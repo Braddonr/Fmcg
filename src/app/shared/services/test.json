@@ -1,0 +1,1111 @@
+{
+    "headers": {
+        "default": {
+            "content-type": "text/html"
+        },
+        "json": {
+            "content-type": "application/json"
+        }
+    },
+    "template": {
+        "field0": "0200",
+        "field24": "BB",
+        "field32": "get;channel",
+        "field37": "create;transactionId",
+        "field43": "get;appName",
+        "field46": "en",
+        "field49": "get;currency",
+        "field60": "get;country-code",
+        "field123": "get;channel",
+        "USSDMNO": "SAFARICOM"
+    },
+    "endpoints": {
+        "profile": {
+            "request": {
+                "field3": "360000",
+                "field2": "__walletAccount",
+                "field32": "USSD",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00",
+                        "57"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                },
+                "adapter": "get-profile"
+            }
+        },
+        "login-pin-authentication": {
+            "request": {
+                "field72": "__loginPin",
+                "field3": "110000",
+                "field2": "__walletAccount",
+                "field0": "0100",
+                "field24": "BB",
+                "DeviceID": "__imsi"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "pin-change": {
+            "request": {
+                "field72": "__newsPin",
+                "field73": "__oldPin",
+                "field3": "140000",
+                "field2": "__walletAccount",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "cbs-lookup": {
+            "request": {
+                "field102": "__fundsTransferCreditAccount",
+                "field2": "__walletAccount",
+                "field3": "410000",
+                "field0": "0200",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "310000",
+                "field2": "__walletAccount",
+                "field100": "CHECK_FEES",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "balance": {
+            "request": {
+                "field3": "310000",
+                "field2": "__walletAccount",
+                "field102": "__balanceDebitAccount",
+                "field68": "BALANCE CHECK",
+                "field100": "BI",
+                "field0": "0100",
+                "field24": "BB",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "funds-transfer": {
+            "request": {
+                "field3": "400000",
+                "field102": "__fundsTransferDebitAccount",
+                "field103": "__fundsTransferCreditAccount",
+                "field4": "__fundsTransferAmount",
+                "field0": "0200",
+                "field24": "BB",
+                "field68": "FUND TRANSFER",
+                "field100": "IFT_FUND_TRANSFER",
+                "field2": "__walletAccount",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "ministatement": {
+            "request": {
+                "field3": "380000",
+                "field2": "__walletAccount",
+                "field102": "__ministatementDebitAccount",
+                "field68": "check Mini statement",
+                "field100": "MINI",
+                "field0": "0200",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "c2b-transaction": {
+            "request": {
+                "field3": "450000",
+                "field4": "__depositAmount",
+                "field2": "__walletAccount",
+                "field103": "__depositDebitAccount",
+                "field65": "__walletAccount",
+                "chargeAmount": "__txcharge",
+                "field68": "Withdrawal to MPESA",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "b2c-transaction": {
+            "request": {
+                "field3": "430000",
+                "field4": "__withdrawalAmount",
+                "field2": "__walletAccount",
+                "field102": "__withdrawalDebitAccount",
+                "field65": "__walletAccount",
+                "chargeAmount": "__txcharge",
+                "field68": "10",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "water-lookup": {
+            "request": {
+                "field3": "500000",
+                "field4": "400",
+                "field2": "__walletAccount",
+                "field65": "__walletAccount",
+                "field64": "700225822000",
+                "field127": "MAGDALINE IGWATAI",
+                "field100": "WATER_LOOKUP",
+                "field68": "Testing",
+                "field0": "0200",
+                "field24": "BB",
+                "field102": "__billPaymentDebitAccount"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "all-billers": {
+            "request": {
+                "field3": "500011",
+                "field2": "__walletAccount",
+                "field64": "700225822",
+                "field100": "ALL_BILLERS",
+                "field32": "USSD",
+                "field68": "Get Billers",
+                "field0": "0200",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00",
+                        "57"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                },
+                "adapter": "get-billers"
+            }
+        },
+        "nairobi-water-bill-payment": {
+            "request": {
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field65": "__walletAccount",
+                "field64": "__billPaymentCreditAccount",
+                "field127": "__firstname",
+                "field100": "__waterBillerKey",
+                "field68": "Water bill payment",
+                "field0": "0200",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "buy-airtime": {
+            "request": {
+                "field3": "420000",
+                "field4": "__airtimeAmount",
+                "field2": "__walletAccount",
+                "field102": "__airtimeDebitAccount",
+                "field65": "__airtimeCreditAccount",
+                "field100": "__airtimeProvider",
+                "field32": "USSD",
+                "field68": "Testing",
+                "field0": "0200",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "get-security-questions": {
+            "request": {
+                "field3": "010000",
+                "field2": "__walletAccount",
+                "field32": "USSD",
+                "field68": "Testing",
+                "field0": "0200",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "set-security-questions": {
+            "request": {
+                "field3": "020000",
+                "field2": "__walletAccount",
+                "CBScustomernumber": "342342653",
+                "QuestionsAnswers": "Q001~MUM#Q002~NAIROBI#Q003~NAIROBI",
+                "field32": "USSD",
+                "field68": "Testing",
+                "field0": "0200",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "balance-charges": {
+            "request": {
+                "field3": "150000",
+                "field4": "0",
+                "field126": "310000",
+                "field2": "__walletAccount",
+                "field100": "BI",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "funds-transfer-savings-to-savings": {
+            "request": {
+                "field3": "400000",
+                "field102": "__fundsTransferDebitAccount",
+                "field103": "__fundsTransferCreditAccount",
+                "field4": "__fundsTransferAmount",
+                "field0": "0200",
+                "field24": "BB",
+                "field68": "FUND TRANSFER",
+                "field100": "IFT_FUND_TRANSFER",
+                "field2": "__walletAccount",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "funds-transfer-savings-to-savings-charges": {
+            "request": {
+                "field3": "150000",
+                "field4": "__fundsTransferAmount",
+                "field126": "400000",
+                "field2": "__walletAccount",
+                "field100": "IFT_FUND_TRANSFER",
+                "field0": "0100",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "funds-transfer-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "400000",
+                "field4": "__fundsTransferAmount",
+                "field2": "__walletAccount",
+                "field100": "IFT_FUND_TRANSFER",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "buy-airtime-charges": {
+            "request": {
+                "field3": "150000",
+                "field4": "__airtimeAmount",
+                "field126": "420000",
+                "field2": "__walletAccount",
+                "field100": "__airtimeProvider",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "nairobiwater-presentment": {
+            "request": {
+                "field3": "500000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field65": "__walletAccount",
+                "field64": "__companyCode",
+                "field127": "__firstname",
+                "field100": "WATER_LOOKUP",
+                "field68": "Water Bill presentment for account %@field64",
+                "field0": "0200"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "ministatement-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "380000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field100": "MINI",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "forgot-pin": {
+            "request": {
+                "QuestionsAnswers": "Q001~MUM#Q002~NAIROBI#Q003~NAIROBI",
+                "field2": "__walletAccount",
+                "Purpose": "ResetPin",
+                "field3": "030000",
+                "DeviceID": "__imsi",
+                "field100": "CHANGE",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "dstv-bill-presentment": {
+            "request": {
+                "field100": "DSTV_LOOKUP",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field68": "DSTV lookup for account %@SmartcardNumber",
+                "field0": "0200",
+                "field102": "__billPaymentDebitAccount"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "dstv-bill-payment": {
+            "request": {
+                "field100": "PAY_DSTV",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "DSTV Bill payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "field0": "0200"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "registration": {
+            "request": {
+                "field71": "__id",
+                "field102": "__coreAccount",
+                "field2": "__walletAccount",
+                "dob": "__dob",
+                "DeviceID": "__imsi",
+                "field3": "120000",
+                "field0": "0200"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "send-to-mpesa": {
+            "request": {
+                "field3": "430000",
+                "field4": "__withdrawalAmount",
+                "field2": "__walletAccount",
+                "field102": "__withdrawalDebitAccount",
+                "field65": "__withdrawalCreditAccount",
+                "chargeAmount": "__txcharge",
+                "field68": "B2C MPESA payment to ACCOUNT",
+                "field100": "B2C_SAFCOM",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "send-to-airtel-money": {
+            "request": {
+                "field3": "430000",
+                "field4": "__withdrawalAmount",
+                "field2": "__walletAccount",
+                "field102": "__withdrawalDebitAccount",
+                "field65": "__walletAccount",
+                "chargeAmount": "__txcharge",
+                "field68": "Send to Airtel money for account %@field102",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "gotv-bill-presentment": {
+            "request": {
+                "field100": "GOTV_LOOKUP",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field68": "GOTV lookup for account %@SmartcardNumber",
+                "field0": "0200",
+                "field102": "__billPaymentDebitAccount"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "zukutv-bill-presentment": {
+            "request": {
+                "field100": "ZUKUTV_LOOKUP",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field68": "ZUKU_TV lookup for account %@SmartcardNumber",
+                "field0": "0200",
+                "field102": "__billPaymentDebitAccount"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "gotv-bill-payment": {
+            "request": {
+                "field100": "PAY_GOTV",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "GOTV bil payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "zuku-tv-bill-payment": {
+            "request": {
+                "field100": "PAY_ZUKU_TV",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "ZUKU TV bil payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "zuku-tv-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_ZUKU_TV",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "gotv-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_GOTV",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "dstv-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_DSTV",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "send-to-mpesa-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "430000",
+                "field4": "__withdrawalAmount",
+                "field2": "__walletAccount",
+                "field100": "B2C_SAFCOM",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "startimes-bill-payment": {
+            "request": {
+                "field100": "PAY_STARTIMESTV",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "STARTIMES TV bil payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "startimes-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_STARTIMESTV",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "nairobi-water-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_WATER",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "zuku-internet-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_ZUKU_INTERNET",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "access-kenya-bill-payment-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field100": "PAY_ACCESS_KENYA",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "access-kenya-bill-payment": {
+            "request": {
+                "field100": "PAY_ACCESS_KENYA",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "Access Kenya bil payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "zuku-internet-bill-payment": {
+            "request": {
+                "field100": "PAY_ZUKU_INTERNET",
+                "SmartcardNumber": "__billPaymentCreditAccount",
+                "field3": "500000",
+                "field4": "__billPaymentAmount",
+                "field2": "__walletAccount",
+                "field102": "__billPaymentDebitAccount",
+                "field68": "Zuku internet bill payment for account %@SmartcardNumber",
+                "chargeAmount": "__txcharge",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "full-statement": {
+            "request": {
+                "field102": "__fullstatementDebitAccount",
+                "field3": "370000",
+                "startDate": "__dateFrom",
+                "endDate": "__dateTo",
+                "emailaddress": "__email",
+                "field4": "400",
+                "field2": "__walletAccount",
+                "field68": "10",
+                "field0": "0200",
+                "field24": "BB",
+                "accountType": "__accountType"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "full-statement-charges": {
+            "request": {
+                "field3": "150000",
+                "field126": "370000",
+                "field4": "0",
+                "field2": "__walletAccount",
+                "field100": "FULL",
+                "field0": "0100"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        },
+        "b2c-transaction-charges": {
+            "request": {
+                "field3": "150000",
+                "field4": "0",
+                "field126": "310000",
+                "field2": "__walletAccount",
+                "field100": "BI",
+                "field0": "0100",
+                "field24": "BB"
+            },
+            "response": {
+                "status": {
+                    "field": "field39",
+                    "matches": [
+                        "00"
+                    ],
+                    "error": {
+                        "message": "field48"
+                    }
+                }
+            }
+        }
+    }
+}

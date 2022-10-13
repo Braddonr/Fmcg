@@ -1,0 +1,81 @@
+<div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <h4><mat-icon>edit</mat-icon>&nbsp;Edit User Details</h4>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </div>
+    
+    <mat-divider></mat-divider>
+    <mat-dialog-content [formGroup]="form" fxLayoutGap="2px">
+        <div fxLayout="row" fxLayout.sm="column" style="margin-top: 12px;">
+            <div fxFlex.gt-sm="50%">
+                <mat-form-field>
+                <input matInput type="text" placeholder="First Name" formControlName="firstName" maxlength="150">
+            </mat-form-field> 
+            <div *ngIf="form.get('firstName').invalid && form.get('firstName').touched || form.get('firstName').dirty">
+                <small class="text-danger" *ngIf="form.get('firstName').errors?.required">This field is required</small>
+            </div>
+            </div>
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="lastName" maxlength="150" placeholder="Surname">
+                </mat-form-field>
+                <div *ngIf="form.get('lastName').invalid && form.get('lastName').touched || form.get('lastName').dirty">
+                    <small class="text-danger" *ngIf="form.get('lastName').errors?.required">This field is required</small>
+                </div>
+            </div>
+            
+        </div>
+
+        <div fxLayout="row" fxLayout.sm="column">
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="userName" maxlength="150" placeholder="Username">
+                </mat-form-field>
+                <div *ngIf="form.get('userName').invalid && form.get('userName').touched || form.get('userName').dirty">
+                    <small class="text-danger" *ngIf="form.get('userName').errors?.required">This field is required</small>
+                </div>
+            </div>
+
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <input matInput formControlName="email" type="email" placeholder="Email Address">
+                  </mat-form-field>
+                  <div *ngIf="form.get('email').invalid && form.get('email').touched || form.get('email').dirty">
+                      <small class="text-danger" *ngIf="form.get('email').errors?.required">Please provide an email address</small>
+                      <small class="text-danger" *ngIf="form.get('email').errors?.email">Please provide a valid email address</small>
+                  </div> 
+            </div>
+            
+        </div>
+        <div fxLayout="row" fxLayout.sm="column">
+            <div fxFlex="50%">
+                <mat-form-field>
+                    <input matInput type="number" formControlName="phoneNumber"                     placeholder="Mobile No">
+                    <span matPrefix class="fa-green">+260&nbsp;</span>
+                  </mat-form-field>
+                  <div *ngIf="form.get('phoneNumber').invalid && form.get('phoneNumber').touched || form.get('phoneNumber').dirty">
+                    <small class="text-danger" *ngIf="form.get('phoneNumber').errors?.required">This field is required</small>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div fxFlex="50">
+                <mat-form-field>
+                    <textarea matInput  formControlName="remarks" maxlength="255" i18n-placeholder
+                      placeholder="Remarks"></textarea>
+                    <mat-hint align="end">{{  form.value.remarks?.length || 0  }}/255</mat-hint>
+                  </mat-form-field>
+                  <div *ngIf="form.get('remarks').invalid && form.get('remarks').touched || form.get('remarks').dirty">
+                    <small class="text-danger" *ngIf="form.get('remarks').errors?.required">This field is required</small>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-dialog-actions>
+            <div fxFlex="50">
+              <button mat-raised-button class="atma-background" [disabled]="!form.valid" (click)="editUser()" title="Submit user details" aria-describedby="Submit user details">Edit User</button>
+            </div>
+        </mat-dialog-actions>
+    </div>
+</div>

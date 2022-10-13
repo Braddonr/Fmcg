@@ -1,0 +1,155 @@
+<div class="container">
+    <div class="header">
+        <h4 class="text-success">{{title}}</h4>
+    </div>
+    <hr>
+    <br>
+    <form class="form" [formGroup]="userForm">
+        <div class="row">
+            <div class="form-group col-4">
+            
+                <mat-form-field>
+                    <mat-select placeholder="Salutation" formControlName="Salutation">
+                    
+                        <mat-option *ngFor=" let salute of salutes" [value]="salute.Id">
+                            {{salute.SubName}}
+                        </mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+                <!-- </div> -->
+            </div>
+            <div class="form-group col-4">
+                <!-- <div class="form-group"> -->
+                <mat-form-field>
+                    <input matInput formControlName="FirstName" placeholder="Enter first name" type="text">
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('FirstName').touched && userForm.get('FirstName').hasError('required')">Required
+                    Field</small>
+            </div>
+            <div class="form-group col-4">
+                <mat-form-field>
+                    <input matInput formControlName="MiddleName" placeholder="Enter middle name" type="text">
+
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('MiddleName').touched && userForm.get('MiddleName').hasError('required')">Required
+                    Field</small>
+            </div>
+
+            <input type="text" formControlName="Password" autocomplete="off" hidden>
+
+        </div>
+
+        <!-- end of first row -->
+
+
+        <!-- </div> -->
+        <div class="row">
+            <div class="form-group col-4">
+                <!-- <div class="form-group"> -->
+                <mat-form-field>
+                    <input matInput formControlName="LastName" placeholder="Enter last name" type="text">
+                    <small class="text-danger"
+                        *ngIf="userForm.get('LastName').touched && userForm.get('LastName').hasError('required')">Required
+                        Field</small>
+                </mat-form-field>
+                <!-- </div> -->
+
+            </div>
+
+            <div class="form-group col-4">
+                <!-- <div class="form-group"> -->
+                <mat-form-field>
+                    <input matInput formControlName="Email" placeholder="Enter a valid email" type="email">
+
+                    <small class="text-danger"
+                        *ngIf="userForm.get('Email').touched && userForm.get('Email').hasError('required')">Required
+                        Field</small>
+                    <small class="text-danger"
+                        *ngIf="userForm.get('Email').touched && userForm.get('Email').hasError('email')">Invalid
+                        email address</small>
+                </mat-form-field>
+                <!-- </div> -->
+            </div>
+            <div class="form-group col-4">
+                <mat-form-field>
+                    <input matInput formControlName="Username" placeholder="Enter Username" type="text">
+
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('Username').touched && userForm.get('Username').hasError('required')">Required
+                    Field</small>
+            </div>
+
+            <div class="form-group col-4">
+                <mat-form-field>
+                    <input matInput formControlName="PhoneNumber" placeholder="Enter phone number" type="text">
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('PhoneNumber').touched && userForm.get('PhoneNumber').hasError('required')">Required
+                    Field</small>
+                <small class="text-danger"
+                    *ngIf="userForm.get('PhoneNumber').touched && userForm.get('PhoneNumber').hasError('PhoneNumber')">Invalid
+                    phone number</small>
+            </div>
+
+            <div class="form-group col-4">
+                <mat-form-field>
+                    <input matInput formControlName="EmploymentNumber" placeholder="Enter Employment number"
+                        type="text">
+
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('EmploymentNumber').touched && userForm.get('EmploymentNumber').hasError('required')">Required
+                    Field</small>
+            </div>
+            <div class="form-group col-4">
+                <mat-form-field>
+                    <mat-select placeholder="Select Branch" formControlName="Branch">
+                        <mat-option *ngFor=" let branch of branches" [value]="branch.branchId">
+                            {{branch.branchName}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- <input matInput formControlName="Branch" placeholder="Enter Branch Name" type="text"> -->
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('Branch').touched && userForm.get('Branch').hasError('required')">Required
+                    Field</small>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+
+            <div class="form-group col">
+                <mat-form-field>
+                    <textarea matInput formControlName="Remarks" rows="2" placeholder="Remarks" type="text"></textarea>
+
+                </mat-form-field>
+                <small class="text-danger"
+                    *ngIf="userForm.get('Remarks').touched && userForm.get('Remarks').hasError('required')">Required
+                    Field</small>
+            </div>
+        </div>
+        <!-- end of fourth row  -->
+        <!-- <hr> -->
+
+        <div class="alert alert-danger" *ngIf="errorMessages.length > 0">
+            <ol *ngFor="let err of errorMessages">
+                <li *ngIf="err.Salutation">Salutation field cannot be empty</li>
+                <li *ngIf="err.Branch">Branch field cannot be empty</li>
+            </ol>
+        </div>
+
+        <button class="btn btn-alt pull-left" (click)="closeDialog()" mat-raised-button>Cancel</button>
+        <button type="button" class=" btn btn-action pull-right" *ngIf="formData.mode" mat-raised-button
+            (click)="submitUser()"><span >Submit <img *ngIf="button_loading" class="pl-2" src="assets/images/app/loading.gif"> </span></button>
+        <button class="btn btn-action pull-right" *ngIf="!formData.mode" (click)="editUser()"
+            mat-raised-button><span >Update <img *ngIf="button_loading" class="pl-2" src="assets/images/app/loading.gif"> </span></button>
+    </form>
+
+</div>

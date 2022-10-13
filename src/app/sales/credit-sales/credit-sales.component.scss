@@ -1,0 +1,41 @@
+table {
+    width: 100%;
+}
+button {
+    background: #337ab7;
+    color: white;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+.title-table[_ngcontent-c48] {
+    color: #007cba;
+}
+.column {
+    float: left;
+    width: 25%;
+  }
+
+  .columnn {
+    float: left;
+    width: 50%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  // .mat-card{
+  //   margin-left: 10px;
+  //   flex-direction: column;
+  //   box-sizing: border-box;
+  //   display: flex;
+  //   max-width: 100%;
+  //   place-content: center;
+  //   align-items: center;
+  // }
+  h5{
+    color: #fff;
+  }

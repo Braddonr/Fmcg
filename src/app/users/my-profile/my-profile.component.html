@@ -1,0 +1,49 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="35px">
+    <div fxFlex.gt-sm="25%">
+        <nz-card [nzActions]="[actionPassword, actionDeactivate]">
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="100.00%">
+                    <h3 class="atma-text"><b>USER DETAILS</b></h3>
+                    <hr>
+                </div>
+            </div>
+            <div fxLayout="row" class="mb-2">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Full Name: </b></p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p>{{user.firstName}}&nbsp;{{user.middleName}}&nbsp;{{user.lastName}}</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Email: </b></p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p style="word-wrap: break-word;">{{user.email}}</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Phone Number: </b></p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p><code>{{user.phoneNumber}}</code></p>
+                </div>
+            </div>
+        </nz-card>
+        <ng-template #actionPassword>
+            <button *ngIf="blockValidated" (click)="forgotPassword(user)" nz-button nzType="primary" nzSize="small"  title="Reset User Password" aria-describedby="Reset User Password" nzGhost><mat-icon>backspace</mat-icon>&nbsp;Reset Password</button>&nbsp;
+        </ng-template>
+        <ng-template #actionDeactivate>
+            <button *ngIf="user.isBlocked && blockValidated; else blockUser" nz-button nzType="primary" nzSize="small" nzGhost title="Activate User" aria-describedby="Activate User" (click)="unBlockThisUser()"><mat-icon>done_outline</mat-icon>&nbsp;Unblock User</button>
+            <ng-template #blockUser>
+                <button *ngIf="blockValidated" (click)="blockThisUser()" nz-button nzType="primary" nzSize="small" title="Deactivate User" aria-describedby="Deactivate User" nzDanger nzGhost><mat-icon>block</mat-icon>&nbsp;Block User</button>
+            </ng-template>
+        </ng-template>
+    </div>
+    <div fxFlex.gt-sm="75%">
+        <app-my-roles></app-my-roles>
+    </div>
+</div>
+

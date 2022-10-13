@@ -1,0 +1,65 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div fxFlex.gt-sm="98%" fxFlex.gt-xs="100%" fxFlex="100%">
+        <nz-card nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" nzSize="large">
+            <nz-table [nzBordered]="false" #basicTable nzSize="small" [nzData]="auditTrails" [nzLoading]="loading" [nzFrontPagination]="false" nzShowSizeChanger [nzTotal]="total" [nzPageSize]="perPage" [nzPageIndex]="page"(nzQueryParams)="onQueryParamsChange($event)">
+                <thead>
+                    <tr>
+                        <th>Accessed URI</th>
+                        <th methodType>
+                            Method Type
+                            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="requestMethod.length > 0" [nzDropdownMenu]="menu">
+                                <i nz-icon nzType="search"></i>
+                            </nz-filter-trigger>
+                        </th>
+                        <th>Response Status</th>
+                        <th requestDate>
+                            Request Time
+                            <nz-filter-trigger [(nzVisible)]="visibleDate" [nzActive]="requestDate.length > 0" [nzDropdownMenu]="menuDate">
+                                <i nz-icon nzType="search"></i>
+                            </nz-filter-trigger>
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of basicTable.data">
+                        <td>{{data.uri}}</td>
+                        <td>{{data.methodType}}</td>
+                        <td>
+                            <app-success-label [labelValue]="data.responseStatus"></app-success-label>
+                        </td>
+                        <td><code>{{data.requestDate}}</code></td>
+                        <td>
+                            <button nz-button nzType="primary" nzGhost nzSize="small"  
+                            [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon>
+                            Actions</button>
+                            <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                                <button mat-menu-item (click)="viewAudit(data)" title="View Details" aria-describedby="View Details">
+                                    <mat-icon>remove_red_eye</mat-icon>View
+                                </button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </tbody>
+            </nz-table>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                    <div class="search-box">
+                        <input nz-input placeholder="Method Type" [(ngModel)]="requestMethod" (ngModelChange)="onMethodSelect($event)">
+                    </div>
+                </div>
+            </nz-dropdown-menu>
+            <nz-dropdown-menu #menuDate="nzDropdownMenu">
+                <div class="ant-table-filter-dropdown">
+                    <div class="search-box">
+                        <nz-range-picker [(ngModel)]="requestDate" (ngModelChange)="onDateSelect($event)"></nz-range-picker>
+                    </div>
+                </div>
+            </nz-dropdown-menu>
+        </nz-card>
+        <ng-template #extraTemplate>
+            <input nz-input placeholder="User Agent" [(ngModel)]="requestAgent" (ngModelChange)="onUserAgentSelect($event)">&nbsp;
+            <button nz-button nzType="primary" nzSize="small" nzDanger title="Clear Filters" aria-describedby="Clear Filters" (click)="reset()">Clear Filters</button>
+        </ng-template>
+    </div>
+</div>

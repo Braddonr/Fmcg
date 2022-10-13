@@ -1,0 +1,56 @@
+<h4 class="modal-title text-info">{{title}}</h4>
+<hr>
+<div class="modal-body" [formGroup]="profileForm">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput formControlName="ProfileName" placeholder="Profile Name" type="text"/>
+        </mat-form-field>
+        <small class="text-danger"
+          *ngIf="profileForm.get('ProfileName').touched && profileForm.get('ProfileName').hasError('required')">
+          Field Required
+        </small>
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <div class="form-group">
+        <mat-form-field>
+          <textarea matInput formControlName="Remarks" rows="2" placeholder="Description(Optional)">
+            </textarea>
+        </mat-form-field>
+        <small class="text-danger"
+          *ngIf="profileForm.get('Remarks').touched && profileForm.get('Remarks').hasError('required')">
+          Field Required
+        </small>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <div class="form-check form-check-inline">
+       
+          <input type="checkbox" id="isactive" formControlName="IsVisible"  class="form-check-input"/>
+        <label for="isactive" class="form-check-label">Is Active</label>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="loading" class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+      aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+  </div>
+  <br>
+  <div *ngIf="errorMessage.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div *ngFor="let err of errorMessage">{{err}}</div>
+  </div>
+  <!-- <hr> -->
+  <br>
+  <button type="button" id="close" class="btn btn-sm btn-dark" (click)="closeModal()">Close</button>
+  <button type="button" [disabled]="!profileForm.valid" class="btn  btn-sm btn-action pull-right"
+    (click)="createProfile()" *ngIf="form_data.mode">Save
+    Record</button>
+    <button type="button" [disabled]="!profileForm.valid" class="btn  btn-sm btn-action pull-right"
+    (click)="updateProfile()" *ngIf="!form_data.mode">Update
+    Record</button>
+
+</div>

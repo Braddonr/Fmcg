@@ -1,0 +1,92 @@
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+<div class="basic-container global" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutGap="20px" class="p-2">
+        <div>
+            <button nz-button nz-dropdown title="Select columns to Display"
+                aria-describedby="Select Columns to Display">
+                <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="columnToggleMenu">
+                    Select Columns to Display
+                    <i nz-icon nzType="down"></i>
+                </a>
+            </button> &nbsp;
+            <nz-dropdown-menu #columnToggleMenu="nzDropdownMenu" nzSize="large">
+                <ul nz-menu>
+                    <nz-checkbox-wrapper class="check-group" (nzOnChange)="selectedColumns($event)">
+                        <div nz-column nzJustify="start">
+                            <div *ngFor="let colm of displayColumns" class="pl-1">
+                                <div *ngIf="mandatoryColumns.includes(colm); else nonchecked">
+                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="true"
+                                        nzSize="small">{{colm }}</label>
+                                </div>
+                                <ng-template #nonchecked>
+                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="false"
+                                        nzSize="small">{{colm}}</label>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </nz-checkbox-wrapper>
+                    <div class="btn-nz"></div>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+        <div>
+            <input type="text" class="form-control form-control-md" style="width: 230px;" [(ngModel)]="searchInput"
+                (ngModelChange)="globalSearch()" placeholder="quick search">
+        </div>
+    </div>
+    <div class="pr-2">
+        <button class="btn btn-action pull-right" (click)="assignUserDialog()">
+            <span class="fa fa-plus"></span>&nbsp; Assign Users</button>
+    </div>
+
+</div>
+
+<div class="basic-container">
+
+    <h1 class="titleCreate pl-1">Users in Admin Profile</h1>
+    <nz-table #nzTable [nzBordered]="true" [nzData]="listOfDisplayData" nzSize="small" nzTableLayout="fixed" class="px-1"
+        [nzLoading]="loading" [nzFrontPagination]="false" nzShowSizeChanger [nzTotal]="total" [nzPageSize]="perPage"
+        [nzPageIndex]="page" (nzQueryParams)="onQueryParamsChange($event)">
+        <thead>
+            <tr>
+                
+                <th nzCustomFilter *ngIf="mandatoryColumns.includes('UserName')">
+                    UserName
+                    <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0"
+                        [nzDropdownMenu]="menu">
+                        <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                </th>
+                <th *ngIf="mandatoryColumns.includes('Full Name')">Full Name</th>
+                <th *ngIf="mandatoryColumns.includes('A/C Status')">A/C Status</th>
+                <th nzRight>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of nzTable.data">
+                <td *ngIf="mandatoryColumns.includes('UserName')">{{data.UserName}}</td>
+                <td *ngIf="mandatoryColumns.includes('Full Name')">{{data.FullName}}</td>
+                <td *ngIf="mandatoryColumns.includes('A/C Status')" class="pl-2" >
+                    <app-label-active [value]="data.Active"></app-label-active>
+                </td>
+
+                <td nzRight class="pl-2">
+                    <button nz-button nzType="primary" nzSize="small" title="Edit User" nzSuccess nzGhost
+                        aria-describedby="Edit User" >
+                        <i nz-icon nzType="edit" nzTheme="outline"></i>
+                    </button>&nbsp;
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</div>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="search code" [(ngModel)]="searchValue">
+            <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+            <button nz-button nzSize="small" (click)="reset()">Reset</button>
+        </div>
+    </div>
+</nz-dropdown-menu>

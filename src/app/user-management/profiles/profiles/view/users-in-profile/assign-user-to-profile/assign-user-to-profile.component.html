@@ -1,0 +1,23 @@
+<div class="card">
+    <div class="card-header"><h6> <b class="titleCreate">{{title}}</b></h6></div>
+    <hr>
+    <form [formGroup]="assignForm" class="card-body">
+        <mat-form-field>
+     
+            <mat-select matInput placeholder="User to assign" formControlName="UserId" required>
+                <mat-option>-- Select user--</mat-option>
+                <mat-option *ngFor="let user of users" [value]="user.Id">
+                    {{user.FirstName}} {{user.MiddleName}} {{user.LastName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br><br>
+        
+        <button type="button" id="close" class="btn btn-sm btn-dark" (click)="closeModal()">Close</button>
+        <button type="button" [disabled]="!assignForm.valid" class="btn  btn-sm btn-action pull-right"
+            (click)="submitUser()">Submit
+        </button>
+
+
+    </form>
+</div>

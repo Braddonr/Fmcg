@@ -1,0 +1,79 @@
+<div fxLayout="row wrap" fxLayoutAlign="center start" *ngIf="auditTrail">
+    <div fxFlex.gt-sm="30%" fxFlex.gt-xs="50%" fxFlex="100">
+        <nz-card nzTitle="USER DETAILS" nzSize="large">
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>User Email:</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <p>{{auditTrail.userEmail}}</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>UserAgent: </b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <p>{{auditTrail.userAgent}}</p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <div fxFlex.gt-sm="68%" fxFlex.gt-xs="50%" fxFlex="100" fxFlexOffset="10px">
+        <nz-card nzTitle="TRANSACTION DETAILS" nzSize="large">
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>Request Time:</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <p><code>{{auditTrail.requestTime}}</code></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>Host Domain:</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <p>{{auditTrail.hostDomain}}</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>Method Type:</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <p>{{auditTrail.methodType}}</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                   <p class="atma-text"><b>Transaction Status</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <app-success-label [labelValue]="auditTrail.responseStatus"></app-success-label>
+                </div>
+            </div>
+            <div fxLayout="row" *ngIf="accessValidated">
+                <div fxFlex="30%">
+                    <p class="atma-text"><b>Request Body:</b></p>
+                </div>
+                <div fxFlex="70%">
+                    <pre>
+                        {{requestBody | json}}
+                    </pre>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="30%">
+                    <p class="atma-text"><b>Response Body:</b></p>
+                </div>
+                <div fxFlex.gt-sm="70%">
+                    <pre>
+                        {{responseBody | json}}
+                    </pre>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    
+</div>

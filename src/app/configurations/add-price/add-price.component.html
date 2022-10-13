@@ -1,0 +1,15 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editPrice()">Update Price</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewPrice()">Create Price</button>
+        </ng-template>
+    </ng-template>
+</div>
+

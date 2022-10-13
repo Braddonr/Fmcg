@@ -1,0 +1,59 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <div fxFlex.gt-sm="90.00%" fxFlex.gt-xs="100.00%" fxFlex="100%">
+      <nz-card  [nzBordered]="true" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" nzSize="large">
+        <nz-table #basicTable [nzData]="workflows" nzSize="small"  [nzFrontPagination]="false"[nzLoading]="loading" [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="page" nzShowSizeChanger (nzQueryParams)="onQueryParamsChange($event)">
+          <thead style="font-weight: bold;">
+            <tr>
+              <th>Workflow Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Created On</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td>{{data.name | titlecase}}</td>
+              <td>{{data.remarks | titlecase}}</td>
+              <td>
+                <app-active-label [labelValue]="data.isActive"></app-active-label>
+              </td>
+              <td><code class="atma-failed">{{data.createdOn | date: 'yyyy-mm-dd HH:mm:ss'}}</code></td>
+              <td>
+                  <button nz-button nzSize="small" nzType="primary" nzGhost
+                  [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon>&nbsp;
+                  Actions
+                  </button>
+                  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                      <button mat-menu-item (click)="viewWorkflow(data)">
+                          <mat-icon>remove_red_eye</mat-icon>View
+                      </button>
+                      <button mat-menu-item (click)="editWorkflow(data)">
+                        <mat-icon>edit</mat-icon>Edit
+                    </button>
+                      <!-- <button mat-menu-item>
+                          <mat-icon>restore_from_trash</mat-icon>
+                          Archive
+                      </button> -->
+                  </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
+      <ng-template #extraTemplate>
+        <button nz-button nzType="primary" (click)="addWorkflow('')"><mat-icon>exposure_plus_1</mat-icon>&nbsp;Add Workflow</button>&nbsp;
+        <button nz-button nzType="primary" [matMenuTriggerFor]="menu"><mat-icon> import_export</mat-icon>&nbsp;Export Data</button>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="exportWorkflowXLSX()">
+                <mat-icon>file_copy</mat-icon>
+                XLSX
+            </button>
+            <button mat-menu-item (click)="exportWorkflowPDF()">
+                <mat-icon>picture_as_pdf</mat-icon>
+                PDF
+            </button>
+        </mat-menu>
+      </ng-template>
+    </div>
+</div>

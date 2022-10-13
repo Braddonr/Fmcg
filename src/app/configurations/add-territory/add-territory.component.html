@@ -1,0 +1,40 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="territoryName">Territory Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="territoryName" id="territoryName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="territoryCode">Territory Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="territoryCode" id="territoryCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="territoryManager">Territory Manager</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="territoryManager" id="territoryManager" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="remarks" id="remarks" />
+                </nz-form-control>
+            </nz-form-item>
+        </form> 
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editTerritoy()">Update Territoryer</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewTerritory()">Create Territory</button>
+        </ng-template>
+    </ng-template>
+</div>
+

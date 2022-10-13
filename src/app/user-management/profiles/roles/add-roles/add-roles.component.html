@@ -1,0 +1,58 @@
+<div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <!-- <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body" [formGroup]="rolesForm"> 
+      <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <mat-form-field>
+                  <mat-label class="text-gray">Role Name</mat-label>
+                  <input matInput class="form-contrl" formControlName="RoleName" placeholder="Role Name">
+                  <small class="text-danger" *ngIf="rolesForm.get('RoleName').touched && rolesForm.get('RoleName').hasError('required')">Required
+                    Field</small>
+                </mat-form-field>                
+              
+          </div>
+          </div>
+          <div class="col-md-12">
+              <div class="form-group">
+               
+                <mat-form-field>
+                  <mat-label class="text-gray">Description</mat-label>
+                  <input matInput formControlName="Description" placeholder="Remarks" >
+                </mat-form-field>
+                  <small class="text-danger" *ngIf="rolesForm.get('Description').touched && rolesForm.get('Description').hasError('required')">Required
+                  Field</small>
+              </div>
+              </div>
+
+              <div class="col-md-12">
+              <div class="form-group">
+                <div class="form-check form-check-inline">
+                  <input type="checkbox" id="active" class="form-check-input" formControlName="isActive">
+                  <label for="active" class="form-check-label">Is Active</label>
+                </div>
+              </div>
+              </div>
+          
+      </div>   
+      <div class="col-md-12">
+      <div *ngIf="loading" class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+          aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+      </div>
+      </div>
+      <!-- <div *ngIf="errorResponseMessages" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div *ngFor="let err of errorResponseMessages">{{err}}</div>
+      </div>
+      </div> -->
+      <!-- <div class="modal-footer col-md-12 mb-1"> -->
+      <button type="button"  class="btn btn-dark btn-sm" (click)="closeModal()">Close</button>
+      <button *ngIf="formData.mode"   class="btn btn-action btn-sm pull-right" (click)="createRole()">Submit</button>
+        <button mat-raised-button *ngIf="!formData.mode" type="button" class="btn btn-action btn-sm pull-right" (click)="editRole()">Update</button>
+      <!-- </div> -->
+      </div>
+      

@@ -1,0 +1,43 @@
+.cardMin {
+    width: 320px !important;
+    [nzTitle] {
+        font-weight: bold;
+    }
+}
+.activeWorkflow {
+    color: #387CA6;
+    h3 {
+        vertical-align: middle;
+    }
+    mat-icon {
+        vertical-align: middle;
+    }
+    button {
+        margin-bottom: 10px;
+    }
+    
+}
+.eBtnSuccess {
+    height: 30px;
+    width: 35px;
+    background-color: rgb(27, 146, 27);
+    color: white;
+}
+.eBtnDanger {
+    height: 30px;
+    width: 35px;
+    background-color: #d91A1A;
+    color: white;
+}
+.listWidth {
+    width: 400px;
+}
+
+mat-icon {
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+h5, p {
+    font-size: small !important;
+}

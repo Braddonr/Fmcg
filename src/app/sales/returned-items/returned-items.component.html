@@ -1,0 +1,108 @@
+<div fxLayout="row" fxLayoutAlign="space-between" style="margin-bottom: 30px;">
+    <div class="column">
+        <mat-card _ngcontent-c38="" class="mat-card">
+            <mat-card-content _ngcontent-c38="" class="mat-card-content">
+                <h3 _ngcontent-c38="" style="text-align: center;">Returned Items Count Trend</h3>
+                <div _ngcontent-c38=""></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="column">
+        <mat-card _ngcontent-c38="" class="mat-card">
+            <mat-card-content _ngcontent-c38="" class="mat-card-content">
+                <h3 _ngcontent-c38="" style="text-align: center;">Returned Items Count by Suppliers</h3>
+                <div _ngcontent-c38=""></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="column">
+        <mat-card _ngcontent-c38="" class="mat-card">
+            <mat-card-content _ngcontent-c38="" class="mat-card-content">
+                <h3 _ngcontent-c38="" style="text-align: center;">Returned Items Count by Complaint Type</h3>
+                <div _ngcontent-c38=""></div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+<mat-card>
+    <mat-card-title></mat-card-title>
+    <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <h3 _ngcontent-c48="" class="title-table"><b _ngcontent-c48="">
+                <mat-icon _ngcontent-c48="" class="mat-icon material-icons" role="img" aria-hidden="true">insert_chart</mat-icon>&nbsp;Returned Items List</b></h3>
+            <div style="margin-right: 20px">
+                <button mat-raised-button (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'Talha'}})"
+                        style="margin-right: 20px">Excel</button>
+                <button mat-raised-button (click)="exporter.exportTable('csv')"
+                        style="margin-right: 20px">Csv</button>
+            </div>
+        </div>
+        <table mat-table matTableExporter  matSort [dataSource]="dataSource">
+            <!-- Issue ID Column -->
+            <ng-container matColumnDef="Issue ID">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Issue ID </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Purchase ID Column -->
+            <ng-container matColumnDef="Purchase ID">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase ID </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Customer Column -->
+            <ng-container matColumnDef="Customer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Store Column -->
+            <ng-container matColumnDef="Store">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Store </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Description Column -->
+            <ng-container matColumnDef="Description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Status Column -->
+            <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Supplier Column -->
+            <ng-container matColumnDef="Supplier">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Supplier </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Customer Location Column -->
+            <ng-container matColumnDef="Customer Location">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Location </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Store Contact Column -->
+            <ng-container matColumnDef="Store Contact">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Store Contact </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Complaint Type Column -->
+            <ng-container matColumnDef="Complaint Type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Complaint Type </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <!-- Actions Column -->
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                <td mat-cell *matCellDef="let element"></td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- Table -->
+        
+        <!-- Table -->
+        <mat-paginator
+            style="font-size: 15px;font-family: 'Nunito', sans-serif;"
+            [pageSizeOptions]="[5,10, 25, 50, 100]" showFirstLastButtons>
+        </mat-paginator>
+    </mat-card-content>
+</mat-card>

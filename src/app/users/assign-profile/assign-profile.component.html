@@ -1,0 +1,22 @@
+<nz-card [nzBordered]="true" nzTitle="{{cardTitle}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+    <form nz-form [formGroup]="form">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="profileId" nzRequired>Select Profile</nz-form-label>
+            <nz-form-control
+                [nzSm]="14"
+                [nzXs]="24"
+                nzErrorTip="This field is required"
+            >
+                <nz-select formControlName="profileId" nzShowSearch>
+                    <nz-option *ngFor="let profile of profiles" nzLabel="{{profile.name}}" nzValue="{{profile.id}}">{{profile.name}}</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>
+<ng-template #extraTemplate>
+    <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+</ng-template>
+<ng-template #actionAdd>
+    <button nz-button nzType="primary" ngSize="medium" (click)="assignProfile()" [disabled]="!form.valid">Assign Profile</button>
+</ng-template>

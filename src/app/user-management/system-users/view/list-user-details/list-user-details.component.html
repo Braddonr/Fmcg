@@ -1,0 +1,27 @@
+<div class="row mb-1 header">
+  <div class="col">
+    <div class="input-group m-3 mb-3 box-shadow">
+      <div class="input-group-append pull-right">
+        <span class="input-group-text border-top-0 border-right-0 border-bottom-0">
+
+          <button class="btn btn-md btn-default"><i class="fa fa-users"> <b> USERS</b></i></button></span>
+        <span class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-th"></i></span>
+        <!-- <span class="input-group-text border-top-0 border-right-0 border-bottom-0">
+  
+            <button mat-raised-button (click)="recordAddUpdate('create', $event)" class="btn-info"><i class="fa fa-plus"> ADD NEW
+                RECORD </i></button></span> -->
+        <span class="input-group-text border-top-0 border-right-0 border-bottom-0"><i class="fa fa-list"></i></span>
+        <span class="input-group-text border-top-0 border-right-0 border-bottom-0">
+
+          <!-- <button (click)="recordAddUpdate('create', $event)" class="btn btn-md btn-info"><i class="fa fa-plus"> ADD NEW
+                RECORD </i></button> -->
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <ng2-smart-table class="table table-hover" [settings]="settings" [source]="userData" (custom)="onCustomAction($event)">
+  </ng2-smart-table>
+</div>

@@ -1,0 +1,58 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="companyName">Company Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="companyName" id="companyName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="email">Email</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="email" id="email" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="location">Location</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="location" id="location" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="contactName">Contact Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="contactName" id="contactName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="contactPhone" id="contactPhone" />
+                </nz-form-control>
+            </nz-form-item>
+            <!-- <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="createdBy">Created By</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="createdBy" id="createdBy" />
+                </nz-form-control>
+            </nz-form-item> -->
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <textarea rows="3" nz-input formControlName="remarks" id="remarks"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editCompany()">Update Company</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewCompany()">Create Company</button>
+        </ng-template>
+    </ng-template>
+</div>
+

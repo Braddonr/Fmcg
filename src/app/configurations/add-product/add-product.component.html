@@ -1,0 +1,75 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="categoryId">Select Category</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <nz-select name="select-category" [ngModel]="'Option 4'" formControlName="categoryId" id="categoryId">
+                        <nz-option nzValue="Option 1" nzLabel="EABL"></nz-option>
+                        <nz-option nzValue="Option 2" nzLabel="BAT"></nz-option>
+                        <nz-option nzValue="Option 3" nzLabel="ARAT"></nz-option>
+                        <nz-option nzValue="Option 4" nzLabel="COCA-COLA"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="productCode">Product Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="productCode" id="productCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="packagingType">Packaging Type</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <nz-select name="select-productType" [ngModel]="'Option 3'" formControlName="packagingType" id="packagingType">
+                        <nz-option nzValue="Option 1" nzLabel="PET"></nz-option>
+                        <nz-option nzValue="Option 2" nzLabel="Glass"></nz-option>
+                        <nz-option nzValue="Option 3" nzLabel="PET"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="brand">Product Name/Brand</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="brand" id="brand" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="unitId">Select Unit of Measure</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <nz-select name="select-unit" [ngModel]="'Option 7'" formControlName="unitId" id="unitId">
+                        <nz-option nzValue="Option 1" nzLabel="Bottles"></nz-option>
+                        <nz-option nzValue="Option 2" nzLabel="Tin"></nz-option>
+                        <nz-option nzValue="Option 3" nzLabel="TetraPack"></nz-option>
+                        <nz-option nzValue="Option 4" nzLabel="Grams"></nz-option>
+                        <nz-option nzValue="Option 5" nzLabel="KiloGrams"></nz-option>
+                        <nz-option nzValue="Option 6" nzLabel="Littles"></nz-option>
+                        <nz-option nzValue="Option 7" nzLabel="Packets"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="productDescription">Product Description</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="productDescription" id="productDescription" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="remarks" id="remarks" />
+                </nz-form-control>
+            </nz-form-item>
+        </form> 
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editProduct()">Update Product</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewProduct()">Create Product</button>
+        </ng-template>
+    </ng-template>
+</div>
+

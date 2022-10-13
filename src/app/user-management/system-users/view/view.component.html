@@ -1,0 +1,262 @@
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+
+<!-- <div class="col-md-12 col-xm-12 col-sm-12"> -->
+<!-- <div class="coltwo" style="background: #fcfcfc; box-shadow: 0 1px 5px #d1cafa;">
+        </div> -->
+<!-- <div class="card">
+        <div class="card-body">
+
+            <ngb-tabset class="nav-justified">
+                <ngb-tab>
+                    <ng-template ngbTabTitle><span class="tab-title">User Details</span></ng-template>
+                    <ng-template ngbTabContent>
+                        <mat-card>
+                            <div class="col-md-6 col-xm-12 col-sm-12">
+                                <div *ngIf="userData" class="panel-side"
+                                    style="background: #fcfcfc; box-shadow: 0 1px 5px #d1cafa;">
+                                    <img class="m-3"
+                                        style="margin-left: 30% !important; text-align: center; height: 80px !important;"
+                                        src="/assets/img/avatar.png" alt="User icon">
+                                    <div class="panel-body" style="text-align: center !important;">
+                                        <h6><b>{{userData.username}}</b></h6>
+                                        <i class="fa fa-user"></i> {{userData.email}}
+
+                                    </div>
+                                    <div class="card card1">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <td><span class="x badge-default"><small>Firstname</small></span></td>
+                                                <td><small>{{userData.Firstname}}</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="x badge-default"><small>Last Name</small></span></td>
+                                                <td><small>{{userData.lastname}}</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="x badge-default"><small>Middle name</small></span></td>
+                                                <td><small>{{userData.middlename}}</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="x badge-default"><small>ID Number</small></span></td>
+                                                <td><small>30923267</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class="x badge-default"><small>Status</small></span></td>
+                                                <td><small>
+
+                                                        <li *ngIf="userData.status === '2'"><span
+                                                                class="badge badge-warning">Suspended</span></li>
+                                                        <li *ngIf="userData.status === '1'"><span
+                                                                class="badge badge-success">Active</span></li>
+                                                        <li *ngIf="userData.status === '0'"><span
+                                                                class="badge badge-secondary">Inactive</span>
+                                                        </li>
+
+                                                    </small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="x badge-default"><small>Date Created</small></span>
+                                                </td>
+                                                <td><small>{{userData.created_on}}</small></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="class-btm" style="padding: 4px 4px;">
+                                        <div class="row">
+                                            <div class="col-md-6" *ngIf="userData.status === '2'">
+                                                <button (click)="unblockUser(userData)" mat-button
+                                                    class='btn-success unblock btn-block'><i class="fa fa-check"></i>
+                                                    Unblock</button>
+                                            </div>
+                                            <div class="col-md-6" *ngIf="userData.status === '3'">
+                                                <button (click)="unSuspendUser(userData)" mat-button
+                                                    class='btn-primary unblock btn-block'><i class="fa fa-check"></i>
+                                                    Unsuspend</button>
+                                            </div>
+                                            <div class="col-md-6" *ngIf="userData.status === '1'">
+                                                <button (click)="suspendUser(userData)" mat-button
+                                                    class='btn-warning btn-sm pull-left'><i
+                                                        class="fa fa-balance-scale"></i> Suspend</button>
+                                            </div>
+                                            <div class="col-md-6" *ngIf="userData.status === '1'">
+                                                <button (click)="blockUser(userData)" mat-button
+                                                    class="btn-danger block btn-sm pull-right"><i class="fa fa-ban"></i>
+                                                    Block</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <span class="template-tab-title">
+                        <ng-template ngbTabTitle><span class="tab-title"> Audit Trails</span></ng-template>
+                    </span>
+                    <ng-template ngbTabContent>
+                        <mat-card>
+                            <app-audit-trail-list></app-audit-trail-list>
+                        </mat-card>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+
+<!-- <div class="col-md-12 col-xm-12 col-sm-12"> -->
+<!-- <div class="coltwo" style="background: #fcfcfc; box-shadow: 0 1px 5px #d1cafa;">
+        </div> -->
+<div class="user-container" fxLayout="row" fxLayoutGap="5px">
+    <!-- <div class="card-body" fxFlex="30"> -->
+
+    <!-- <mat-tab-group >
+                <mat-tab label="User Details"> -->
+    <!-- <ng-template ngbTabTitle><span class="tab-title">User Details</span></ng-template> -->
+    <!-- <ng-template ngbTabContent> -->
+    <!-- <mat-card> -->
+    <div class="card" fxFlex="30">
+        <div class="panel-side" style="background: #fcfcfc; box-shadow: 0 1px 5px #d1cafa;">
+            <button class="btn-default pull-right" mat-raised-button routerLink="/user-profile/list-users"><i
+                    class="fa fa-arrow-left"></i>Back</button>
+            <!-- <img class="m-3" style="margin-left: 40% !important; height: 50px !important;" src="/assets/images/default-avatar.jpg"
+        alt="User icon"> -->
+            <img class="m-3" style="margin-left: 35% !important; text-align: center; height: 80px !important;"
+                src="/assets/images/default-avatar.jpg" alt="User icon">
+            <div class="panel-body" style="text-align: center !important;" *ngIf="itemUser">
+                <h6><b></b></h6>
+                <i class="fa fa-envelope"></i> {{itemUser.Email}}
+
+            </div>
+            <div class="card card1">
+                <table class="table table-striped">
+                    <tr>
+                        <td><span class="x badge-default"><small>Firstname:</small></span></td>
+                        <td *ngIf="itemUser"><small>{{itemUser.FirstName}}</small></td>
+                    </tr>
+                    <tr>
+                        <td><span class="x badge-default"><small>Last Name:</small></span></td>
+                        <td *ngIf="itemUser"><small>{{itemUser.LastName}}</small></td>
+                    </tr>
+                    <tr>
+                        <td><span class="x badge-default"><small>Middle name:</small></span></td>
+                        <td *ngIf="itemUser"><small>{{itemUser.MiddleName}}</small></td>
+                    </tr>
+                    <tr>
+                        <td><span class="x badge-default"><small>Employment Number:</small></span></td>
+                        <td *ngIf="itemUser"><small>{{itemUser.EmploymentNumber}}</small></td>
+                    </tr>
+                    <tr>
+                        <td> <span class=" badge-default"><small>Status:</small></span></td>
+                        <td *ngIf="itemUser"><small>
+                                <app-label-active [value]="itemUser.Active"></app-label-active>
+                            </small></td>
+                    </tr>
+                    <!-- blocked status -->
+                    <tr>
+                        <td><span class="x badge-default"><small>Block Status: </small></span></td>
+                        <td *ngIf="itemUser">
+                            <small *ngIf="itemUser.Locked == true" class="badge badge-warning">Blocked</small>
+                            <small *ngIf="itemUser.Locked == false" class="badge badge-success">Unblocked</small>
+                        </td>
+                    </tr>
+                    <!-- end of blocked status -->
+
+                    <!-- <tr>
+                                                <td><span class="x badge-default"><small>Date Created</small></span>
+                                                </td>
+                                                <td><small>3/09/2021</small></td>
+                                            </tr> -->
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-action btn-sm "
+                                (click)="blockUser()">Block</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm " (click)="openDialog(itemUser)">Reset
+                                Password</button>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+            <!-- <div class="class-btm" style="padding: 4px 4px;">
+                                        <div class="row">
+                                            <div class="col-md-6" >
+                                                <button (click)="unblockUser(userData)" 
+                                                    class='btn btn-success unblock btn-block'><i class="fa fa-check"></i>
+                                                    Unblock</button>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <button (click)="unSuspendUser(userData)"
+                                                    class='btn btn-primary unblock btn-block'><i class="fa fa-check"></i>
+                                                    Unsuspend</button>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <button (click)="suspendUser(userData)"
+                                                    class='btn-warning btn-sm pull-left'><i
+                                                        class="fa fa-balance-scale"></i> Suspend</button>
+                                            </div>
+                                            <div class="col-md-6" >
+                                                <button (click)="blockUser(userData)"
+                                                    class="btn btn-danger block btn-sm pull-right"><i class="fa fa-ban"></i>
+                                                    Block</button>
+                                            </div>
+                                        </div>
+                                    </div> -->
+            <hr>
+        </div>
+    </div>
+    <!-- </mat-card> -->
+    <!-- </ng-template> -->
+    <!-- </mat-tab> -->
+    <!-- <mat-tab label="Audit Trails"> -->
+    <!-- <span class="template-tab-title">
+                        <ng-template ngbTabTitle><span class="tab-title"> Audit Trails</span></ng-template>
+                    </span> -->
+    <!-- <ng-template ngbTabContent> -->
+    <div fxFlex="70" class="card tables">
+        <app-audit-trail-list></app-audit-trail-list>
+    </div>
+    <!-- </ng-template> -->
+    <!-- </mat-tab> -->
+    <!-- </mat-tab-group> -->
+    <!-- </div> -->
+</div>
+<!-- </div> -->
+
+<!-- *ngIf="userData.status === '2'" -->
+<!-- *ngIf="userData.status === '3'" -->
+<!-- *ngIf="userData.status === '1'" -->
+<!-- *ngIf="userData.status === '1'" -->
+
+
+
+
+
+
+<!-- <li *ngIf="userData.status === '2'"><span
+                                                                class="badge badge-warning">Suspended</span></li>
+                                                        <li *ngIf="userData.status === '1'"><span
+                                                                class="badge badge-success">Active</span></li>
+                                                        <li *ngIf="userData.status === '0'"><span
+                                                                class="badge badge-secondary">Inactive</span>
+                                                        </li> -->

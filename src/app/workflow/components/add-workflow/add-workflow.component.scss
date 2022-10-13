@@ -1,0 +1,10 @@
+.atma-danger {
+    background-color: #d51317;
+    color: white;
+}
+nz-option[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -100%;
+    left: 0;
+}

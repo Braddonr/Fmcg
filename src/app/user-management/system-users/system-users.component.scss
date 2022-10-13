@@ -1,0 +1,36 @@
+// @import "../../shared/components/page-size/page-size.component.scss";
+// table, mat-paginator {
+//   width: 97%;
+// }
+:host ::ng-deep .ant-card-body
+  { 
+    padding: 20px 2px !important;
+  }
+
+.total{
+  padding: 2px 2px 0 0;
+  font-weight: bold;
+  font-size: 1.3em !important;
+}
+
+.mat-form-field {
+  margin-top: auto;
+  font-size: 14px;
+  width: 100%;
+  height: 40px;
+}
+
+ .bar{
+   margin-left: 0% !important;
+    width: 97%;
+     background-color: #ffffff;
+     padding-top: 20px;
+     box-shadow: 0 1px 5px #d3d3d3;
+     height: 80px;
+ 
+}
+.btn-info{
+  background: #26cad3 !important;
+  color: #ffffff;
+}
+

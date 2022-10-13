@@ -1,0 +1,63 @@
+<div class="portal-todo-wrapper">
+    <div fxLayout="row" fxFlexFill fxLayoutAlign="center start" fxLayoutGap="16px">
+  
+      <mat-card class="portal-todo mat-elevation-z8">
+        <div class="portal-todo__header portal-todo__header-demo">
+          <h2 i18n>Missing Roles</h2>
+          <div class="portal-todo__header-demo-mountain"></div>
+          <div class="portal-todo__header-demo-mountain"></div>
+          <div class="portal-todo__header-demo-cloud"></div>
+          <div class="portal-todo__header-demo-sun"></div>
+        </div>
+        <mat-card-content>
+          <mat-selection-list #todos  [ngModel]="selectedOptionsToBeAdded" (ngModelChange)="onSelectedOptionsChangeA($event)" fxFlex="100" class="portal-todo__list">
+            <mat-list-option *ngFor="let todo of unAssignedRoles" [value]="todo.RoleId">
+              <span *ngIf="!todo.completed; else nowrap">{{  todo.RoleName  }}</span>
+              <ng-template #nowrap><del>{{  todo.RoleName  }}</del></ng-template>
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-card-content>
+      </mat-card>
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px" style="padding-top: 10%;">
+          <button [disabled]='addDisabled' mat-raised-button color="primary" (click)="add()" >Add&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></button>
+          <button [disabled]='removeDisabled'mat-raised-button color="accent" (click)="removeMultipleRoles()"><i class="fa fa-angle-double-left"></i>&nbsp;Remove</button>
+          <button [disabled]='approveDisabled'mat-raised-button color="warn" (click)="approveMultipleRoles()"><i class="fa fa-check"></i>&nbsp;Approve Role(s)</button>
+      </div>
+      <mat-card class="portal-todo mat-elevation-z8">
+          <div class="portal-todo__header portal-todo__header-demo">
+              <h2 i18n>Assigned Roles</h2>
+              <div class="portal-todo__header-demo-mountain"></div>
+              <div class="portal-todo__header-demo-mountain"></div>
+              <div class="portal-todo__header-demo-cloud"></div>
+              <div class="portal-todo__header-demo-sun"></div>
+            </div>
+           <mat-card-content>
+             <mat-selection-list #todos2  [ngModel]="selectedOptionsToBeRemoved" (ngModelChange)="onSelectedOptionsChangeR($event)" fxFlex="100" class="portal-todo__list">
+               <mat-list-option *ngFor="let todo of assignedRoles" [value]="todo.RoleID">
+                 <span *ngIf="todo.IsActive; else nowrap">{{  todo.Role.RoleName  }}</span>
+                 <ng-template #nowrap  ><del>{{  todo.Role.RoleName  }}</del>
+                <!--  <a (click)= "approve(todo.id)"><i class="fa fa-check"> Approve role</i></a> -->
+                </ng-template>
+               </mat-list-option>
+              
+             </mat-selection-list>
+           </mat-card-content>
+         </mat-card>
+     <!-- <div fxLayout="column" fxLayoutAlign="space-between center" fxLayoutGap="16px" class="portal-todo__actions">
+        <div fxLayoutAlign="space-between center" fxLayout="row" fxFlex="100" fxLayoutGap="16px">
+          <button mat-button (click)="todos.selectAll()" i18n>Select all</button>
+          <button mat-button (click)="todos.deselectAll()" i18n>Deselect all</button>
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Add a task" [(ngModel)]="newTodo">
+          </mat-form-field>
+          <a mat-mini-fab (click)="addTodo()"><mat-icon>add</mat-icon></a>
+        </div>
+        <div fxLayoutAlign="space-between center" fxLayout="row" fxFlex="100" fxLayoutGap="16px" *ngIf="selectedOptions.length">
+          <button mat-button (click)="deleteSelectedTodos()" i18n *ngIf="selectedOptions.length">Delete Selected</button>
+          <button mat-button (click)="uncompleteSelectedTodos()" i18n *ngIf="selectedOptions.length">Uncomplete Selected</button>
+          <button mat-button (click)="completeSelectedTodos()" i18n *ngIf="selectedOptions.length">Complete Selected</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  

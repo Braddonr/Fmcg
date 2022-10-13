@@ -1,0 +1,43 @@
+<nz-card [nzBordered]="false" nzTitle="{{cardTitle}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+    <form nz-form [formGroup]="form">
+        <p *ngIf="errorMessage" class="text-danger">{{errorMessage}}</p>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="workflowName">Workflow Name</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+              <input nz-input formControlName="workflowName" id="workflowName" />
+            </nz-form-control>
+        </nz-form-item><
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="role">Role</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="role" nzPlaceHolder="Role" nzShowSearch>
+                    <nz-option *ngFor="let role of systemRoles" nzLabel="{{role.name}}" nzValue="{{role.id}}">{{role.name}}</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description">Remarks</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+              <textarea rows="3" nz-input formControlName="description" id="description"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="status">Active Status</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="status">
+                    <nz-option nzLabel="Active" nzValue=true>Active</nz-option>
+                    <nz-option nzLabel="Disabled" nzValue=false>Disabled</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>
+<ng-template #extraTemplate>
+    <button mat-mini-fab  class="atma-danger" aria-label="close dialog" title="close dialog" (click)="close()"><mat-icon>close</mat-icon></button>
+</ng-template>
+<ng-template #actionAdd>
+    <button *ngIf="editBool == false; else editMode" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="submitData()">Create Workflow</button>
+    <ng-template #editMode>
+        <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="editDetails()">Edit Workflow</button>
+    </ng-template>
+</ng-template>

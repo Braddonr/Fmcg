@@ -1,0 +1,54 @@
+<div class="panel-side" style="background: #fcfcfc; box-shadow: 0 1px 5px #d1cafa;">
+    <button class="btn-default pull-right" mat-raised-button routerLink="/user-profile/profile/list-profiles"><i class="fa fa-arrow-left"></i>Back</button>
+    <img class="m-3" style="margin-left: 40% !important; height: 50px !important;" src="/assets/images/default-avatar.jpg"
+        alt="User icon">
+
+    <div class="panel-body" style="text-align: center;">
+        <h6><b>Profile Details</b></h6>
+        <!-- <i class="fa fa-building"></i> wensjuma@gmail.com -->
+    </div>
+    <!-- <div class="card card-details"> -->
+    <table *ngIf="profile" class="table table-striped">
+
+        <tr>
+            <td><span class="x badge-default"><small>Profile Name</small></span></td>
+            <td><small>{{profile.ProfileName}}</small></td>
+            <!-- <td><small>Dedan Njoroge</small></td> -->
+        </tr>
+        <!-- <tr>
+            <td><span class="x badge-default"><small>Date created</small></span></td>
+            <td><small>
+                   
+                </small></td>
+        </tr> -->
+        <tr>
+            <td><span class="x badge-default"><small>Profile Status</small></span></td>
+            <td><small>
+                    <span *ngIf="profile.IsVisible === true"><span class="badge badge-success">Active</span></span>
+                    <span *ngIf="profile.IsVisible === false"><span class="badge badge-warning">Inactive</span></span>
+
+
+                    <!-- <span><span class="badge badge-success">Active</span></span>
+                    <span><span class="badge badge-warning">Inactive</span></span> -->
+                </small></td>
+        </tr>
+        <!-- <tr>
+            <td><span class="x badge-default"><small>No. of Users</small></span></td>
+            <td><small>245</small></td>
+        </tr> -->
+
+        <tr>
+            <td><span class="x badge-default"><small>Description</small></span></td>
+            <td><small>
+                    {{profile.Remarks}}
+                    <!-- profile description -->
+                </small></td>
+        </tr>
+        <!-- <tr>
+              <td><span class="x badge-default"><small>Balance</small></span></td>
+              <td><small>KES.85,000</small></td>
+          </tr> -->
+    </table>
+    <!-- <button (click)="generateTellerStatement()" mat-button class="btn-success btn-block"><i class="fa fa-print"></i> Teller Statements</button> -->
+    <!-- </div> -->
+</div>

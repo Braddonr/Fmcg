@@ -1,0 +1,40 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="regionName">Region Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="regionName" id="regionName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="regionCode">Region Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="regionCode" id="regionCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="regionDescription">Region Description</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="regionDescription" id="regionDescription" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="remarks" id="remarks" />
+                </nz-form-control>
+            </nz-form-item>
+        </form> 
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editRegion()">Update Region</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewRegion()">Create Region</button>
+        </ng-template>
+    </ng-template>
+</div>
+

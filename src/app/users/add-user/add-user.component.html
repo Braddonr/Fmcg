@@ -1,0 +1,106 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstName">First Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="This field is required">
+                  <input nz-input formControlName="firstName" id="firstName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstName">Middle Name</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="This field is required">
+                <input nz-input formControlName="middleName" id="middleName" />
+              </nz-form-control>
+          </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lastName">Last Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="This field is required">
+                  <input nz-input formControlName="lastName" id="lastName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="userName">Username</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="This field is required">
+                  <input nz-input formControlName="userName" id="userName" autocomplete="false" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="The input is not valid E-mail!">
+                  <input type="email" nz-input formControlName="email" id="email" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="mobileNumber" nzRequired>Phone Number</nz-form-label>
+                <nz-form-control
+                  [nzSm]="14"
+                  [nzXs]="24"
+                  nzHasFeedback nzValidatingTip="Validating..."
+                  nzErrorTip="This field is required"
+                >
+                  <!-- <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+                    <ng-template #addOnBeforeTemplate>
+                      <nz-select formControlName="phoneNumberPrefix" class="phone-select" placeholder="+255">
+                        <nz-option nzLabel="+260" nzValue="+260"></nz-option>
+                        <nz-option nzLabel="+254" nzValue="+254"></nz-option>
+                      </nz-select>
+                    </ng-template> -->
+                    <input formControlName="mobileNumber" id="mobileNumber" type="tel" nz-input maxlength="10" />
+                  <!-- </nz-input-group> -->
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="regionCode" nzRequired>Region Code</nz-form-label>
+              <nz-form-control
+                [nzSm]="14"
+                [nzXs]="24"
+                nzHasFeedback nzValidatingTip="Validating..."
+                nzErrorTip="This field is required"
+              >
+               <input formControlName="regionCode" id="regionCode" type="text" nz-input maxlength="10" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="territoryCode" nzRequired>Territory Code</nz-form-label>
+              <nz-form-control
+                [nzSm]="14"
+                [nzXs]="24"
+                nzHasFeedback nzValidatingTip="Validating..."
+                nzErrorTip="This field is required"
+              >
+               <input formControlName="territoryCode" id="territoryCode" type="text" nz-input maxlength="10" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="profileId" nzRequired>Profile ID</nz-form-label>
+              <nz-form-control
+                [nzSm]="14"
+                [nzXs]="24"
+                nzHasFeedback nzValidatingTip="Validating..."
+                nzErrorTip="This field is required"
+              >
+                  <input formControlName="profileId" id="profileId" type="tel" nz-input maxlength="10" />
+              </nz-form-control>
+          </nz-form-item>
+            <!-- <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                  <textarea rows="3" nz-input formControlName="remarks" id="remarks"></textarea>
+                </nz-form-control>
+            </nz-form-item> -->
+            <div *ngIf="errorMessage">
+              <p class="text-danger">{{errorMessage}}</p>
+          </div>
+          <ng-template #actionAdd>
+            <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editUser()">Update User</button>
+            <ng-template #create>
+                <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addThisUser()">Create User</button>
+            </ng-template>
+        </ng-template>
+        </form>
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+</div>

@@ -1,0 +1,252 @@
+.thead-bold {
+  font-weight: bold;
+}
+.btnRow {
+  margin-bottom: 10px;
+}
+
+.atma-ssucess [nz-button] {
+  background-color: gray;
+}
+.crop-square {
+  vertical-align: middle;
+  opacity: .2;
+}
+mat-icon {
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+// button {
+//     background: #337ab7;
+//     color: white;
+    
+//   }
+  .mat-form {
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    height: 3.3rem;
+    width: 100%;
+  }
+  
+  .form-field {
+    width: 80%;
+    height: 3.2rem;
+  }
+  .btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  float: right;
+  
+  }
+  .btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  }
+  .title-table[_ngcontent-c48] {
+      color: #007cba;
+  }
+  .column {
+      float: left;
+      width: 25%;
+    }
+  
+    .columnn {
+      float: left;
+      width: 50%;
+    }
+  
+    /* Page title */
+  /* ---------------------------------------------------------- */
+  .title-holder {
+    border-bottom: 2px solid #f2f2f2;
+    margin-bottom: 10px;
+  }
+  .table-holder {
+    background-color: white;
+    padding: 15px;
+    padding-top: 5px;
+    border-radius: 5px;
+    margin-left: 45px;
+    margin-right: 45px;
+  }
+  .list-title {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    margin: 5px;
+  }
+  /* ---------------------------------------------------------- */
+  
+  
+  /* Table styles */
+  /* ---------------------------------------------------------- */
+  .mat-table {
+    width: 100%;
+  }
+  
+  .float-right {
+    float: right;
+  }
+  /* ---------------------------------------------------------- */
+  
+  /* Header styles */
+  /* ---------------------------------------------------------- */
+  .mat-header-cell {
+    background-color: #fafafa;
+    color: #000000d9;
+    font-weight: 500;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .mat-header-cell:not(:first-child) {
+    padding-left: 10px;
+  }
+  
+  /* Style just the text in the header */
+  .mat-header-cell span {
+    font-weight: 600;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+  }
+  /* Round the top table corners */
+  .mat-header-cell:first-child {
+    border-top-left-radius: 5px;
+  }
+  .mat-header-cell:last-child {
+    border-top-right-radius: 5px;
+  }
+  
+  .mat-header-row {
+    height: 3em;
+  }
+  
+  .btn-icon {
+    height: 17px;
+    width: 17px;
+    background-color: #393939;
+    border: none;
+  }
+  
+  .sort-icon {
+    height: 17px;
+    width: 17px;
+    color: white;
+  }
+  
+  ::ng-deep .mat-sort-header-arrow {
+    position: relative;
+    left: -1.5rem;
+    display: none!important;
+    opacity: 0;
+  }
+  
+  .header {
+    padding: 5px;
+  }
+  
+  .mat-header-cell {
+    /* color: red!important; */
+    /* display: flex; */
+    /* align-content: center; */
+  }
+  /* ---------------------------------------------------------- */
+  
+  
+  /* Column styles */
+  /* ---------------------------------------------------------- */
+  .position-column {
+    width: 2%;
+    padding-right: 1rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .name-column {
+    width: 25%;
+    padding-right: 0rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .price-column {
+    width: 10%;
+    padding-right: 0rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .currency-column {
+    width: 10%;
+    padding-right: 0rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .description-column {
+    width: 20%;
+    padding-right: 0rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .createdby-column {
+    width: 15%;
+    padding-right: 0rem;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .id-column {
+    text-align: center;
+    width: 5%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .action-column {
+    text-align: center;
+    width: 5%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  
+  /* ---------------------------------------------------------- */
+  
+  /* Row styles */
+  /* ---------------------------------------------------------- */
+  .mat-row:nth-child(2n) {
+    background-color: #f2f2f2;
+  }
+  /* ---------------------------------------------------------- */
+  
+  /* Cell styles */
+  /* ---------------------------------------------------------- */
+  .state-cell {
+    text-align: right;
+  }
+  .mat-cell {
+    border: none;
+  }
+
+  td.mat-cell {
+    /* row padding */
+    padding: 16px 0;
+    /* row border */
+    border-bottom: 1px solid #f0f0f0;
+    border-top: 1px solid #f0f0f0;
+   }
+  td.mat-cell {
+    padding-left: 5px;
+    /* row border */
+    border-left: 1px solid #f0f0f0;
+  }
+  td.mat-cell:last-child {
+    /* row border */
+    border-right: 1px solid #f0f0f0;
+  }
+  
+  .green-svg {
+    fill: #6dd400;
+  }
+  .gray-svg {
+    fill: #b2b4b6;
+  }
+  /* ---------------------------------------------------------- */
+   

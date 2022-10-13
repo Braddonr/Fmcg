@@ -1,0 +1,202 @@
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+<!--  -->
+
+
+<div class="container">
+  <nz-card class="card"> 
+    <!-- <mat-card style="width: auto; height: fit-content; margin-top: 20px;  margin-left: -80px;"> -->        
+            <!-- Search Filter -->
+      <div class="row filter-row" style="margin-bottom: 20px;">
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+          <div class="form-group form-focus">
+            <form class="mat-form">
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label><i class="fa fa-arrowdown">&nbsp;Show/Hide Columns</i></mat-label>
+                <mat-select [formGroup]="columns" multiple>
+                  <!-- <mat-option (click)="show_hide_details()" *ngFor="let cd of columnDefinitions;">{{cd.label}}</mat-option> -->
+                  <!-- <mat-option value="id" (click)="show_hide_ID()">ID</mat-option>
+                  <mat-option value="outletName" (click)="show_hide_outletname()">Outlet Name</mat-option>
+                  <mat-option  value="outletCode" (click)="show_hide_code()">Outlet Code</mat-option>
+                  <mat-option value="latitude" (click)="show_hide_latitude()">Latitude</mat-option>
+                  <mat-option value="longitude" (click)="show_hide_longitude()">Longitude</mat-option>
+                  <mat-option value="remarks" (click)="show_hide_remarks()">Remarks</mat-option> -->
+                  
+                  <mat-option (click)="show_hide_ID()">ID</mat-option>
+                  <div class="checkbox">
+                  <p><mat-checkbox formControlName="outletName" (click)="show_hide_outletname()">Outlet Name</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="outletCode" (click)="show_hide_code()">Outlet Code</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="creditName"(click)="show_hide_creditname()">Credit Name</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="creditName"(click)="show_hide_type()">Type</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="creditName"(click)="show_hide_outletroute()">Outlet Route</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="location"(click)="show_hide_location()">Location</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="contactName"(click)="show_hide_contactname()">Contact Name</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="contactPhone"(click)="show_hide_contactphone()">Contact Phone</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="latitude" (click)="show_hide_latitude()">Latitude</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="longitude" (click)="show_hide_longitude()">Longitude</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="createdBy"(click)="show_hide_createdby()">Created By</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="createdOn"(click)="show_hide_createdon()">Created On</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="remarks" (click)="show_hide_remarks()">Remarks</mat-checkbox></p>
+                  <p><mat-checkbox formControlName="actions"(click)="show_hide_actions()">Actions</mat-checkbox></p>
+                </div>
+                  <!-- <mat-section class="example-section" [formGroup]="columns">
+                    <p><mat-checkbox formControlName="pepperoni">ID</mat-checkbox></p>
+                    <p><mat-checkbox formControlName="extracheese">Outlet Name</mat-checkbox></p>
+                    <p><mat-checkbox formControlName="mushroom">Outlet Code</mat-checkbox></p>
+                  </mat-section> -->
+                 
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+          <div class="form-group form-focus">
+            <form class="mat-form">
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label><i class="fa fa-search">&nbsp;Quick Search</i></mat-label>
+                <input matInput type="text" search (keyup)="applyFilter($event)" #input>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+<!--          <a  class="btn btn-success w-100"> Search </a>-->
+      </div>
+        <div class="col-sm-6 col-md-3 col-lg-4 col-xl-3 col-12">
+            <div class="offset-md-6">
+              <!-- Button trigger modal -->
+              <button (click)="triggerModal('')" type="button" class="btn btn-primary">
+                <i class="fa fa-plus"></i> Add Outlet
+              </button>
+            </div>
+        </div>
+      </div>
+      <!-- /Search Filter -->
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <h3 _ngcontent-c48="" class="title-table"><b _ngcontent-c48="">
+                    <mat-icon _ngcontent-c48="" class="mat-icon fa fa-users" role="img" aria-hidden="true" style="padding-right: 1.5em;"></mat-icon>&nbsp;Outlets</b>
+                </h3>
+                <div class="mr-1">
+                  <button nz-button nzType="primary" [matMenuTriggerFor]="menu" ><mat-icon> import_export</mat-icon>&nbsp;Export Data</button>
+                  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                      <button mat-menu-item (click)=exportOutletsPDF() title="Export Outlets_List to PDF" aria-describedby="Export Outlets_List to pdf">
+                          <mat-icon>picture_as_pdf</mat-icon>
+                          PDF
+                      </button>
+                      <button mat-menu-item  (click)="exporter.exportTable('xlsx', {fileName:'Outlets_List', sheet: 'Outlets_List', Props: {Author: 'Eclectics Internation'}})"
+                        title="Export Outlets_List to PDF" aria-describedby="Export Outlets_List to Excel"><mat-icon>file_copy</mat-icon>
+                        Excel
+                      </button>
+                      <button mat-menu-item (click)="exporter.exportTable('csv', {fileName:'Outlets_List', sheet: 'Outlets_List', Props: {Author: 'Eclectics Internation'}})" 
+                          title="Export Outlets_List to Csv" aria-describedby="Export Outlets_List to Excel"><mat-icon>file_copy</mat-icon>
+                        CSV
+                      </button>
+                  </mat-menu>
+                </div>
+            </div>
+            
+            <div class="table">
+            <nz-table
+            #fixedTable
+            nzShowSizeChanger
+            [nzData]="listOfData"
+            [nzFrontPagination]="false"
+            [nzLoading]="loading"
+            [nzTotal]="total"
+            [nzPageSize]="perPage"
+            [nzPageIndex]="page" 
+            (nzQueryParams)="onQueryParamsChange($event)"
+            [nzScroll]="{ x: '1150px', y: '510px' }"
+            >
+            <thead class="table">
+              <tr class="table">
+                <th nzWidth="50px" nzLeft nzColumnKey="Position">#</th>
+                <th nzColumnKey="ID" [ngStyle]="{display: showHideID === false?  'table-cell' : 'none'}">ID</th>
+                <th nzColumnKey="outletName"[ngStyle]="{display: showHideOutletName === false?  'table-cell' : 'none'}" >Outlet Name</th>
+                <th nzRight nzColumnKey="outletCode"[ngStyle]="{display: showHideCode === false?  'table-cell' : 'none'}">Outlet Code</th>
+                <th nzColumnKey="cdName" [ngStyle]="{display: showHideCreditName === false?  'table-cell' : 'none'}">Credit Name</th>
+                <th nzColumnKey="outletType" [ngStyle]="{display: showHideType === false?  'table-cell' : 'none'}">Type</th>
+                <th nzColumnKey="outletRoute" [ngStyle]="{display: showHideOutletRoute === false?  'table-cell' : 'none'}" >Outlet Route</th>
+                <th nzColumnKey="location" [ngStyle]="{display: showHideLocation === false?  'table-cell' : 'none'}">Location</th>
+                <th nzColumnKey="contactName" [ngStyle]="{display: showHideContactName === false?  'table-cell' : 'none'}">Contact Name</th>
+                <th nzColumnKey="contactMobileNumber" [ngStyle]="{display: showHideContactPhone === false?  'table-cell' : 'none'}">Contact Phone</th>
+                <th nzColumnKey="latitude"  [ngStyle]="{display: showHideLatitude === false?  'table-cell' : 'none'}">Latitude</th>
+                <th nzColumnKey="longitude" [ngStyle]="{display: showHideLongitude === false?  'table-cell' : 'none'}">Longitude</th>
+                <th nzColumnKey="cdCode" [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}">Credit Code</th>
+                <th nzColumnKey="createdBy" [ngStyle]="{display: showHideCreatedBy === false?  'table-cell' : 'none'}">Created By</th>
+                <th nzColumnKey="createdOn" [ngStyle]="{display: showHideCreatedOn === false?  'table-cell' : 'none'}">Created On</th>
+                <th nzColumnKey="remarks" [ngStyle]="{display: showHideRemarks === false?  'table-cell' : 'none'}" >Remarks</th>
+                <th NzRight nzColumnKey="actions"[ngStyle]="{display: showHideActions === false?  'table-cell' : 'none'}">Actions</th>
+
+              </tr>
+            </thead>
+            <tbody class="table">
+              <tr *ngFor="let data of listOfData">
+                <td nzLeft>{{ data.ID}}</td>
+                <td [ngStyle]="{display: showHideID === false?  'table-cell' : 'none'}">{{ data.id}}</td>
+                <td [ngStyle]="{display: showHideOutletName === false?  'table-cell' : 'none'}">{{ data.outletName }}</td>
+                <td [ngStyle]="{display: showHideCode === false?  'table-cell' : 'none'}">{{ data.outletCode }}</td>
+                <td nzRight [ngStyle]="{display: showHideCreditName === false?  'table-cell' : 'none'}">{{ data.cdName }}</td>
+                <td [ngStyle]="{display: showHideType === false?  'table-cell' : 'none'}">{{ data.outletType }}</td>
+                <td [ngStyle]="{display: showHideOutletRoute === false?  'table-cell' : 'none'}">{{ data.outletRoute }}</td>
+                <td [ngStyle]="{display: showHideLocation === false?  'table-cell' : 'none'}">{{ data.location }}</td>
+                <td [ngStyle]="{display: showHideContactName === false?  'table-cell' : 'none'}">{{ data.contactName }}</td>
+                <td [ngStyle]="{display: showHideContactPhone === false?  'table-cell' : 'none'}">{{ data.contactMobileNumber }}</td>
+                <td [ngStyle]="{display: showHideLatitude === false?  'table-cell' : 'none'}">{{ data.latitude }}</td>
+                <td [ngStyle]="{display: showHideLongitude === false?  'table-cell' : 'none'}">{{ data.longitude }}</td>
+                <td [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}">{{ data.cdCode }}</td>
+                <td [ngStyle]="{display: showHideCreatedBy === false?  'table-cell' : 'none'}">{{ data.createdBy }}</td>
+                <td [ngStyle]="{display: showHideCreatedOn === false?  'table-cell' : 'none'}">{{ data.createdOn | date : 'short'}}</td>
+                <td [ngStyle]="{display: showHideRemarks === false?  'table-cell' : 'none'}">{{ data.remarks }}</td>
+                <td nzRight [ngStyle]="{display: showHideActions === false?  'table-cell' : 'none'}">
+                  <div>
+                    <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="small"   
+                    nzType="primary" nzGhost>
+                    <i class="fa fa-cog mr-1"></i> Actions
+                  </button>
+                  <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                      <li nz-menu-item>
+                        <span (click)="view(data)" title="View User Details" aria-describedby="View User Details">
+                          <mat-icon>remove_red_eye</mat-icon>View
+                      </span>
+                      </li>
+                      <li nz-menu-item>
+                        <span (click)="edit(data)" title="Edit User" aria-describedby="Edit User">
+                          <mat-icon>edit</mat-icon>Edit
+                      </span>
+                      </li>
+                      <li nz-menu-item>
+                        <span (click)="delete(data)" title="Delete User" aria-describedby="Delete User" style="color: red;">
+                          <mat-icon>delete</mat-icon>Delete
+                      </span>
+                      </li>
+                      </ul>
+                      </nz-dropdown-menu>
+                    </div>
+                </td>
+                
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+
+
+            
+            <!-- Row show when no data found -->
+            <tr class="mat-row" *ngIf="!dataSource" >
+              <td class="mat-cell" style="width: 70rem; text-align: center;font-size: 20px;"><mat-icon style="color: #c7c7c7"> table_chart</mat-icon><br>
+                No Data Available
+              </td>
+            </tr>
+            <!-- <mat-paginator
+                style="font-size: 15px;font-family: 'Nunito', sans-serif;"
+                [pageSizeOptions]="[5,10, 25, 50, 100]" showFirstLastButtons>
+            </mat-paginator> -->
+        
+    <!-- </mat-card> -->
+  </nz-card>
+</div>
+
+

@@ -1,0 +1,24 @@
+<div fxLayout="row" fxLayoutGap="20px"  class="profile-details" >
+  <div fxFlex="30">
+    <app-profile-details></app-profile-details>
+  </div>
+  <div fxFlex="70">
+    <div class="card">
+      <div class="card-body">
+        <mat-tab-group mat-stretch-tabs>
+          <mat-tab label="Users in Profile" class="template-tab-title">
+            <mat-card>
+                <app-users-in-profile></app-users-in-profile>
+              </mat-card>
+          </mat-tab>
+          <mat-tab label="Manage Roles"  >
+              <mat-card  >
+                <!-- <app-assign-roles-to-profile></app-assign-roles-to-profile> -->
+                <app-roles-in-profile></app-roles-in-profile>
+              </mat-card>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

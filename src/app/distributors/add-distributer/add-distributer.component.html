@@ -1,0 +1,102 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdCode">Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdCode" id="cdCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdName">Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdName" id="cdName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdEmail">Email</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdEmail" id="cdEmail" />
+                </nz-form-control>
+            </nz-form-item>
+            <!-- <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="postalAddress">Postal Address</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="postalAddress" id="postalAddress" />
+                </nz-form-control>
+            </nz-form-item> -->
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdContactFullName">Contact Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdContactFullName" id="cdContactFullName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdContactMobileNumber">Contact Mobile Number</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdContactMobileNumber" id="cdContactMobileNumber" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="regionCode">Regional Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="regionCode" id="regionCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="territoryCode">Territory Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <nz-select *ngIf="!editData" nzShowSearch nzAllowClear nzPlaceHolder="Territory Code" formControlName="territoryCode" id="territoryCode">
+                        <!-- <nz-option *ngFor="let option of routeNames"  nzCustomContent [nzLabel]="option" [nzValue]="option">{{option}}</nz-option> -->
+                        <nz-option nzLabel="TR-0000000158" nzValue="TR-0000000158"></nz-option>
+                        <nz-option nzLabel="TR-0000000104" nzValue="TR-0000000104"></nz-option>
+                        <nz-option nzLabel="TR-0000000159" nzValue="TR-0000000159"></nz-option>
+                        <nz-option nzLabel="TR-0000000160" nzValue="TR-0000000160"></nz-option>
+                        <nz-option nzLabel="TR-0000000162" nzValue="TR-0000000162"></nz-option>
+                        <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000165"></nz-option>
+
+                      </nz-select>
+
+                      <!-- <nz-select *ngIf="editData" nzShowSearch nzAllowClear nzPlaceHolder="Territory Code" formControlName="territoryCode" id="territoryCode"> -->
+                        <!-- <nz-option *ngFor="let option of routeNames"  nzCustomContent [nzLabel]="option" [nzValue]="option">{{option}}</nz-option> -->
+                        <!-- <nz-option [nzLabel]="loadedCode" [nzValue]="loadedCode"></nz-option> -->
+                        <!-- <nz-option nzLabel="TR-0000000104" nzValue="TR-0000000104"></nz-option>
+                        <nz-option nzLabel="TR-0000000158" nzValue="TR-0000000158"></nz-option>
+                      </nz-select> -->
+
+                      <mat-form-field *ngIf="editData" formControlName="territoryCode" id="territoryCode">
+                        <mat-select  [(value)]="loadedCode">
+                            <mat-option value="TR-0000000158">TR-0000000158</mat-option>
+                            <mat-option value="TR-0000000104">TR-0000000104</mat-option>
+                            <mat-option value="TR-0000000159">TR-0000000159</mat-option>
+                            <mat-option value="TR-0000000160">TR-0000000160</mat-option>
+                            <mat-option value="TR-0000000162">TR-0000000162</mat-option>
+                            <mat-option value="TR-0000000165">TR-0000000165</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                      <!-- <select *ngIf="editData" formControlName="territoryCode" id="territoryCode">
+                        <option label="TR-0000000158" value="TR-0000000158"[selected]= "loadedCode"></option>
+                        <option label="TR-0000000104" value="TR-0000000104"></option>
+                      </select> -->
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="remarks" id="remarks" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editDistributor()">Update Distributor</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewDistributor()">Create Distributor</button>
+        </ng-template>
+    </ng-template>
+</div>
+

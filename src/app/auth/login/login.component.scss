@@ -1,0 +1,53 @@
+.portal-login-container {
+    min-height: 100%;
+  }
+  
+  .portal-login-card {
+    padding: 0;
+    box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+    mat-card-title h1 {
+      margin-bottom: 0;
+    }
+    mat-card-content {
+      min-height: 400px;
+      width: 320px;
+      padding: 48px;
+      margin: 0;
+    }
+    .mat-form-field {
+      width: 100%;
+    }
+    box-shadow: 0px 14.5px 34px 0 rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  
+  .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+    background-color: #00A7E1;
+  }
+  .portal-login-card__logo[_ngcontent-c1] {
+    height: 160px;
+    
+  }
+  //Davy styles
+  .portal-accent-bg {
+    // churchill
+    //background-image: linear-gradient(18deg, #eb6b2c, #db1603);
+    // umhalth #
+    // background-image: linear-gradient(18deg, #e2a923, #e2a923);
+    background-image: linear-gradient(to right bottom, #0d98ba, #ffe342, #FF4500);
+  }
+  .my-dark-bg{
+    background-color: #e7cb29  ;
+    color: antiquewhite
+  }
+  .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #0d98ba;
+   // background-color: #db1603;
+    color: #ffffff;
+    box-shadow: 0px 14.5px 34px 0 rgba(0, 0, 0, 0.3);
+  }
+  .mat-input {
+    background-color: #ffffff;
+  }
+  

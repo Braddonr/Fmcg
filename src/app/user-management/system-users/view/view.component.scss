@@ -1,0 +1,38 @@
+ul li{
+
+    list-style-type: none;
+}
+li{
+    list-style-type: none;
+}
+
+span small{
+    font-weight: bold;
+}
+
+.btn-info {
+    margin-left: 20px !important;
+    background: #a32a29;
+    border-radius: 20px !important;
+}
+.user-container{
+    margin: 0px 15px;
+}
+.tables{
+    height: fit-content;
+}
+.tab-title{
+    font-weight: bold;
+    color: #a32a29;
+}
+.card1{
+//  padding: 10px !important;
+ padding-top: 3px;
+}
+.btn-warning, .btn-danger{
+width: 90px
+}
+.block{
+    //background: #f3c0c0 !important;
+    color: white;
+ }

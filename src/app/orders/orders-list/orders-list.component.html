@@ -1,0 +1,205 @@
+
+<!--  -->
+
+
+<div class="container">
+    <mat-card style="width: 100%;height: fit-content;margin-top: 20px;">
+        <mat-card-title></mat-card-title>
+        <mat-card-content>
+          
+            <!-- Search Filter -->
+      <div class="row filter-row" style="margin-bottom: 20px;">
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+          <div class="form-group form-focus">
+            <form class="mat-form">
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label><i class="fa fa-arrowdown">&nbsp;Show/Hide Columns</i></mat-label>
+                <mat-select [formGroup]="" multiple>
+                  <mat-option (click)="show_hide_details()" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option>
+                  <!-- <mat-option (change)="onChange($event, 'index')" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option> -->
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+          <div class="form-group form-focus">
+            <form class="mat-form">
+              <mat-form-field class="form-field" appearance="fill">
+                <mat-label><i class="fa fa-search">&nbsp;Quick Search</i></mat-label>
+                <input matInput type="text" search (keyup)="applyFilter($event)" #input>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+<!--          <a  class="btn btn-success w-100"> Search </a>-->
+        </div>
+        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
+            <div class="col-auto float-end ms-auto">
+              <!-- Button trigger modal -->
+              <button (click)="triggerModal('')" type="button" class="btn btn-primary" style="margin-left: 5.2rem;margin-bottom: 10px;">
+                <i class="fa fa-plus"></i> Add Order
+              </button>
+            </div>
+        </div>
+      </div>
+      <!-- /Search Filter -->
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <h3 _ngcontent-c48="" class="title-table"><b _ngcontent-c48="">
+                    <mat-icon _ngcontent-c48="" class="mat-icon fa fa-briefcase" role="img" aria-hidden="true" style="padding-right: 1.5em;"></mat-icon>&nbsp;Orders</b>
+                </h3>
+                <div style="margin-right: 20px">
+                  <button nz-button nzType="primary" [matMenuTriggerFor]="menu" ><mat-icon> import_export</mat-icon>&nbsp;Export Data</button>
+                  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                      <button mat-menu-item (click)=exportOderPDF() title="Export Order_List to PDF" aria-describedby="Export Order_List to pdf">
+                          <mat-icon>picture_as_pdf</mat-icon>
+                          PDF
+                      </button>
+                      <button mat-menu-item  (click)="exporter.exportTable('xlsx', {fileName:'Order_List', sheet: 'Order_List', Props: {Author: 'Eclectics Internation'}})"
+                        title="Export Order_List to PDF" aria-describedby="Export Order_List to Excel"><mat-icon>file_copy</mat-icon>
+                        Excel
+                      </button>
+                      <button mat-menu-item (click)="exporter.exportTable('csv', {fileName:'Order_List', sheet: 'Order_List', Props: {Author: 'Eclectics Internation'}})" 
+                          title="Export Order_List to Csv" aria-describedby="Export Order_List to Excel"><mat-icon>file_copy</mat-icon>
+                        CSV
+                      </button>
+                  </mat-menu>
+                </div>
+            </div>
+            <table mat-table matTableExporter  matSort [dataSource]="dataSource"
+            #exporter="matTableExporter">
+                <!-- Position Column -->
+                <ng-container matColumnDef="Position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> # </th>
+                    <td mat-cell *matCellDef="let element" style="padding-right: 10px"
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                      {{element.ID}}
+                    </td>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="ID">
+                  <th class="id-column" mat-header-cell *matHeaderCellDef mat-sort-header 
+                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> ID </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 10px;"
+                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                    {{element.id}}
+                  </td>
+                </ng-container>
+                <!-- CREDIT CODE Column -->
+                <ng-container matColumnDef="CREDIT_CODE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CREDIT CODE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.cdCode}}
+                    </td>
+                </ng-container>
+                <!-- CREDIT NAME Column -->
+                <ng-container matColumnDef="CREDIT_NAME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CREDIT NAME </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.cdName}}
+                    </td>
+                </ng-container>
+                <!-- PRODUCT CODE Column -->
+                <ng-container matColumnDef="PRODUCT_CODE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PRODUCT CODE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.productCode}}
+                    </td>
+                </ng-container>
+                <!-- DESCRIPTION Column -->
+                <ng-container matColumnDef="DESCRIPTION">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPTION </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.productDescription}}
+                    </td>
+                </ng-container>
+                <!-- ORDER REF Column -->
+                <ng-container matColumnDef="ORDER_REF">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ORDER REF </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.orderRef}}
+                    </td>
+                </ng-container>
+                <!-- ORDER QUANTITY Column -->
+                <ng-container matColumnDef="ORDER_QUANTITY">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ORDER QUANTITY </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.orderQuantity}}
+                    </td>
+                </ng-container>
+                <!-- ORDER VALUE Column -->
+                <ng-container matColumnDef="ORDER_VALUE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ORDER VALUE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.orderValue}}
+                    </td>
+                </ng-container>
+                <!-- PAY MODE Column -->
+                <ng-container matColumnDef="PAY_MODE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PAY MODE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.modeOfPayment}}
+                    </td>
+                </ng-container>
+                <!-- PAYMENT PROOF Column -->
+                <ng-container matColumnDef="PAYMENT_PROOF">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PAYMENT PROOF </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.proofOfPayment}}
+                    </td>
+                </ng-container>
+                <!-- STATUS Column -->
+                <ng-container matColumnDef="STATUS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> STATUS </th>
+                    <td mat-cell *matCellDef="let element"
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                      {{element.status}}
+                    </td>
+                </ng-container>
+                <!-- Actions Column -->
+                <ng-container matColumnDef="ACTIONS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACTIONS </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div>
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="small"   
+                        nzType="primary" nzGhost >
+                        <i class="fa fa-cog mr-1"></i> Actions
+                      </button>
+                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                          <button mat-menu-item (click)="view(element)">
+                            <mat-icon>visibility</mat-icon>
+                            view
+                          </button>
+                          <button mat-menu-item (click)="edit(element)">
+                            <mat-icon>create</mat-icon>
+                            edit
+                          </button>
+                          <button mat-menu-item (click)="delete(element)" style="color: red;">
+                            <mat-icon>delete</mat-icon>
+                            delete
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <!-- Row show when no data found -->
+            <tr class="mat-row" *ngIf="!dataSource" >
+              <td class="mat-cell" style="width: 70rem; text-align: center;font-size: 20px;"><mat-icon style="color: #c7c7c7"> table_chart</mat-icon><br>
+                No Data Available
+              </td>
+            </tr>
+            <mat-paginator
+                style="font-size: 15px;font-family: 'Nunito', sans-serif;"
+                [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
+

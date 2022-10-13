@@ -1,0 +1,128 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="outletName"> Outlet Name </nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="outletName" id="outletName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="outletCode"> Outlet Code  </nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="outletCode" id="outletCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="outletType"> Outlet Type</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="outletType" id="outletType"/>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="outletRoute">Outlet Route</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <nz-select *ngIf="!editData" nzShowSearch nzAllowClear nzPlaceHolder="Select Route" formControlName="outletRoute" id="outletRoute">
+                        <nz-option *ngFor="let option of routeNames" nzCustomContent nzLabel="option" nzValue="option">{{option}}</nz-option>
+                    </nz-select>
+                      <!-- <input class="input" *ngIf="editData" formControlName="outletRoute" id="outletRoute"> -->
+                      <!-- <nz-select *ngIf="editData" nzShowSearch nzAllowClear nzPlaceHolder={{outlet.outletRoute}} formControlName="outletRoute" id="outletRoute"> -->
+                      <!-- <nz-option *ngFor="let option of routeNames"  nzCustomContent [nzLabel]="option" [nzValue]="option">{{option}}</nz-option> -->
+                      <!-- <nz-option nzLabel="333" nzValue="333"></nz-option>
+                      <nz-option nzLabel="335" nzValue="335"></nz-option>
+                      <nz-option nzLabel="334" nzValue="334"></nz-option>
+                    </nz-select> -->
+                       
+                    <mat-form-field *ngIf="editData" formControlName="outletRoute" id="outletRoute">
+                        <mat-select [(value)]="loadedRoute" >
+                            <mat-option value="333">333</mat-option>
+                            <mat-option value="334">334</mat-option>
+                            <mat-option value="335">335</mat-option>
+                            <mat-option value="339">339</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="location">Location</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="location" id="location" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="latitude">Latitude</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="latitude" id="latitude" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="longitude">Longitude</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="longitude" id="longitude" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdName">Credit Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdName" id="cdName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdCode">Credit Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdCode" id="cdCode" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="!editData">
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdEmail">Email</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdEmail" id="cdEmail" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="!editData">
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdContactFullName">Office Contact Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdContactFullName" id="cdContactFullName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="!editData">
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdOfficePhoneNumber">Office Phone Number</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdOfficePhoneNumber" id="cdOfficePhoneNumber" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="contactName">Contact Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="contactName" id="contactName" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="contactMobileNumber">Contact Phone Number</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="contactMobileNumber" id="contactMobileNumber" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="remarks" id="remarks" />
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card> 
+    <ng-template #extraTemplate>
+       <button (click)="close()" class="close-button"> 
+       <i nz-icon nzType="close" nzTheme="outline"></i>
+       </button>
+        <!-- <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button> -->
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" (click)="editOutlet()">Update Outlet</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewOutlet()">Create Outlet</button>
+        </ng-template>
+    </ng-template>
+</div>
+

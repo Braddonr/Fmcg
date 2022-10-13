@@ -1,0 +1,57 @@
+<nz-card [nzBordered]="false" nzTitle="{{cardTitle}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+    <form nz-form [formGroup]="form">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="stepName">Step Name</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <input nz-input formControlName="stepName" id="stepName">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>l
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="stepNo">Step No</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <input type="number" nz-input formControlName="stepNo" id="stepNo">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="role">Role</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="role" nzShowSearch nzAllowClear nzPlaceHolder="{{this.roles}}">
+                    <nz-option *ngFor="let role of availableRoles" nzLabel="{{role.name}}" nzValue="{{role.id}}" title="{{role.remarks}}" nzPlaceHolder={{roles}}>{{role.name}}</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+              <textarea rows="3" nz-input formControlName="remarks" id="remarks"></textarea>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="isFinal">Final Status</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="isFinal">
+                    <nz-option nzLabel="True" nzValue=true>True</nz-option>
+                    <nz-option nzLabel="False" nzValue=false>False</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="isActive">Active Status</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="isActive">
+                    <nz-option nzLabel="True" nzValue=true>True</nz-option>
+                    <nz-option nzLabel="False" nzValue=false>False</nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>
+<ng-template #extraTemplate>
+    <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+</ng-template>
+<ng-template #actionAdd>
+    <button *ngIf="edit == false; else editable" nz-button nzType="primary" [disabled]="!form.valid" (click)="submitData()">Create Step</button>
+    <ng-template #editable>
+        <button nz-button nzType="primary" (click)="editData()" [disabled]="!form.valid">Edit Step</button>
+    </ng-template>
+</ng-template>

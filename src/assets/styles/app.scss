@@ -1,0 +1,144 @@
+@import "scss/material.variables";
+@import "scss/material.themes";
+@import "scss/mixins/bi-app/bi-app-ltr";
+// Core Variables and Mixins
+@import "scss/app.variables";
+@import "scss/mixins";
+// Core Styles
+@import "scss/core";
+@import "scss/material";
+@import "scss/utilities/utilities";
+
+/* Portal CSS */
+// @import 'sass/portal';
+
+// @import "~font-awesome/css/font-awesome.css";
+
+
+*{
+   .ant-card-body
+  { 
+    padding: 20px 2px !important;
+  }}
+
+  mat-form-field{
+    width: 100% !important;
+  }
+  .card{
+    border: none !important;
+    padding: 10px !important;
+  }
+  .title{
+    text-transform: uppercase;
+    font-weight: bold !important;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  .form-control{
+    border-radius: 2px !important;
+  }
+  .mat-header-cell {
+    background: #0074eb;
+    color: #ffffff;
+    font-weight: bold;
+
+}
+.actions-btn{
+  color: #ffffff;
+  background: #127f90 !important;
+  // height: 34px !important;
+  width: 100px !important;
+  margin-left: 8px !important;
+}
+.mat-column-index {
+    flex: 0 0 5%;
+}
+.mat-column-actions {
+    flex: 0 0 12%;
+}
+.container{
+    display: flex;
+}
+.submit-btn{
+  background: #0074eb !important;
+  border-radius: 2px !important;
+  width: 200px !important;
+  color: #ffffff !important;
+}
+h6{
+  font-size: 16px !important;
+}
+mat-icon{
+  color: #083273 !important;
+}
+  
+.basic-container{
+  margin: 0 4px;
+}
+
+/*-----------------
+	7. Modal
+-----------------------*/
+
+.modal {
+	-webkit-overflow-scrolling: touch;
+}
+.modal-footer.text-center {
+    justify-content: center;
+}
+.modal-footer.text-start {
+    justify-content: flex-start;
+}
+.modal-dialog.modal-md {
+    max-width: 600px;
+}
+.custom-modal .modal-content {
+	border: 0;
+    border-radius: 10px;
+}
+.custom-modal .modal-footer {
+	border: 0;
+}
+.custom-modal .modal-header {
+    border: 0;
+    justify-content: center;
+    padding: 30px 30px 0;
+}
+.custom-modal .modal-footer {
+    border: 0;
+    justify-content: center;
+    padding: 0 30px 30px;
+}
+.custom-modal .modal-body {
+    padding: 30px;
+}
+.custom-modal .close {
+    background-color: #a0a0a0;
+	border: 0;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    opacity: 1;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 20px;
+    z-index: 99;
+}
+.custom-modal .close:not(:disabled):not(.disabled):focus,.custom-modal .close:not(:disabled):not(.disabled):hover {
+    opacity: .75;
+}
+.custom-modal .modal-title {
+	font-size: 22px;
+}
+.modal-backdrop.show {
+    opacity: 0.4;
+	-webkit-transition-duration: 400ms;
+	transition-duration: 400ms;
+}
+.modal .card {
+	box-shadow: unset;
+}

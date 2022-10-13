@@ -1,0 +1,38 @@
+<div class="portal-accent-bg portal-login-container" fxLayoutAlign="center center" fxLayoutAlign.lt-sm="none">
+    <mat-card class="portal-login-card mat-elevation-z" fxLayout.lt-sm="column">
+      <mat-card-content fxFlex="auto" fxFlex.gt-sm="100%" fxLayout="column" fxLayoutAlign="space-between none">
+        <mat-card-title fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px" il8n>
+            <!-- ADMIN PORTAL -->
+            <img class="portal-login-card__logo" src="assets/images/iko-stock-logo.png" height="100px"/>
+          <!-- <img class="portal-login-card__logo" src="assets/images/eclogo2.png" height="100px"/> -->
+        </mat-card-title>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" (keyup.enter)="onSubmit(loginForm.value)">
+           <mat-form-field>
+             <input matInput formControlName="username" il8n placeholder="Username">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" formControlName="password" il8n placeholder="Password" autocomplete="current-password">
+          </mat-form-field>
+          <div *ngIf="_submitted">
+            <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+          </div>
+          <mat-error *ngIf="_errorMessage">
+            {{ _errorMessage }}
+          </mat-error>
+        </form>
+        <div fxLayout="column" fxLayoutGap="16px">
+        <!--    <a mat-button i18n fxFlex="50%" fxFlex.lt-md="none" (click)="forgotPassword()">
+                Forgot Password?
+              </a>
+            -->
+          <div fxLayout="row" fxLayoutGap="16px" fxLayout.lt-md="column">
+            <button il8n mat-raised-button i18n type="submit" fxFlex="100%" fxFlex.lt-md="none" color="primary" (click)="onSubmit(loginForm.value)"
+              [disabled]="!loginForm.valid">
+              LOGIN
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

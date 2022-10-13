@@ -1,0 +1,23 @@
+.atma-danger {
+    background-color: #d91A1A;
+    color: white;
+}
+
+nz-option[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -100%;
+    left: 0;
+}
+
+.text-danger {
+    color: #d91A1A;
+}
+
+mat-icon {
+    vertical-align: middle;
+}
+
+mat-dialog-content {
+    overflow-y: hidden;
+}

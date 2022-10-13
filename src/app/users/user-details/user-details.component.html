@@ -1,0 +1,36 @@
+<mat-dialog-content>  
+    <mat-toolbar color="accent" style="background-color:darkblue;">  
+User Details  
+</mat-toolbar>
+
+<div fxLayout="row">
+    <!-- <div fxFlex.gt-sm="100.00%">
+        <h3 class="atma-text"><b>USER DETAILS</b></h3>
+        <hr>
+    </div> -->
+</div>
+<div fxLayout="row" class="mb-2">
+    <div fxFlex.gt-sm="50.00%">
+        <p class="atma-text"><b>Full Name: </b></p>
+    </div>
+    <div fxFlex.gt-sm="50.00%">
+        <p class="descText">{{firstName | titlecase}}</p>
+    </div>
+</div>
+<div fxLayout="row">
+    <div fxFlex.gt-sm="50.00%">
+        <p class="atma-text"><b>Email: </b></p>
+    </div>
+    <div fxFlex.gt-sm="50.00%">
+        <p class="descText" style="word-wrap: break-word;"></p>
+    </div>
+</div>
+<div fxLayout="row">
+    <div fxFlex.gt-sm="50.00%">
+        <p class="atma-text"><b>Phone Number: </b></p>
+    </div>
+    <div fxFlex.gt-sm="50.00%">
+        <p class="descText"></p>
+    </div>
+</div>
+</mat-dialog-content>

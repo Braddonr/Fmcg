@@ -1,0 +1,84 @@
+<div fxLayout="column" fxLayoutAlign="center stretch">
+    <mat-card-content id="dataToExport">
+        <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+            <ng-container matColumnDef="select">
+                <mat-header-cell mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+                    </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+                    </mat-checkbox>
+                </mat-cell>
+
+            </ng-container>
+            <ng-container matColumnDef="index">
+                <mat-header-cell *matHeaderCellDef il8n mat-sort-header>#</mat-header-cell>
+                <mat-cell *matCellDef="let element;let i = index;"> {{ i+1 }} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="userName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.username | titlecase }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="firstName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.firstName | titlecase }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.lastName | titlecase }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="profileId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Profile Id </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.roles.name | titlecase }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="phoneNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Phonenumber </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.phoneNumber }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i=index;">
+                    <div fxLayout="row" fxLayoutGap="16px">
+                        <button mat-button mat-flat-button class="btn btn-info actions-btn" 
+                            [matMenuTriggerFor]="menu"><mat-icon>build</mat-icon>
+                            Actions
+                        </button>
+                        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                            <button mat-menu-item (click)="approveUser(element)">
+                                <mat-icon>done_outline</mat-icon>Approve
+                            </button>
+                            <button mat-menu-item (click)="viewUser(element)">
+                                <mat-icon>remove_red_eye</mat-icon>View
+                            </button>
+                            <button mat-menu-item>
+                                <mat-icon>restore_from_trash</mat-icon>
+                                Archive
+                            </button>
+                        </mat-menu>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</div>

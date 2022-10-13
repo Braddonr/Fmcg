@@ -1,0 +1,221 @@
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+<!--  -->
+
+
+<div class="container">
+    <mat-card>
+        <mat-card-title></mat-card-title>
+        <mat-card-content>
+          
+            <!-- Search Filter -->
+            <div fxLayout="row" fxLayoutAlign="space-between" style="margin-bottom: 20px;">
+              <div>
+                <form class="mat-form">
+                  <mat-form-field class="form-field" appearance="fill">
+                    <mat-label><i class="fa fa-arrowdown">&nbsp;Show/Hide Columns</i></mat-label>
+                    <mat-select [formGroup]="column" multiple>
+                      <!-- <mat-option (click)="show_hide_details()" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option> -->
+                      <!-- <mat-option (change)="onChange($event, 'index')" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option> -->
+                      <mat-option disabled>Tick/Untick</mat-option>
+                      <div class="checkbox">
+                      <p><mat-checkbox formControlName="model" (click)="show_hide_model()">Model</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="assetNumber" (click)="show_hide_assetNumber()">Asset Number</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="coolerSize" (click)="show_hide_coolerSize()"> Cooler Size</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="serialNumber"(click)="show_hide_serialNumber()">Serial Number</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="purchaseDate"(click)="show_hide_purchaseDate()">Purchase Date</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="createdBy"(click)="show_hide_createdby()">Territory </mat-checkbox></p>
+                      <p><mat-checkbox formControlName="createdOn"(click)="show_hide_createdon()">Created On</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="status" (click)="show_hide_status()">Status</mat-checkbox></p>
+                      <p><mat-checkbox formControlName="remarks"(click)="show_hide_remarks()">Remarks </mat-checkbox></p>
+                      <p><mat-checkbox formControlName="actions"(click)="show_hide_actions()">Actions</mat-checkbox></p>
+                    </div>
+                    
+                    </mat-select>
+                  </mat-form-field>
+                </form>
+              </div>
+              <div>
+                <div>
+                  <form class="mat-form">
+                    <mat-form-field class="form-field" appearance="fill">
+                      <mat-label><i class="fa fa-search">&nbsp;Quick Search</i></mat-label>
+                      <input matInput type="text" search (keyup)="applyFilter($event)" #input>
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+              <div>
+                <!-- Button trigger modal -->
+                <button (click)="triggerModal('')" class="btn btn-primary">
+                  <i class="fa fa-plus"></i> Add Cooler
+                </button>
+              </div>
+            </div>
+      <!-- /Search Filter -->
+
+            <div fxLayout="row" fxLayoutAlign="space-between">
+                <h3 _ngcontent-c48="" class="title-table"><b _ngcontent-c48="">
+                    <mat-icon _ngcontent-c48="" class="mat-icon fa fa-users" role="img" aria-hidden="true" style="padding-right: 1.5em;"></mat-icon>&nbsp;All Coolers</b>
+                </h3>
+                <div>
+                  <button nz-button nzType="primary" [matMenuTriggerFor]="menu" ><mat-icon> import_export</mat-icon>&nbsp;Export Data</button>
+                  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                      <button mat-menu-item (click)=exportCoolerPDF() title="Export Cooler_List to PDF" aria-describedby="Export Cooler_List to pdf">
+                          <mat-icon>picture_as_pdf</mat-icon>
+                          PDF
+                      </button>
+                      <button mat-menu-item  (click)="exporter.exportTable('xlsx', {fileName:'Cooler_List', sheet: 'Cooler_List', Props: {Author: 'Eclectics Internation'}})"
+                        title="Export Cooler_List to PDF" aria-describedby="Export Cooler_List to Excel"><mat-icon>file_copy</mat-icon>
+                        Excel
+                      </button>
+                      <button mat-menu-item (click)="exporter.exportTable('csv', {fileName:'Cooler_List', sheet: 'Cooler_List', Props: {Author: 'Eclectics Internation'}})" 
+                          title="Export Cooler_List to Csv" aria-describedby="Export Cooler_List to Excel"><mat-icon>file_copy</mat-icon>
+                        CSV
+                      </button>
+                  </mat-menu>
+                </div>
+            </div>
+            <table mat-table matTableExporter  matSort [dataSource]="dataSource"
+            #exporter="matTableExporter">
+                <!-- Position Column -->
+                <ng-container matColumnDef="Position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.ID}}
+                    </td>
+                </ng-container>
+                <!-- ID Column -->
+                <ng-container matColumnDef="ID">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header 
+                  [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}"> ID </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left: 10px;"
+                  [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}">
+                    {{element.id}}
+                  </td>
+                </ng-container>
+                <!-- Model Column -->
+                <ng-container matColumnDef="Model">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> MODEL </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.model}}
+                    </td>
+                </ng-container>
+                <!-- Asset Number Column -->
+                <ng-container matColumnDef="Asset_Number">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ASSET NUMBER </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.assetNumber}}
+                    </td>
+                </ng-container>
+                <!-- Cooler Size Column -->
+                <ng-container matColumnDef="Cooler_Size">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> COOLER SIZE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.coolerSize}}
+                    </td>
+                </ng-container>
+                <!-- Serial Number Column -->
+                <ng-container matColumnDef="Serial_Number">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SERIAL NUMBER </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.serialNumber}}
+                    </td>
+                </ng-container>
+                <!-- Purchase Date Column -->
+                <ng-container matColumnDef="Purchase_Date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PURCHASE DATE </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.purchaseDate}}
+                    </td>
+                </ng-container>
+                <!-- Created By Column -->
+                <ng-container matColumnDef="Created_By">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> CREATED BY </th>
+                    <td mat-cell *matCellDef="let element"
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                      {{element.createdBy}}
+                    </td>
+                </ng-container>
+                <!-- Created On Column -->
+                <ng-container matColumnDef="Created_On">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header
+                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> CREATED ON </th>
+                  <td mat-cell *matCellDef="let element"
+                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                    {{element.createdBy}}
+                  </td>
+              </ng-container>
+              <!-- Reworked By Column -->
+              <ng-container matColumnDef="Reworked_By">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header
+                [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}"> REWORKED BY </th>
+                <td mat-cell *matCellDef="let element"
+                [ngStyle]="{display: showHideDetails === false?  'table-cell' : 'none'}">
+                  {{element.reworkedBy}}
+                </td>
+            </ng-container>
+                <!-- Status Column -->
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> STATUS </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.status}}
+                    </td>
+                </ng-container>
+                <!-- Remarks Column -->
+                <ng-container matColumnDef="Remarks">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> REMARKS </th>
+                    <td mat-cell *matCellDef="let element"
+                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
+                      {{element.remarks}}
+                    </td>
+                </ng-container>
+                <!-- Actions Column -->
+                <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                      <div>
+                        <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="small"   
+                        nzType="primary" nzGhost >
+                        <i class="fa fa-cog mr-1"></i> Actions
+                      </button>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                          <ul nz-menu>
+                            <li nz-menu-item>
+                              <span (click)="view(element)" title="View Van Details" aria-describedby="View Van Details">
+                                <mat-icon>remove_red_eye</mat-icon>view
+                            </span>
+                            </li>
+                            <li nz-menu-item>
+                              <span (click)="edit(element)" title="Edit Van Details" aria-describedby="Edit Van Details">
+                                <mat-icon>create</mat-icon>edit
+                            </span>
+                            </li>
+                            <li nz-menu-item>
+                              <span (click)="delete(element)" title="Delete" aria-describedby="Delete Van" style="color: red;">
+                                <mat-icon>delete</mat-icon>delete
+                            </span>
+                            </li>
+                          </ul>
+                        </nz-dropdown-menu>
+                      </div>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <!-- Row show when no data found -->
+            <tr class="mat-row" *ngIf="!dataSource" >
+              <td class="mat-cell" style="width: 70rem; text-align: center;font-size: 20px;"><mat-icon style="color: #c7c7c7"> table_chart</mat-icon><br>
+                No Data Available
+              </td>
+            </tr>
+            <mat-paginator
+                style="font-size: 15px;font-family: 'Nunito', sans-serif;"
+                [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
+

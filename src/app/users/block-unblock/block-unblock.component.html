@@ -1,0 +1,32 @@
+<nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+    <form nz-form [formGroup]="form">
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <textarea rows="3" nz-input formControlName="remarks" id="remarks"></textarea>
+              </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="blocked                 
+            ">Action</nz-form-label>
+            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                <nz-select formControlName="blocked" nz-placeholder="block">
+                    <nz-option *ngIf="statusBool; else unblockOption" nzLabel="Block" nzValue="block">Block</nz-option>
+                    <ng-template #unblockOption>
+                        <nz-option nzLabel="Unblock" nzValue="unblock">Unblock</nz-option>
+                    </ng-template>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-card>
+<ng-template #extraTemplate>
+    <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+</ng-template>
+<ng-template #actionAdd>
+    <button *ngIf="statusBool ; else unblock" nz-button nzType="primary" (click)="blockThisUser()" type="submit" [disabled]="!form.valid">Submit</button>
+    <ng-template #unblock>
+        <button nz-button nzType="primary" (click)="unBlockThisUser()" type="submit" [disabled]="!form.valid">Submit</button>
+    </ng-template>
+</ng-template>
+

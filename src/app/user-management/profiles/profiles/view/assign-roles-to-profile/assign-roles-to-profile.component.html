@@ -1,0 +1,65 @@
+<!-- <div class="container"> -->
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="cover">
+        <div class="card-header">
+          <h5><b> Unassigned Roles </b></h5>
+        </div>
+        <div class="card-body">
+
+          <div  class="list-group">
+            <span *ngFor="let un_role of unAssignedRoles" class="roles">
+              <small class="list-group-item  waves-light" mdbWavesEffect>
+                <b> {{ un_role.RoleName }}</b>
+                <span><input class="pull-right" (change)="onSelectedOptionsChangeA(un_role)" type="checkbox">&nbsp;
+                </span>
+              </small>
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-2">
+      <br><br><br><br> <br>
+      <button [disabled]="addDisabled" mat-raised-button class="btn-primary" style="width: 80px;"
+        (click)="addRoleToProfile()">Assign </button><br><br>
+      <button [disabled]="removeDisabled" mat-raised-button color='warn' style="width: 80px;" class="btn-danger"
+        (click)="removeMultipleRoles()">Unassign</button><br><br>
+      <button [disabled]="approveDisabled" class="btn btn-md btn-success" style="width: 80px;"
+        (click)="approveMultipleRoles()">Approve</button>
+    </div>
+
+    <div class="col-md-6">
+      <div class="cover">
+        <div class="card-header">
+          <h5><b> Assigned Roles </b></h5>
+        </div>
+        <div class="card-body">
+
+          <div class="list-group">
+            <span *ngFor="let role of assignedRoles" class="roles">
+              <small class="list-group-item  waves-light" mdbWavesEffect>
+                <b>{{ role.RoleName }}</b> &nbsp;&nbsp; <i class="text-success fa fa-check pull-right"
+                  *ngIf="role.isActive === true"></i>
+
+                <span><input class="pull-right" (change)="onSelectedOptionsChangeR(role)" type="checkbox">
+
+
+                </span>
+
+              </small>
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+<!-- </div> -->

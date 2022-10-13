@@ -1,0 +1,79 @@
+<div class="card-form">
+    <nz-card [nzBordered]="false" nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" [nzActions]="[actionAdd]">
+        <form nz-form [formGroup]="form" [nzLayout]="'vertical'" style="margin-left: 20px;">
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="cdCode">Code</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="cdCode" id="cdCode" />
+                    <!-- <nz-select *ngIf="!editData" nzShowSearch nzAllowClear nzPlaceHolder="Cd Code" formControlName="cdCode" id="cdCode">
+                        <nz-option *ngFor="let option of routeNames"  nzCustomContent [nzLabel]="option" [nzValue]="option">{{option}}</nz-option>
+                        <nz-option nzLabel="CBL-CD-157" nzValue="CBL-CD-157"></nz-option>
+                        <nz-option nzLabel="CBL-CD-158" nzValue="CBL-CD-158"></nz-option>
+                        <nz-option nzLabel="CBL-CD-160" nzValue="CBL-CD-160"></nz-option>
+                        <nz-option nzLabel="CBL-CD-161" nzValue="CBL-CD-161"></nz-option>
+                        <nz-option nzLabel="CBL-CD-162" nzValue="CBL-CD-162"></nz-option>
+                        <nz-option nzLabel="CBL-CD-163" nzValue="CBL-CD-163"></nz-option>
+                      </nz-select> -->
+
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="vehicleType">Vehicle Type</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="vehicleType" id="vehicleType" />
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="plateNumber">Plate Number</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="plateNumber" id="plateNumber" />
+                </nz-form-control>
+            </nz-form-item>
+            <!-- <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="userName">User Name</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <input nz-input formControlName="userName" id="userName" />
+                </nz-form-control>
+            </nz-form-item> -->
+            <nz-form-item>
+                <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="salespersonId">Sales Person ID</nz-form-label>
+                <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
+                    <!-- <input nz-input formControlName="salespersonId" id="salespersonId" /> -->
+                    <nz-select *ngIf="!editData" nzShowSearch nzAllowClear nzPlaceHolder="Sales Person Id" formControlName="salespersonId" id="salespersonId">
+                        <nz-option nzLabel="444" nzValue="444"></nz-option>
+                        <nz-option nzLabel="445" nzValue="445"></nz-option>
+                        <nz-option nzLabel="446" nzValue="446"></nz-option>
+                        <nz-option nzLabel="453" nzValue="453"></nz-option>
+                        <nz-option nzLabel="454" nzValue="454"></nz-option>
+                        <nz-option nzLabel="456" nzValue="456"></nz-option>
+                        <nz-option nzLabel="510" nzValue="510"></nz-option>
+                        <nz-option nzLabel="569" nzValue="569"></nz-option>
+                      </nz-select> 
+
+                      <mat-form-field *ngIf="editData" formControlName="salespersonId" id="salespersonId">
+                        <mat-select  [(value)]="loadedId">
+                            <mat-option value="444">444</mat-option>
+                            <mat-option value="445">445</mat-option>
+                            <mat-option value="446">446</mat-option>
+                            <mat-option value="453">453</mat-option>
+                            <mat-option value="454">454</mat-option>
+                            <mat-option value="456">456</mat-option>
+                            <mat-option value="510">510</mat-option>
+                            <mat-option value="569">569</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card> 
+    <ng-template #extraTemplate>
+        <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+    </ng-template>
+    <ng-template #actionAdd>
+        <button *ngIf="editData; else create" style="text-align: center;" nz-button  nzType="primary" [disabled]="!form.valid" (click)="editVan()">Update Van</button>
+        <ng-template #create>
+            <button style="text-align: center;" nz-button nzType="primary" [nzLoading]="loading" [disabled]="!form.valid" (click)="addNewVan()">Create Van</button>
+        </ng-template>
+    </ng-template>
+</div>
+

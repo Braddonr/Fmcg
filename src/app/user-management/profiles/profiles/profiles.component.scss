@@ -1,0 +1,22 @@
+ .input-group{
+    width: 1000px !important;
+}
+:host ::ng-deep ng2-smart-table{
+    font-size: 12px;
+}
+.card-body{
+    background: #ffffff !important;
+}
+.header-buttons{
+    float: right !important;
+}
+:host ::ng-deep .ant-card-body
+  { 
+    padding: 20px 2px !important;
+  }
+
+.total{
+  padding: 2px 2px 0 0;
+  font-weight: bold;
+  font-size: 1.3em !important;
+}

@@ -1,0 +1,41 @@
+<div class="session atma-background">
+    <div class="session-content">
+      <div class="session-wrapper">
+        <mat-card>
+          <mat-card-content>
+            <form [formGroup]="form">
+              <div class="text-xs-center pb-1">
+                <img class="portal-login-card__logo" src="assets/images/iko-stock-logo.png" height="100px"/>
+                <br>
+                <!-- <img src="assets/images/postbank-logo.png" alt="" height="150px" width="240px" /> -->
+                <span class="mat-text-muted">Sign in with your username and password</span>
+              </div>
+              <div fxLayout="row">
+                <nz-tag [nzColor]="'#F22233'" *ngIf="errorMessage">{{errorMessage | titlecase}}!</nz-tag>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="space-around">
+                <div class="pb-1">
+                  <mat-form-field style="width: 100%">
+                    <input matInput placeholder="Enter Username" formControlName="username" type="text">
+                  </mat-form-field>
+                  <small *ngIf="form.get('username').hasError('required') && form.get('username').touched" class="mat-text-warn">Username
+                    is required.</small>
+                </div>
+                <div class="pb-1">
+                  <mat-form-field style="width: 100%">
+                    <input matInput type="password" id="Password" placeholder="Enter Password" autocomplete="off" formControlName="password" readonly (click)="editField()">
+                  </mat-form-field>
+                  <small *ngIf="form.get('password').hasError('required') && form.get('password').touched"
+                    class="mat-text-warn">Password is required.</small>
+                </div>
+                <button *ngIf="loading; else loaded" nz-button nzType="primary" (click)="login()" [nzLoading]="loading" type="submit" nzDanger [disabled]="!form.valid && loading">Login</button>
+                <ng-template #loaded>
+                  <button nz-button nzType="primary" (click)="login()" [nzLoading]="loading" type="submit" nzDanger [disabled]="!form.valid">Login</button>
+                </ng-template>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>

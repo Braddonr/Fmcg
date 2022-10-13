@@ -1,0 +1,141 @@
+<!-- 
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span> -->
+<div class="panel-side">
+<div class=" global" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutGap="20px" class="p-2">
+        <div>
+
+            <button nz-button nz-dropdown title="Select columns to Display"
+                aria-describedby="Select Columns to Display">
+                <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="columnToggleMenu">
+                    Select Columns to Display
+                    <i nz-icon nzType="down"></i>
+                </a>
+            </button> &nbsp;
+            <nz-dropdown-menu #columnToggleMenu="nzDropdownMenu" nzSize="large">
+                <ul nz-menu>
+                    <nz-checkbox-wrapper class="check-group" (nzOnChange)="selectedColumns($event)">
+                        <div nz-column nzJustify="start">
+                            <div *ngFor="let colm of displayColumns" class="pl-1">
+                                <div *ngIf="mandatoryColumns.includes(colm); else nonchecked">
+                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="true"
+                                        nzSize="small">{{colm }}</label>
+                                </div>
+                                <ng-template #nonchecked>
+                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="false"
+                                        nzSize="small">{{colm}}</label>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </nz-checkbox-wrapper>
+                    <div class="btn-nz"></div>
+                </ul>
+            </nz-dropdown-menu>
+        </div>
+        <div>
+            <input type="text" class="form-control form-control-md" style="width: 230px;" [(ngModel)]="searchInput"
+                (ngModelChange)="globalSearch()" placeholder="quick search">
+        </div>
+    </div>
+
+</div>
+
+<div>
+  <!-- <div class="row mb-1 pl-1">
+    <div class="col">
+        <div class="input-group mb-0 box-shadow">
+         <div class="input-group-append col-md-offset-8">
+            <span class="input-group-text border-top-0 border-right-0 border-bottom-0">
+                <button class="btn btn-md btn-default disabled"><b class="text-primary"><i class="fa fa-history"></i> User Actions</b></button>
+              </span>
+                <span   class="input-group-text border-top-0 border-right-0 border-bottom-0"><i
+                        class="fa fa-th"></i></span>
+                <span   class="input-group-text border-top-0 border-right-0 border-bottom-0"><i
+                        class="fa fa-list"></i></span>
+            </div>
+        </div>
+    </div>
+  </div> -->
+  <nz-card [nzBordered]="false" nzTitle="User Actions" nzSize="large" [nzExtra]="extraTemplate">
+    <nz-table #nzTable [nzBordered]="true" [nzData]="listOfDisplayData" nzSize="small" nzTableLayout="fixed" class="px-1"
+        [nzLoading]="loading" [nzFrontPagination]="false" nzShowSizeChanger [nzTotal]="total" [nzPageSize]="perPage"
+        [nzPageIndex]="page" (nzQueryParams)="onQueryParamsChange($event)">
+        <thead>
+            <tr>
+                <th nzCustomFilter *ngIf="mandatoryColumns.includes('Method')" nz-dropdown>
+                    Method
+                </th>
+                <th *ngIf="mandatoryColumns.includes('IP')" nz-dropdown>IP</th>
+                <th *ngIf="mandatoryColumns.includes('Time')" nz-dropdown>Time</th>
+                <th *ngIf="mandatoryColumns.includes('URL')" nz-dropdown>URL</th>
+                <th *ngIf="mandatoryColumns.includes('Request Status')" nz-dropdown>Request Status</th>
+                <th *ngIf="mandatoryColumns.includes('Response')" nz-dropdown>Response</th>
+                <th *ngIf="mandatoryColumns.includes('User A/C')" nz-dropdown>User A/C</th>
+                <th *ngIf="mandatoryColumns.includes('User Agent')" nz-dropdown>User Agent</th>
+
+                <th nzRight>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of nzTable.data">
+              <td *ngIf="mandatoryColumns.includes('Method')">Method</td>
+                <td *ngIf="mandatoryColumns.includes('IP')">{{data.name}}</td>
+                <td *ngIf="mandatoryColumns.includes('Time')">{{data.CategoryName}}</td>
+                <td *ngIf="mandatoryColumns.includes('URL')">{{data.process_code}}</td>
+                <td *ngIf="mandatoryColumns.includes('Request Status')" class="pl-2" >
+                    <app-label-active [value]="data.is_active"></app-label-active>
+                </td>
+                <td *ngIf="mandatoryColumns.includes('Response')">Response</td>
+                <td *ngIf="mandatoryColumns.includes('User A/C')">User A/C</td>
+                <td *ngIf="mandatoryColumns.includes('User Agent')">User Agent</td>
+
+                <td nzRight class="pl-2">
+                    <button nz-button nzType="primary" nzSize="small" title="Edit Workflow" nzSuccess nzGhost
+                        aria-describedby="Edit Workflow" (click)="editWorkflowDetails(data)">
+                        <i nz-icon nzType="edit" nzTheme="outline"></i>
+                    </button>&nbsp;
+                    <button nz-button nzType="primary" nzSize="small" title="View Workflow" nzSuccess nzGhost
+                        aria-describedby="View Workflow" (click)="viewWorkflowDetails(data)">
+                        <i nz-icon nzType="eye" nzTheme="outline"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+    </nz-card>
+</div>
+
+<ng-template #extraTemplate>
+      
+    <span *ngIf="total > 0">Showing <span class="total">{{perPage}}</span> of <span class="total">{{total}}</span>items</span>&nbsp;&nbsp;&nbsp;
+    <button [matMenuTriggerFor]="export" class="pull-right mr-2 btn btn-action">
+        <i class="fas fa-file-export"></i>
+        Export Data
+        <br>
+    </button>
+    <mat-menu #export="matMenu" x-position="before" [overlapTrigger]="false">
+
+        <button mat-menu-item title="Export users to XLSX" (click)="exportUsersXLSX()"
+            aria-describedby="Export users to XLSX">
+            <mat-icon class="text-success">file_copy</mat-icon>XLSX
+        </button>
+        <button mat-menu-item title="Export users to pdf" (click)="exportUsersPDF()"
+            aria-describedby="Export users to pdf">
+            <mat-icon>picture_as_pdf</mat-icon>
+            PDF
+        </button>
+
+    </mat-menu>
+   
+</ng-template>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="search code" [(ngModel)]="searchValue">
+            <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+            <button nz-button nzSize="small" (click)="reset()">Reset</button>
+        </div>
+    </div>
+</nz-dropdown-menu>
+</div>

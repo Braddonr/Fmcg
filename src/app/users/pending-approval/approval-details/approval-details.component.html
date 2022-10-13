@@ -1,0 +1,50 @@
+<nz-card [nzBordered]="false" nzTitle="{{stagedTitle | titlecase}} Stage Details" [nzExtra]="extraTemplate">
+    <div nz-row>
+        <div nz-col nzSpan="7">
+            <h3><b>Previous Data</b></h3>
+            <div class="previousData">
+                <pre>
+                    {{prevData | json}}
+                </pre>
+            </div>
+        </div>
+        <div nz-col nzSpan="1">
+            <div class="vl"></div>
+        </div>
+        
+        <div nz-col nzSpan="7">
+            <h3 id="curD"><b>Current Data</b></h3>
+            <div class="currentData">
+                <pre>
+                    <p class="currentData">{{curData | json}}</p>
+                </pre>
+                
+            </div>
+        </div>
+        <div nz-col nzSpan="2">
+            <div class="vl"></div>
+        </div>
+        <div nz-col nzSpan="7">
+            <h3><b>Action Form</b></h3>
+            <form nz-form [formGroup]="form">
+                <nz-form-item>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                        <textarea rows="3" cols="5" nz-input formControlName="remarks" id="remarks" placeholder="Remarks"></textarea>
+                      </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required">
+                        <nz-select formControlName="approved" nzPlaceHolder="Action">
+                            <nz-option nzLabel="Approve" nzValue="true">Approve</nz-option>
+                            <nz-option nzLabel="Reject" nzValue="false">Reject</nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <button class="btn-center" nz-button [nzLoading]="loading" nzType="primary" (click)="approveUser()" type="submit" [disabled]="!form.valid">Submit</button>
+            </form>
+        </div>
+    </div>
+</nz-card>
+<ng-template #extraTemplate>
+    <button mat-mini-fab aria-label="close dialog" title="close dialog" class="atma-danger" (click)="close()"><mat-icon>close</mat-icon></button>
+</ng-template>

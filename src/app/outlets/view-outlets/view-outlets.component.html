@@ -1,0 +1,103 @@
+<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="35px">
+    <div fxFlex.gt-sm="100%">
+        <nz-card>
+            <!-- [nzActions]="[actionPassword, actionDeactivate]" -->
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="100.00%">
+                    <h3 class="atma-text"><b>OUTLET DETAILS</b></h3>
+                    <hr>
+                </div>
+            </div>
+            <div fxLayout="row" class="mb-2">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Name: &nbsp; </b> {{outletData.outletName}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText">&nbsp;&nbsp;</p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Code: &nbsp; </b>{{outletData.outletCode}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText" style="word-wrap: break-word;"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Type: &nbsp; </b>{{outletData.outletType}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Route: &nbsp; </b>{{outletData.outletRoute}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Location: &nbsp; </b>{{outletData.location}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Latitude: &nbsp; </b>{{outletData.latitude}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Longitude: &nbsp; </b>{{outletData.longitude}} </p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Contact Name: &nbsp; </b>{{outletData.contactName}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Contact Number: &nbsp;  </b>{{outletData.contactMobileNumber}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="atma-text"><b>Remarks: &nbsp;</b> {{outletData.remarks}}</p>
+                </div>
+                <div fxFlex.gt-sm="50.00%">
+                    <p class="descText"></p>
+                </div>
+            </div>
+        </nz-card>
+    </div>
+    <!-- <div fxFlex.gt-sm="50%">
+        <mat-tab-group>
+            <mat-tab label="Audit Trail" aria-label="Audit Trail">
+                <app-user-audit-trail [user]="user"></app-user-audit-trail>
+            </mat-tab>
+            <mat-tab label="User Profiles" aria-label="User Profiles">
+                <app-user-profiles [user]="user"></app-user-profiles>
+            </mat-tab>
+        </mat-tab-group>
+    </div> -->
+</div>
