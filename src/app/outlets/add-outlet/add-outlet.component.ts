@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from 'src/app/shared/services/http.service';
 
@@ -20,6 +21,7 @@ export class AddOutletComponent implements OnInit {
   loading: boolean = false;
   routes: any;
   routeNames = [];
+  routeIds = [];
   selectedValue: any;
   loadedRoute: any;
   
@@ -30,6 +32,7 @@ export class AddOutletComponent implements OnInit {
     private _httpService: HttpService,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private modal: NzModalService
     
   ) { }
 
@@ -87,7 +90,7 @@ export class AddOutletComponent implements OnInit {
   this._httpService.post("outlet/new", this.form.value)
   .subscribe({
    next:(res)=> {
-     this.toastr.success("Outlet details added", "Success!");
+     this.toastr.success("Outlet details added, awaiting approval", "Success!");
      this.form.reset();
    },
    error:()=>{
@@ -158,9 +161,15 @@ export class AddOutletComponent implements OnInit {
         this.routeNames.push(x.routeName)         
       })
       console.log(this.routeNames)
+
+      this.routes.map((x:any) => {
+        this.routeIds.push(x.id)          
+      })
+      console.log(this.routeIds)
     });
   }
 
+  
   //closes dialog
   close(): void {
     setTimeout(() => {

@@ -56,6 +56,13 @@ import { SystemHttpInterceptor } from "./shared/services/system-http.interceptor
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzMenuModule } from "ng-zorro-antd/menu";
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+// import { IconDefinition } from '@ant-design/icons-angular';
+// import { NzIconModule } from 'ng-zorro-antd/icon';
+
+// Import what you need. RECOMMENDED. ✔️
+// import { AccountBookFill, AlertFill, AlertOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 // import { NgMatTableQueryReflectorDirective } from './directives/ng-mat-table-query-reflector.directive';
 
 registerLocaleData(en);
@@ -71,6 +78,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true,
   minScrollbarLength: 20
 };
+// const icons: IconDefinition[] = [ AccountBookFill, AlertOutline, AlertFill, PlusOutline ];
 
 @NgModule({
   declarations: [
@@ -133,6 +141,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatTableExporterModule,
     NzDropDownModule,
     NzMenuModule,
+    NzSpaceModule,
+    NzToolTipModule
+    // NzIconModule.forRoot(icons),
+
   ],
   providers: [
     DatePipe,
@@ -149,6 +161,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
   ],
+  // exports: [NzIconModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

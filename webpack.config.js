@@ -1,13 +1,21 @@
 module.exports = {
-    configureWebpack: {
-      module: {
-        rules: [
-          {
-            test: /\.mjs$/,
-            include: /node_modules/,
-            type: "javascript/auto"
-          }
-        ]
-      }
-    }
-  }
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            ident: 'postcss',
+            syntax: 'postcss-scss',
+            plugins: [
+              require('postcss-import'),
+              require('tailwindcss'),
+              require('autoprefixer'),
+            ],
+          },
+        },
+      },
+    ],
+  },
+};

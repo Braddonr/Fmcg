@@ -85,6 +85,8 @@ import { EditNotificationLabelComponent } from "./components/edit-notification-l
 import { SuccessLabelComponent } from "./components/success-label/success-label.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { LoaderComponent } from './loader/loader.component';
+import { TablefiltersPipe } from './pipes/tablefilters.pipe';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -104,7 +106,8 @@ export function createTranslateLoader(http: HttpClient) {
     EditNotificationLabelComponent,
     ActiveStatusLabelComponent,
     ColumnsComponent,
-    LoaderComponent
+    LoaderComponent,
+    // TablefiltersPipe,
   ],
   imports: [
     CommonModule,

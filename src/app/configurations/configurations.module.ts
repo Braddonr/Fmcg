@@ -16,6 +16,8 @@ import { AddTerritoryComponent } from './add-territory/add-territory.component';
 import { MatInputModule } from "@angular/material/input";
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { DialogComponent } from './dialog/dialog.component';
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
     declarations: [
@@ -38,6 +40,8 @@ import { DialogComponent } from './dialog/dialog.component';
         ConfigurationsRoutingModule,
         MatInputModule,
         MatTableExporterModule,
+        NzModalModule,
+        NzToolTipModule
     ],
     providers: [],
     entryComponents: []

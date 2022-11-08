@@ -45,8 +45,9 @@ export class AddVanComponent implements OnInit {
       cdCode:[this.van ? this.van['cdCode']: '', Validators.compose([Validators.required])],
       vehicleType:[this.van ? this.van['vehicleType']: '', Validators.compose([Validators.required])],
       plateNumber:[this.van ? this.van['plateNumber']: '', Validators.compose([Validators.required])],
-      // userName:[this.van ? this.van['userName']: '', Validators.compose([Validators.required])],
       salespersonId:[this.van ? this.van['salespersonId']: '', Validators.compose([Validators.required])],
+
+      // userName:[this.van ? this.van['userName']: '', Validators.compose([Validators.required])],
     });
   }
   addNewVan(){

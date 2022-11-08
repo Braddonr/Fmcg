@@ -1,0 +1,520 @@
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+<!--  -->
+
+  <nz-card class="card" nzTitle="Outlets Pending Approval ({{pendingTotalNumber}} Records)" [nzExtra]="extraTemplate" style="font-size: 12px;"> 
+          
+      <div class="table">
+      <nz-table 
+      #borderedTable nzBordered 
+      #pendingAddTable
+      id="pendingAddTable"
+      [nzData]="pendingAddData" 
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="perPage"
+      [nzPageIndex]="page" 
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+          <thead>
+            <tr>
+              <th nzLeft nzWidth="4%">#</th>
+              <th *ngIf="!showHideID" nzCustomFilter>ID
+                <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideOutletName"nzCustomerFilter>Outlet Name
+                <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideCode">Outlet Code</th>
+              <th *ngIf="!showHideCreditName" nzWidth="15%" nzCustomFilter>Credit Name
+                <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideType" nzCustomFilter>Type
+                <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideOutletRoute" nzCustomFilter>Outlet Route
+                <nz-filter-trigger [(nzVisible)]="visible5" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletRoute">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideLocation" nzCustomFilter>Location
+                <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideContactName">Contact Name</th>
+              <th *ngIf="!showHideContactPhone">Contact Phone</th>
+              <th *ngIf="!showHideLatitude">Latitude</th>
+              <th *ngIf="!showHideLongitude">Longitude</th>
+              <th *ngIf="!showHideCdCode" nzCustomFilter>Credit Code
+                <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideCreatedBy">Created By
+              </th>
+              <th *ngIf="!showHideCreatedOn"nzCustomFilter >Created On
+                <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                  <i nz-icon nzType="calendar"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="!showHideRemarks">Remarks</th>
+              <th nzRight *ngIf="!showHideActions" nzWidth="7%">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of pendingAddTable.data">
+              <td nzLeft>{{ data.ID }}</td>
+              <td *ngIf="!showHideID">{{ data.id }}</td>
+              <td *ngIf="!showHideOutletName">{{ data.outletName }}</td>
+              <td *ngIf="!showHideCode">{{ data.outletCode }}</td>
+              <td *ngIf="!showHideCreditName">{{ data.cdName }}</td>
+              <td *ngIf="!showHideType">{{ data.outletType }}</td>
+              <td *ngIf="!showHideOutletRoute">{{ data.outletRoute }}</td>
+              <td *ngIf="!showHideLocation">{{ data.location }}</td>
+              <td *ngIf="!showHideContactName">{{ data.contactName }}</td>
+              <td *ngIf="!showHideContactPhone">{{ data.contactMobileNumber }}</td>
+              <td *ngIf="!showHideLatitude">{{ data.latitude | number }}</td>
+              <td *ngIf="!showHideLongitude">{{ data.longitude | number }}</td>
+              <td *ngIf="!showHideCdCode">{{ data.cdCode }}</td>
+              <td *ngIf="!showHideCreatedBy">{{ data.createdBy }}</td>
+              <td *ngIf="!showHideCreatedOn">{{ data.createdOn | date : 'short' }}</td>
+              <td *ngIf="!showHideRemarks">{{ data.remarks }}</td>
+              <td nzRight nzWidth="8%" *ngIf="!showHideActions">
+
+                <button nz-button nzType="primary" nzShape="circle" nzSize="small" (click)="approvePendingAdd(data)">A</button>&nbsp;
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+            </div>
+  </nz-card>
+
+  <nz-dropdown-menu #menuID="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
+      
+        <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuType="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-range-picker [nzSize]="size"  [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+<!-- 
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Outlet" nzOkText="Add Outlet" nzWidth="700px" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formAdd" class="ant-advanced-search-form">
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Outlet Name"
+                  formControlName="outletName"
+                  id="outletName"
+                  (change)="showFormDetails()"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Outlet Code"
+                  formControlName="outletCode"
+                  id="outletCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control id="outletType" nzErrorTip="This field is required">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Outlet Type" formControlName="outletType">
+                  <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control  id="outletRoute" nzErrorTip="This field is required">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder=" Outlet Route" formControlName="outletRoute">
+                  <nz-option nzLabel="{{routeName}}" nzValue="{{routeName}}" *ngFor="let routeName of routeNames"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+       
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Credit Name"
+                  formControlName="cdName"
+                  id="cdName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Credit Code"
+                  formControlName="cdCode"
+                  id="cdCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your location!" [nzSpan]="12">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="location" id="location" placeholder="Location" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Email!" [nzSpan]="12">
+            <nz-input-group>
+              <input type="email" nz-input formControlName="cdEmail" id="cdEmail" placeholder="Email" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Office Contact Name"
+                  formControlName="cdContactFullName"
+                  id="cdContactFullName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Office Phone Number"
+                  formControlName="cdOfficePhoneNumber"
+                  id="cdOfficePhoneNumber"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Name"
+                  formControlName="contactName"
+                  id="contactName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Phone Number"
+                  formControlName="contactMobileNumber"
+                  id="contactMobileNumber"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      
+        <nz-form-item>
+          
+          <nz-form-control [nzSpan]="12" nzErrorTip="Please write something here!">
+            <textarea formControlName="remarks" id="remarks" nz-input rows="2" placeholder="Remarks"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </ng-container>
+  </nz-modal>
+
+  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Outlet" nzOkText="Edit Outlet" nzWidth="700px" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formEdit" class="ant-advanced-search-form">
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Outlet Name"
+                  formControlName="outletName"
+                  id="outletName"
+                  (change)="showFormDetails()"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Outlet Code"
+                  formControlName="outletCode"
+                  id="outletCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control id="outletType" nzErrorTip="This field is required">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Outlet Type" formControlName="outletType">
+                  <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="6" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control  id="outletRoute" nzErrorTip="This field is required">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder=" Outlet Route" formControlName="outletRoute">
+                  <nz-option nzLabel="{{routeId}}" nzValue="{{routeId}}" *ngFor="let routeId of routeIds"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+       
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Credit Name"
+                  formControlName="cdName"
+                  id="cdName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Credit Code"
+                  formControlName="cdCode"
+                  id="cdCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your location!" [nzSpan]="12">
+            <nz-input-group>
+              <input type="text" nz-input formControlName="location" id="location" placeholder="Location" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Please input your Email!" [nzSpan]="12">
+            <nz-input-group>
+              <input type="email" nz-input formControlName="cdEmail" id="cdEmail" placeholder="Email" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Office Contact Name"
+                  formControlName="cdContactFullName"
+                  id="cdContactFullName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Office Phone Number"
+                  formControlName="cdOfficePhoneNumber"
+                  id="cdOfficePhoneNumber"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="16">
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Name"
+                  formControlName="contactName"
+                  id="contactName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="12" class="gutter-row">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Phone Number"
+                  formControlName="contactMobileNumber"
+                  id="contactMobileNumber"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      
+        <nz-form-item>
+          
+          <nz-form-control [nzSpan]="12" nzErrorTip="Please write something here!">
+            <textarea formControlName="remarks" id="remarks" nz-input rows="2" placeholder="Remarks"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </ng-container>
+  </nz-modal> -->
+
+  <ng-template #extraTemplate>
+    <nz-space>
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+        Show/Hide Columns
+        <i nz-icon nzType="down"></i>
+      </button>&nbsp;
+      <nz-dropdown-menu #menu4="nzDropdownMenu">
+        <ul nz-menu style="padding: 10px">
+        <label nz-checkbox [(ngModel)]="id" (click)="show_hide_ID()">ID</label><br>
+        <label nz-checkbox [(ngModel)]="outletName" (click)="show_hide_outletname()">Outlet Name</label><br>
+        <label nz-checkbox  [(ngModel)]="outletCode" (click)="show_hide_code()">Outlet Code</label><br>
+        <label nz-checkbox [(ngModel)]="creditName" (click)="show_hide_creditname()">Credit Name</label><br>
+        <label nz-checkbox [(ngModel)]="type" (click)="show_hide_type()">Type</label><br>
+        <label nz-checkbox [(ngModel)]="outletRoute" (click)="show_hide_outletroute()">Outlet Route</label><br>
+        <label nz-checkbox [(ngModel)]="location" (click)="show_hide_location()">Location</label><br>
+        <label nz-checkbox [(ngModel)]="contactName" (click)="show_hide_contactname()">Contact Name</label><br>
+        <label nz-checkbox [(ngModel)]="contactPhone" (click)="show_hide_contactphone()">Contact Phone</label><br>
+        <label nz-checkbox [(ngModel)]="cdCode" (click)="show_hide_cdCode()">Credit Code</label><br>
+        <label nz-checkbox [(ngModel)]="latitude" (click)="show_hide_latitude()">Latitude</label><br>
+        <label nz-checkbox [(ngModel)]="longitude" (click)="show_hide_longitude()">Longitude</label><br>
+        <label nz-checkbox [(ngModel)]="createdBy" (click)="show_hide_createdby()">Created By</label><br>
+        <label nz-checkbox [(ngModel)]="createdOn" (click)="show_hide_createdon()">Created On</label><br>
+        <label nz-checkbox [(ngModel)]="remarks" (click)="show_hide_remarks()">Remarks</label><br>
+        <label nz-checkbox [(ngModel)]="actions" (click)="show_hide_actions()">Actions</label>
+        </ul>
+      </nz-dropdown-menu>
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+      <nz-dropdown-menu #fileType="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a (click)="exportOutletsPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportOutletsExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)=" exportOutletsCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-space>
+  </ng-template>
+
+  
+

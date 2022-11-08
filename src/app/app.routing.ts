@@ -13,7 +13,7 @@ export const AppRoutes: Routes = [
   {
     path: "",
     component: AdminLayoutComponent,
-    canActivate: [AuthGuardService],
+    // canActivate: [AuthGuardService],
     children: [
       {
         path: "dashboards",
@@ -124,11 +124,11 @@ export const AppRoutes: Routes = [
   },
 
   // auth
-  {
-    path: "auth",
-    loadChildren:() => 
-    import("./auth/auth.module").then(m => m.AuthModule)
-  },
+  // {
+  //   path: "auth",
+  //   loadChildren:() => 
+  //   import("./auth/auth.module").then(m => m.AuthModule)
+  // },
   // end of auth
   {
     path: "",
@@ -141,8 +141,8 @@ export const AppRoutes: Routes = [
       }
     ]
   },
-  {
-    path: "**",
-    redirectTo: "session/404"
-  }
+  // {
+  //   path: "**",
+  //   redirectTo: "session/404"
+  // }
 ];

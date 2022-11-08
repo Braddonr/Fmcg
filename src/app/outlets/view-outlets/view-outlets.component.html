@@ -1,103 +1,38 @@
-<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="35px">
-    <div fxFlex.gt-sm="100%">
-        <nz-card>
-            <!-- [nzActions]="[actionPassword, actionDeactivate]" -->
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="100.00%">
-                    <h3 class="atma-text"><b>OUTLET DETAILS</b></h3>
-                    <hr>
-                </div>
-            </div>
-            <div fxLayout="row" class="mb-2">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Name: &nbsp; </b> {{outletData.outletName}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText">&nbsp;&nbsp;</p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Code: &nbsp; </b>{{outletData.outletCode}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText" style="word-wrap: break-word;"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Type: &nbsp; </b>{{outletData.outletType}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Route: &nbsp; </b>{{outletData.outletRoute}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Location: &nbsp; </b>{{outletData.location}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Latitude: &nbsp; </b>{{outletData.latitude}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Longitude: &nbsp; </b>{{outletData.longitude}} </p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Contact Name: &nbsp; </b>{{outletData.contactName}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Contact Number: &nbsp;  </b>{{outletData.contactMobileNumber}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-            <div fxLayout="row">
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="atma-text"><b>Remarks: &nbsp;</b> {{outletData.remarks}}</p>
-                </div>
-                <div fxFlex.gt-sm="50.00%">
-                    <p class="descText"></p>
-                </div>
-            </div>
-        </nz-card>
-    </div>
-    <!-- <div fxFlex.gt-sm="50%">
-        <mat-tab-group>
-            <mat-tab label="Audit Trail" aria-label="Audit Trail">
-                <app-user-audit-trail [user]="user"></app-user-audit-trail>
-            </mat-tab>
-            <mat-tab label="User Profiles" aria-label="User Profiles">
-                <app-user-profiles [user]="user"></app-user-profiles>
-            </mat-tab>
-        </mat-tab-group>
-    </div> -->
-</div>
+<nz-card style="margin: 20px;">
+    <nz-page-header
+      class="site-page-header"
+      nzbutton (click)="onBack()" 
+      nzBackIcon
+      nzTitle="Outlet Details"
+    ></nz-page-header>
+    <!-- nz-tooltip [nzTooltipTitle]="toolTipBackTitle" [nzTooltipColor]="toolTipBackColor" [nzTooltipPlacement]='toolTipBackPosition' -->
+<nz-descriptions [nzColumn]="4" nzBordered  style="padding:20px;">
+    
+    <nz-descriptions-item  nzTitle="Outlet Type">{{outletData.outletType}} <br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Outlet Route">{{outletData.outletRoute}}<br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Outlet Name">{{outletData.outletName}}<br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Outlet Code">{{outletData.outletCode}}<br/></nz-descriptions-item>
+    <!-- <nz-descriptions-item  nzTitle="ID">{{outletData.id}}</nz-descriptions-item> -->
+    <nz-descriptions-item  nzTitle="Location" [nzSpan]="4">{{outletData.location}}</nz-descriptions-item>
+    <!-- <nz-descriptions-item  nzTitle="Latitude">{{outletData.latitude}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Longitude">{{outletData.longitude}}</nz-descriptions-item> -->
+    <nz-descriptions-item  nzTitle="Cd Name" [nzSpan]="2">{{outletData.cdName}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Cd Code" [nzSpan]="2">{{outletData.cdCode}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Contact Name">{{outletData.contactName}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Contact Phone Number">{{outletData.contactMobileNumber}}</nz-descriptions-item>
+    <!-- <nz-descriptions-item  nzTitle="Office Contact Name">{{outletData.outletName}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Office Phone Number">{{outletData.outletName}}</nz-descriptions-item> -->
+    <nz-descriptions-item  nzTitle="Created By" [nzSpan]="2">{{outletData.createdBy}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Approved">
+      <div #decode id="decode">
+        <i *ngIf="readableResponse" nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" style="font-size: 24px"></i>
+        <i *ngIf="!readableResponse" nz-icon [nzType]="'close-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF0000'" style="font-size: 24px"></i>
+      </div>
+    </nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Approved By">{{outletData.approvedBy}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Approved On" [nzSpan]="4">{{outletData.approvedOn | date : 'short'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="Remarks" [nzSpan]="4">
+      Nothing to Add<br>
+    </nz-descriptions-item>
+  </nz-descriptions>
+</nz-card>

@@ -1,0 +1,13 @@
+{
+"data": 
+[{"ID":1,"id":83,"model":"Cogidoo","serialNumber":"103384469-1","assetNumber":"623266647-X","status":true,"createdOn":"12/20/2021","createdBy":"wpaunton0"},
+{"ID":2,"id":24,"model":"Rhyloo","serialNumber":"902322983-5","assetNumber":"442114657-9","status":false,"createdOn":"11/30/2021","createdBy":"cvynall1"},
+{"ID":3,"id":41,"model":"Bubblemix","serialNumber":"155570391-7","assetNumber":"337874189-9","status":true,"createdOn":"4/14/2022","createdBy":"bglanester2"},
+{"ID":4,"id":91,"model":"Yodo","serialNumber":"539220227-6","assetNumber":"972227040-0","status":true,"createdOn":"8/28/2022","createdBy":"kbedford3"},
+{"ID":5,"id":75,"model":"Shufflester","serialNumber":"917566120-9","assetNumber":"371442461-X","status":false,"createdOn":"11/8/2021","createdBy":"hhaining4"},
+{"ID":6,"id":69,"model":"Avamba","serialNumber":"038820587-3","assetNumber":"657521813-X","status":true,"createdOn":"12/23/2021","createdBy":"clowings5"},
+{"ID":7,"id":96,"model":"Divape","serialNumber":"427785084-7","assetNumber":"943893790-0","status":false,"createdOn":"11/17/2021","createdBy":"jcrippes6"},
+{"ID":8,"id":4,"model":"Zoombeat","serialNumber":"572000244-8","assetNumber":"390236646-X","status":true,"createdOn":"1/8/2022","createdBy":"rbaroux7"},
+{"ID":9,"id":17,"model":"Trudoo","serialNumber":"161521163-2","assetNumber":"554970333-5","status":true,"createdOn":"6/3/2022","createdBy":"adurtnall8"},
+{"ID":10,"id":34,"model":"Photolist","serialNumber":"833203839-1","assetNumber":"876468089-4","status":true,"createdOn":"1/11/2022","createdBy":"emichiel9"}]
+}

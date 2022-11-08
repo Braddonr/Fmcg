@@ -46,7 +46,35 @@ export class HttpService {
         return response;
     }
     ));
+
 }
+// get mock data to use when end points are down
+public getMockData(): any {
+  return this.http.get<any>("http://localhost:3000/data")
+  .pipe(map((res: any) =>{
+  return res;
+  }))
+}
+
+
+public getPending(endpoint: string,  page?:number, size?:number, status?: boolean): any {
+  let params = new HttpParams()
+  .set('page', page.toString())
+  .set('size', size.toString())
+  .set('status', status.toString());
+  
+  return this.http.get(this._globalService.fmcgHost + endpoint,
+      { headers: this.getHeaders() , params: params
+          }
+  ).pipe(
+      map(
+          response => {
+      response = response;
+      return response;
+  }
+  ));
+}
+
 
 
 public retrieveData(endpoint: string,  model): any {
@@ -80,6 +108,26 @@ public getData(endpoint: string) {
   }
   ));
 }
+ //make request to geoapify
+
+ 
+ public reverseGeoCoder(apiKey:string, lat?:number, lon?: number): any {
+  let params = new HttpParams()
+  .set('apiKey', apiKey.toString())
+  .set('lat', lat.toString())
+  .set('lon', lon.toString());
+  
+  return this.http.get('https://api.geoapify.com/v1/geocode/reverse',
+      { params: params}
+  ).pipe(
+      map(
+          response => {
+      response = response;
+      return response;
+  }
+  ));
+}
+
 
  //returns error message
  loadErrorMessage(): string {
@@ -157,8 +205,9 @@ public getUserByUsername(endpoint: string, userName: string){
 public post(endpoint: string, model?: any): any {
     
   return this.http.post(this._globalService.fmcgHost + endpoint, model, { headers: this.getHeaders() }
-  ).pipe(map(response => {
-      response = response;
+  ).pipe(
+    map(response => {
+      response = response;      
       return response;
   }));
 }
@@ -182,7 +231,7 @@ public put(endpoint: string, model: any): any {
 
 
 public delete(endpoint: string, id?: string): any {
-  return this.http.delete(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders()}
+  return this.http.delete(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders(), body: {id: id}}
   ).pipe(map(response => {
       response = response;
       return response;
@@ -190,8 +239,8 @@ public delete(endpoint: string, id?: string): any {
 }
 
 public deleteId(endpoint: string, id: string){
-  let parameter = new HttpParams()
-  return this.http.delete(this._globalService.fmcgHost + endpoint + id, { headers: this.getHeaders()}
+  let parameter = new HttpParams().set('vehicleEntityDto', id);
+  return this.http.delete(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders(),  params: parameter}
   ).pipe(map(response => {
       response = response;
       return response;

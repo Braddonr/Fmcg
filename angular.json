@@ -9,7 +9,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
             "aot": false,
             "allowedCommonJsDependencies": [
@@ -17,7 +17,8 @@
               "dragula",
               "chart.js",
               "rxjs",
-              "babel-runtime"
+              "babel-runtime",
+              "crypto-js"
             ],
             "outputPath": "dist",
             "index": "src/index.html",
@@ -82,7 +83,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "primer:build"
           },
@@ -99,7 +100,7 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",

@@ -15,7 +15,11 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { DialogComponent } from './dialog/dialog.component';
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzMenuModule } from "ng-zorro-antd/menu";
-
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { ViewDistributorComponent } from './view-distributor/view-distributor.component';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 @NgModule({
     declarations: [
         AllDistributorsComponent,
@@ -25,6 +29,7 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
         AddVanComponent,
         AddVanStockComponent,
         DialogComponent,
+        ViewDistributorComponent,
         
     ],
     imports: [
@@ -36,7 +41,11 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
         MatCheckboxModule,
         MatTableExporterModule,
         NzDropDownModule,
-        NzMenuModule
+        NzModalModule,
+        NzMenuModule,
+        NzToolTipModule,
+        NzDescriptionsModule,
+        NzPageHeaderModule
     ],
     providers: [],
     entryComponents: []

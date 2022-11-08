@@ -1,3 +1,9 @@
+*{
+  @font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+'Noto Color Emoji';
+}
+
 .thead-bold {
   font-weight: bold;
 }
@@ -152,12 +158,12 @@ mat-icon {
   // align-content: center;
 }
 /* ---------------------------------------------------------- */
-// .table{
-//   position: relative;
-//   padding: 10px;
-//   overflow-wrap: break-word;
+.table_container{
+  width: 100%;
+}
+// .search{
+//   width: 200px;
 // }
-
 /* Column styles */
 /* ---------------------------------------------------------- */
 .position-column {
@@ -280,11 +286,91 @@ td.mat-cell {
 .gray-svg {
   fill: #b2b4b6;
 }
-.card{
-  margin-left: -80px;
-  margin-right: -50px;
-  margin-top: 20px; 
 
+
+
+/* -----Modal styles----------------------------------------------------- */
+// .ant-advanced-search-form {
+//   padding: 24px;
+//   background: #fbfbfb;
+//   border: 1px solid #d9d9d9;
+//   border-radius: 6px;
+// }
+
+/* -----Table search styles----------------------------------------------------- */
+
+.search-box {
+  padding: 8px;
 }
+
+.search-box input {
+  width: 188px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: 8px;
+}
+
+[nz-form-label] {
+  overflow: visible;
+}
+
+nz-range-picker {
+  margin: 0 8px 12px 0;
+}
+
+.card{
+  // margin-left: -80px;
+  // margin-right: -50px;
+  // margin-top: 20px; 
+ padding: 10px;
+ margin: 20px;
+}
+
+.label{
+  font-size: 14px;
+}
+// [nz-row] {
+//   background-color: rgba(20, 68, 238, 0.08);
+// }
 /* ---------------------------------------------------------- */
- 
+ .table{
+  margin-top: 2px;
+  overflow-x: scroll;
+  * { 
+    font-size: 12px;;
+  }
+ }
+// ::ng-deep .ant-table table {
+//   font-size: 12px;
+// }
+// ::ng-deep .ant-table-thead>tr>th {
+//   position: relative;
+//   overflow-wrap: break-word;
+// }
+
+::ng-deep .ant-table table{
+  font-size: 12px;
+}
+.ant-tag {
+  margin-bottom: 8px;
+  width: 5px;
+}
+.ant-toolTipEdit-inner {
+  color: black;
+  background-color: white;
+}
+// .ant-table, .ant-table.ant-table-middle, .ant-table.ant-table-small {
+//   font-size: 12px;
+// }
+
+//map styling
+.location{
+  text-align: end;
+}

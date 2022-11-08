@@ -36,7 +36,7 @@ export class SystemHttpInterceptor implements HttpInterceptor {
           // this.showError(SystemHttpInterceptor.REFRESH_PAGEON_TOAST_CLICK_MESSAGE);
         }
       
-      return throwError(err.message);
+      return throwError(err);
     }));
 
     };

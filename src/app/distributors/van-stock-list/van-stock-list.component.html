@@ -1,162 +1,437 @@
 <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
-<div class="container">
-    <mat-card style="width: 100%;height: fit-content;margin-top: 20px;">
-        <mat-card-title></mat-card-title>
-        <mat-card-content>
-            <!-- Search Filter -->
-      <div class="row filter-row" style="margin-bottom: 20px;">
-        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
-          <div class="form-group form-focus">
-            <form class="mat-form">
-              <mat-form-field class="form-field" appearance="fill">
-                <mat-label><i class="fa fa-arrowdown">&nbsp;Show/Hide Columns</i></mat-label>
-                <mat-select [formGroup]="" multiple>
-                  <mat-option (click)="show_hide_details()" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option>
-                  <!-- <mat-option (change)="onChange($event, 'index')" *ngFor="let cd of columnDefinitions">{{cd.label}}</mat-option> -->
-                </mat-select>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
-          <div class="form-group form-focus">
-            <form class="mat-form">
-              <mat-form-field class="form-field" appearance="fill">
-                <mat-label><i class="fa fa-search">&nbsp;Quick Search</i></mat-label>
-                <input matInput type="text" search (keyup)="applyFilter($event)" #input>
-              </mat-form-field>
-            </form>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
-<!--          <a  class="btn btn-success w-100"> Search </a>-->
-        </div>
-        <div class="col-sm-6 col-md-3 col-lg-3 col-xl-3 col-12">
-            <div class="col-auto float-end ms-auto">
-                <!-- Button trigger modal -->
-              <button (click)="triggerModal('')" type="button" class="btn btn-primary" style="margin-left: 3.4rem;margin-bottom: 10px;">
-                <i class="fa fa-plus"></i> Add Van Stock
-              </button>
-            </div>
-        </div>
-      </div>
-      <!-- /Search Filter -->
+<!--  -->
 
-            <div fxLayout="row" fxLayoutAlign="space-between">
-                <h3 _ngcontent-c48="" class="title-table"><b _ngcontent-c48="">
-                    <mat-icon _ngcontent-c48="" class="mat-icon fa fa-truck" role="img" aria-hidden="true" style="padding-right: 1.5em;"></mat-icon>&nbsp;Van Stock List</b>
-                </h3>
-                <div style="margin-right: 20px">
-                  <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="small" nzType="primary" nzGhost><mat-icon> import_export</mat-icon>&nbsp;Export Data</button>
-                  <nz-dropdown-menu #menu="nzDropdownMenu">
-                    <ul nz-menu>
-                      <li nz-menu-item>
-                        <span (click)="view(data)" title="View Van_Stock Details" aria-describedby="View Van_Stock Details">
-                          <mat-icon>remove_red_eye</mat-icon>view
-                      </span>
-                      </li>
-                      <li nz-menu-item>
-                        <span (click)="edit(data)" title="Edit Van_Stock Details" aria-describedby="Edit Van_Stock Details">
-                          <mat-icon>create</mat-icon>edit
-                      </span>
-                      </li>
-                      <li nz-menu-item>
-                        <span (click)="delete()" title="Delete Van_Stock" aria-describedby="Delete Van_Stock" style="color: red;">
-                          <mat-icon>delete</mat-icon>delete
-                      </span>
-                      </li>
-                    </ul>
-                  </nz-dropdown-menu>
+  <nz-card class="card" nzTitle="Van Stock List ({{totalVanStock}} Records)" [nzExtra]="extraTemplate" style="font-size: 12px;"> 
+          
+      <div class="table">
+      <nz-table
+      #borderedTable nzBordered 
+      #vanStockListTable
+      id="VanStockList"
+      [nzData]="listOfDataToDisplay" 
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="perPage"
+      [nzPageIndex]="page" 
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th *ngIf="showHideColumn('id')" nzCustomFilter>ID
+                <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('deport')"nzCustomerFilter>Deport
+                <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('stockNumber')">Stock Number
+                <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('value')" nzWidth="15%" nzCustomFilter>Value
+                <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('route')" nzCustomFilter>Route
+                <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('cdName')" nzCustomFilter>Cd Name
+                <nz-filter-trigger [(nzVisible)]="visible5" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletRoute">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('vehiclePlateNumber')" nzCustomFilter>Vehicle Plate Number
+                <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('approved')" nzCustomFilter>Approved
+                <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('actions')">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of vanStockListTable.data">
+              <td>{{ data.ID }}</td>
+              <td *ngIf="showHideColumn('id')">{{ data.id }}</td>
+              <td *ngIf="showHideColumn('deport')">{{ data.deport }}</td>
+              <td *ngIf="showHideColumn('stockNumber')">{{ data.stockNumber }}</td>
+              <td *ngIf="showHideColumn('value')">{{ data.value }}</td>
+              <td *ngIf="showHideColumn('route')">{{ data.route }}</td>
+              <td *ngIf="showHideColumn('cdName')">{{ data.cdName }}</td>
+              <td *ngIf="showHideColumn('vehiclePlateNumber')">{{ data.vehiclePlateNumber }}</td>
+              <td *ngIf="showHideColumn('approved')">{{ data.createdOn | date : 'short' }}</td>
+              <td *ngIf="showHideColumn('actions')">
+                <div style="justify-items: center; text-align: center;">
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button>
                 </div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
             </div>
-            <table mat-table matSort [dataSource]="dataSource" matTableExporter
-            #exporter="matTableExporter">
-                <!-- Position Column -->
-                <ng-container matColumnDef="Position">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
-                    <td mat-cell *matCellDef="let element">
-                    </td>
-                </ng-container>
-                <!-- ID Column -->
-                <ng-container matColumnDef="ID">
-                  <th class="id-column" mat-header-cell *matHeaderCellDef mat-sort-header 
-                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> ID </th>
-                  <td mat-cell *matCellDef="let element" style="padding-left: 10px;"
-                  [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
-                    {{element.id}}
-                  </td>
-                </ng-container>
-                <!-- DEPORT Column -->
-                <ng-container matColumnDef="DEPORT">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DEPORT </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- CREATED ON Column -->
-                <ng-container matColumnDef="CREATED ON">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header
-                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}"> CREATED ON </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;"
-                    [ngStyle]="{display: showHideDetails === true?  'table-cell' : 'none'}">
-                    </td>
-                </ng-container>
-                <!-- STOCK NUMBER Column -->
-                <ng-container matColumnDef="STOCK NUMBER">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> STOCK NUMBER </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- VALUE(UGX) Column -->
-                <ng-container matColumnDef="VALUE(UGX)">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> VALUE(UGX) </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- ROUTE Column -->
-                <ng-container matColumnDef="ROUTE">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ROUTE </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- CR_NAME Column -->
-                <ng-container matColumnDef="CR_NAME">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CR_NAME </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- VEHICLE PLATE NUMBER Column -->
-                <ng-container matColumnDef="VEHICLE PLATE NUMBER">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> VEHICLE PLATE NUMBER </th>
-                  <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                  </td>
-              </ng-container>
-                <!-- APPROVED Column -->
-                <ng-container matColumnDef="APPROVED">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> APPROVED </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left: 10px;">
-                    </td>
-                </ng-container>
-                <!-- Actions Column -->
-                <ng-container matColumnDef="Actions">
-                    <th class="header action-column" mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-                    <td mat-cell *matCellDef="let element">
-                      <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomCenter" nzSize="small"   
-                        nzType="primary" nzGhost style="margin-left: 20px">
-                        <i class="fa fa-cog mr-1"></i> Actions
-                      </button>
+  </nz-card>
 
-                      <button  class="btn btn-sm btn-danger ng-star-inserted" mattooltipclass="tooltip-default" aria-describedby="cdk-describedby-message-80" cdk-describedby-host="">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <mat-paginator
-                style="font-size: 15px;font-family: 'Nunito', sans-serif;"
-                [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons>
-            </mat-paginator>
-        </mat-card-content>
-    </mat-card>
-</div>
+  <nz-dropdown-menu #menuID="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
+      
+        <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuType="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Van Stock" nzOkText="Add Van Stock" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formAdd">
+        <div nz-row [nzGutter]="14" class="label">
+        <label  nz-col nzFlex="2.5">Cd Name:</label>
+        <label  nz-col nzFlex="2.5">Cd Code:</label>
+      </div>
+        <div nz-row [nzGutter]="14">
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Name"
+                  formControlName="cdName"
+                  id="cdName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Code"
+                  formControlName="cdCode"
+                  id="cdCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="14" class="label">
+          <label  nz-col nzFlex="2.5">Contact FullName:</label>
+          <label  nz-col nzFlex="2.5">Contact Mobile Number:</label>
+        </div>
+          <div nz-row [nzGutter]="14">
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact FullName"
+                    formControlName="cdContactFullName"
+                    id="cdContactFullName"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact Mobile Number:"
+                    formControlName="cdContactMobileNumber"
+                    id="cdContactMobileNumber"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        
+          <div nz-row [nzGutter]="14" class="label">
+            <label  nz-col nzFlex="2.5">Region Code:</label>
+            <label  nz-col nzFlex="2.5">Territory Code:</label>
+          </div>
+            <div nz-row [nzGutter]="14">
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="This field is required">
+                    <input
+                      nz-input
+                      placeholder="Region Code"
+                      formControlName="regionCode"
+                      id="regionCode"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="This field is required">
+                    <input
+                      nz-input
+                      placeholder="Territory Code"
+                      formControlName="territoryCode"
+                      id="territoryCode"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row [nzGutter]="14" class="label">
+              <label  nz-col nzFlex="2.5">Email:</label>
+              <label  nz-col nzFlex="2.5">Remarks:</label>
+            </div>
+              <div nz-row [nzGutter]="14">
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="This field is required">
+                      <input
+                        type="email"
+                        nz-input
+                        placeholder="Email"
+                        formControlName="cdEmail"
+                        id="cdEmail"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control  nzErrorTip="Please write something here!">
+                        <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
+                      </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+      
+    </form>
+  </ng-container>
+  </nz-modal>
+
+  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Van Stock" nzOkText="Edit Van Stock" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formEdit">
+        <div nz-row [nzGutter]="14" class="label">
+        <label  nz-col nzFlex="2.5">Cd Name:</label>
+        <label  nz-col nzFlex="2.5">Cd Code:</label>
+      </div>
+        <div nz-row [nzGutter]="14">
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Name"
+                  formControlName="cdName"
+                  id="cdName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Code"
+                  formControlName="cdCode"
+                  id="cdCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row [nzGutter]="14" class="label">
+          <label  nz-col nzFlex="2.5">Contact FullName:</label>
+          <label  nz-col nzFlex="2.5">Contact Mobile Number:</label>
+        </div>
+          <div nz-row [nzGutter]="14">
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact FullName"
+                    formControlName="cdContactFullName"
+                    id="cdContactFullName"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact Mobile Number:"
+                    formControlName="cdContactMobileNumber"
+                    id="cdContactMobileNumber"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        
+          <div nz-row [nzGutter]="14" class="label">
+            <label  nz-col nzFlex="2.5">Region Code:</label>
+            <label  nz-col nzFlex="2.5">Territory Code:</label>
+          </div>
+            <div nz-row [nzGutter]="14">
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="This field is required">
+                    <input
+                      nz-input
+                      placeholder="Region Code"
+                      formControlName="regionCode"
+                      id="regionCode"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control nzErrorTip="This field is required">
+                    <input
+                      nz-input
+                      placeholder="Territory Code"
+                      formControlName="territoryCode"
+                      id="territoryCode"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row [nzGutter]="14" class="label">
+              <label  nz-col nzFlex="2.5">Email:</label>
+              <label  nz-col nzFlex="2.5">Remarks:</label>
+            </div>
+              <div nz-row [nzGutter]="14">
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="This field is required">
+                      <input
+                        type="email"
+                        nz-input
+                        placeholder="Email"
+                        formControlName="cdEmail"
+                        id="cdEmail"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control  nzErrorTip="Please write something here!">
+                        <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
+                      </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+      
+    </form>
+  </ng-container>
+  </nz-modal>
+
+  <ng-template #extraTemplate>
+    <nz-space>
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+        Show/Hide Columns
+        <i nz-icon nzType="down"></i>
+      </button>&nbsp;
+      <nz-dropdown-menu #menu4="nzDropdownMenu">
+        <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+        <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+        <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+        
+        </ul>
+      </nz-dropdown-menu>
+
+      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Van Stock</button>&nbsp;
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+      <nz-dropdown-menu #fileType="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a (click)="exportVanStockListPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportVanStockListExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)=" exportVanStockListCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-space>
+  </ng-template>
+
+  
+

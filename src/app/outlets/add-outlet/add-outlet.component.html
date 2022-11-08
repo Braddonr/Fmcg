@@ -23,7 +23,7 @@
                 <nz-form-label [nzSm]="14" [nzXs]="24" nzRequired nzFor="outletRoute">Outlet Route</nz-form-label>
                 <nz-form-control [nzSm]="20" [nzXs]="24" nzErrorTip="This field is required">
                     <nz-select *ngIf="!editData" nzShowSearch nzAllowClear nzPlaceHolder="Select Route" formControlName="outletRoute" id="outletRoute">
-                        <nz-option *ngFor="let option of routeNames" nzCustomContent nzLabel="option" nzValue="option">{{option}}</nz-option>
+                        <nz-option *ngFor="let option of routeNames" nzCustomContent nzLabel={{option}} nzValue={{option}}>{{option}}</nz-option>
                     </nz-select>
                       <!-- <input class="input" *ngIf="editData" formControlName="outletRoute" id="outletRoute"> -->
                       <!-- <nz-select *ngIf="editData" nzShowSearch nzAllowClear nzPlaceHolder={{outlet.outletRoute}} formControlName="outletRoute" id="outletRoute"> -->
@@ -34,13 +34,22 @@
                     </nz-select> -->
                        
                     <mat-form-field *ngIf="editData" formControlName="outletRoute" id="outletRoute">
-                        <mat-select [(value)]="loadedRoute" >
-                            <mat-option value="333">333</mat-option>
+                        <mat-select [(value)]="loadedRoute">
+                            <mat-option value={{routeId}} *ngFor="let routeId of routeIds">{{routeId}}</mat-option>
+                            <!-- <mat-option value="333">333</mat-option>
                             <mat-option value="334">334</mat-option>
                             <mat-option value="335">335</mat-option>
-                            <mat-option value="339">339</mat-option>
+                            <mat-option value="339">339</mat-option> -->
                         </mat-select>
                     </mat-form-field>
+
+
+                    <!-- <nz-select ngModel="339">
+                        <nz-option nzValue="333" nzLabel="333"></nz-option>
+                        <nz-option nzValue="339" nzLabel="339"></nz-option>
+                        <nz-option nzValue="334" nzLabel="334"></nz-option>
+                      </nz-select> -->
+
 
                 </nz-form-control>
             </nz-form-item>

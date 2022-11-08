@@ -112,6 +112,7 @@ mat-sidenav.sidebar-panel {
         display: none !important;
         visibility: hidden;
       }
+      
 
       .mat-list-item>.mat-list-item-content>a {
         padding-right: 0;
@@ -179,4 +180,9 @@ mat-sidenav.sidebar-panel {
       }
     }
   }
+}
+.label[_ngcontent-ilb-c70] {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 48px;
 }

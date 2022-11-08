@@ -1,6 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import moment from 'moment';
 import { QueryCommandInterface } from 'src/app/common/models/query_commands_interface';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import {ngxCsv } from 'ngx-csv/ngx-csv';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import autoTable from 'jspdf-autotable';
+
+const PDF_EXTENSION ='.pdf';
+const hash = '#'
+const EXCEL_EXTENSION = '.xlsx';
+const CSV_EXTENSION = '.csv';
+const CSV_TYPE = 'text/plain;charset=utf-8';
 
 @Injectable({
   providedIn: 'root'
@@ -201,5 +213,157 @@ export class GlobalService {
     phoneNumber = prfx + '256' + phoneNumber.substring(4, 13);
 }
     return phoneNumber;
+  }
+ 
+//export PDF
+public exportPDF(element: string, fileName: string, PDFTitle: string): void{
+
+//pass table id
+// let DATA: any = document.getElementById(element);
+// html2canvas(DATA).then((canvas) => {
+
+//   let fileWidth = 208;
+//   let fileHeight = (canvas.height * fileWidth) / canvas.width;
+//   const FILEURI = canvas.toDataURL('./assets/images/iko-stock-logo.png');
+//   let PDF = new jsPDF('p', 'mm', 'a4');
+//   let position = 0;
+//   PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+//   PDF.save(`${fileName}${PDF_EXTENSION}`);
+// });
+
+// var prepare=[];
+//     this.listOfData.forEach(e=>{
+//       var tempObj =[];
+//       tempObj.push(e.ID);
+//       tempObj.push(e.cdCode);
+//       tempObj.push(e.cdName);
+//       tempObj.push(e.productCode);
+//       tempObj.push( e.productDescription);
+//       tempObj.push(e.orderRef);
+//       tempObj.push(e.orderQuantity);
+//       tempObj.push(e.orderValue);
+//       tempObj.push(e.modeOfPayment);
+//       tempObj.push(e.status);
+//       prepare.push(tempObj);
+//     });
+    // 'outletName','outletCode','outletType','outletRoute', 'location', 'latitude', 'longitude','cdName','cdCode','cdEmail','cdContactFullName', 'cdOfficePhoneNumber', 'contactName','contactMobileNumber','remarks'
+    
+    const doc = new jsPDF('l', 'mm', 'a4',);
+    var fontSize = 12; 
+    var imageUrl = "./assets/images/iko-stock-logo.png";
+    doc.setFontSize(fontSize);
+    doc.setPage(1);
+    doc.addImage(imageUrl, 'JPEG', 125, 5, 35, 35,);
+    doc.text(PDFTitle,  130, 48,);
+    // let page = document.getElementById(`${element}`) as HTMLTableElement;
+    
+    
+    autoTable(doc, {
+        // head: [['#','CD CODE','CD NAME','PRODUCT CODE','DESCRIPTION','ODER REF','QUANTITY','VALUE','PAY MODE','STATUS']],
+        margin: {  top: 5, horizontal: 5, bottom: 2, vertical: 5},
+        // body: prepare,
+        html: element,
+        startY: 60,
+        theme: 'striped',
+        // headStyles :{minCellHeight: 12, textColor: [255,255,255],fontStyle: "bold", fontSize: 10},
+        foot: [['','','', '','@Eclectics International',' ','','',]],
+        footStyles :{textColor: [255,255,255],font: "rotobo", fontSize: 10},
+        bodyStyles: {minCellHeight: 10, fontSize: 9.5}
+    });
+
+    doc.save(`${fileName}${PDF_EXTENSION}`);
+
+
+}
+
+
+
+//export excel
+
+//  /**
+//    * Creates excel from the table element reference.
+//    *
+//    * @param element DOM table element reference.
+//    * @param fileName filename to save as.
+//    */
+
+  public exportTableElmToExcel(element: HTMLElement, fileName: string): void {
+
+
+     //pass table id
+  // let element = document.getElementById('outletTable');
+  const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+  
+  //generate workbook and worksheet
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
+
+  //then save to file
+  XLSX.writeFile(wb, `${fileName}${EXCEL_EXTENSION}`);
+
+  }
+
+//export csv
+
+  // /**
+  //  * Saves the file on the client's machine via FileSaver library.
+  //  *
+  //  * @param buffer The data that need to be saved.
+  //  * @param fileName File name to save as.
+  //  * @param fileType File type to save as.
+  //  */
+   private saveAsFile(buffer: any, fileName: string, fileType: string): void {
+    const data: Blob = new Blob([buffer], { type: fileType });
+    FileSaver.saveAs(data, fileName);
+  }
+
+  // /**
+  //  * Creates an array of data to CSV. It will automatically generate a title row based on object keys.
+  //  *
+  //  * @param rows array of data to be converted to CSV.
+  //  * @param fileName filename to save as.
+  //  * @param columns array of object properties to convert to CSV. If skipped, then all object properties will be used for CSV.
+  //  */
+  
+  public exportToCsv(rows: object[], fileName: string, columns?: string[]): string {
+    if (!rows || !rows.length) {
+      return;
+    }
+    const separator = ',';
+    const keys = Object.keys(rows[0]).filter(k => {
+      if (columns?.length) {
+        return columns.includes(k);
+      } else {
+        return true;
+      }
+    });
+    const csvContent =
+      keys.join(separator) +
+      '\n' +
+      rows.map(row => {
+        return keys.map(k => {
+          let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+          cell = cell instanceof Date
+            ? cell.toLocaleString()
+            : cell.toString().replace(/"/g, '""');
+          if (cell.search(/("|,|\n)/g) >= 0) {
+            cell = `"${cell}"`;
+          }
+          return cell;
+        }).join(separator);
+      }).join('\n');
+    this.saveAsFile(csvContent, `${fileName}${CSV_EXTENSION}`, CSV_TYPE);
+  }
+//convert response from backend to readable data by user
+responseDecoder(response: boolean){
+let readableResponse: boolean;
+if(response = true){
+  readableResponse = true;
+  // this.readableResponse = `<i nz-icon nzType="check-circle" nzTheme="twotone" style="text-color: green;"></i>`;  
+}
+else{
+  readableResponse = false;
+  // this.readableResponse = `<i nz-icon nzType="close-circle" nzTheme="twotone  style="text-color: red;""></i>`;
+   }
   }
 }

@@ -15,6 +15,8 @@ import { MatTableExporterModule } from "mat-table-exporter";
 import { DialogComponent } from "./dialog/dialog.component";
 import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzMenuModule } from "ng-zorro-antd/menu";
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 
 @NgModule({
     declarations: [
@@ -35,7 +37,9 @@ import { NzMenuModule } from "ng-zorro-antd/menu";
         MatInputModule,
         MatTableExporterModule,
         NzDropDownModule,
-        NzMenuModule
+        NzMenuModule,
+        NzModalModule,
+        NzToolTipModule
     ],
     providers: [],
     entryComponents:[]

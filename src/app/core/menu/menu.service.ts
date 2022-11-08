@@ -58,7 +58,10 @@ export class MenuService {
         label: this.translate.instant("Outlets Module"),
         icon: "dashboard",
         items: [
-          { link: "/outlets/list-outlets", label: this.translate.instant("Outlets List") , icon: "crop_square"}
+          { link: "/outlets/list-outlets", label: this.translate.instant("Outlets List") , icon: "crop_square"},
+          { link: "/outlets/pending-add", label: this.translate.instant("Pending Add") , icon: "crop_square"},
+          
+          
         ]
       },
       {

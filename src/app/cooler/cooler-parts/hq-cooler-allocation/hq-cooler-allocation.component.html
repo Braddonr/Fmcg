@@ -1,192 +1,369 @@
 <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
-<div class="basic-container global" fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutGap="20px" class="p-2">
-        <div>
-            <button nz-button nz-dropdown title="Select columns to Display"
-                aria-describedby="Select Columns to Display">
-                <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="columnToggleMenu">
-                    Select Columns to Display
-                    <i nz-icon nzType="down"></i>
-                </a>
-            </button> &nbsp;
-            <nz-dropdown-menu #columnToggleMenu="nzDropdownMenu" nzSize="large">
-                <ul nz-menu>
-                    <nz-checkbox-wrapper class="check-group" (nzOnChange)="selectedColumns($event)">
-                        <div nz-column nzJustify="start">
-                            <div *ngFor="let colm of displayColumns" class="pl-1">
-                                <div *ngIf="mandatoryColumns.includes(colm); else nonchecked">
-                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="true"
-                                        nzSize="small">{{colm }}</label>
-                                </div>
-                                <ng-template #nonchecked>
-                                    <label for="" nz-checkbox nzValue="{{colm}}" class="wrapper-label" [ngModel]="false"
-                                        nzSize="small">{{colm}}</label>
-                                </ng-template>
-                            </div>
-                        </div>
-                    </nz-checkbox-wrapper>
-                    <div class="btn-nz"></div>
-                </ul>
-            </nz-dropdown-menu>
-        </div>
-        <div>
-            <input type="text" class="form-control form-control-md" style="width: 230px;" [(ngModel)]="searchInput"
-                (ngModelChange)="globalSearch()" placeholder="quick search">
-        </div>
-    </div>
-    <!-- <div class="pr-2">
-        <span class="total">Total Number of Users: {{total}}</span>&nbsp;&nbsp;
-        <button class="btn btn-action pull-right" (click)="openDialog('create', '$event')">
-            <span class="fa fa-plus"></span>&nbsp; Add User</button>
+<!--  -->
 
-        <button [matMenuTriggerFor]="export" class="pull-right mr-2 btn btn-action">
-            <i class="fas fa-file-export"></i>
-            Export Data
-            <br>
-        </button>
-        <mat-menu #export="matMenu" x-position="before">
-            <button mat-menu-item (click)="exportXlsx()" title="Export XLSX">
-                <span class="fa fa-file-excel-o fa-lg text-success" style="font-size: 500px;"
-                    data-inline="false"></span>&nbsp; &nbsp;
-                Excel
-            </button>
-            <button mat-menu-item (click)="exportPdf()" title="Export PDF">
-                <span class="fa fa-file-pdf-o fa-lg text-danger" style="font-size:500px;"
-                    data-inline="false"></span>&nbsp; &nbsp;
-                PDF
-            </button>
-            <button mat-menu-item (click)="exportToCsvFile()" title="Export CSV">
-                <img style="width: 15px; height: 15px" src="assets/images/csv.svg" alt=""> &nbsp;&nbsp;
-                CSV
-            </button>
-
-        </mat-menu>
-    </div> -->
-</div>
-
-<div class="basic-container">
-
-
-    <nz-card [nzBordered]="false" nzTitle="All Products" nzSize="large" [nzExtra]="extraTemplate">
-        <nz-table #nzTable [nzBordered]="true" [nzData]="listOfDisplayData" nzSize="small" nzTableLayout="fixed"
-            class="px-1" [nzLoading]="loading" [nzFrontPagination]="false" nzShowSizeChanger [nzTotal]="total"
-            [nzPageSize]="perPage" [nzPageIndex]="page" (nzQueryParams)="onQueryParamsChange($event)">
-            <thead>
-                <tr>
-                    <th width="40px">#</th>
-
-                    <th class="thead-bold" nz-dropdown [(nzVisible)]="visible"
-                        [nzDropdownMenu]="menu" *ngIf="mandatoryColumns.includes('UserName')">
-                        Product ID
-                    </th>
-                    <th class="thead-bold" *ngIf="mandatoryColumns.includes('Full Name')"  nz-dropdown [nzDropdownMenu]="fullName">Product Name</th>
-                    <th class="thead-bold" *ngIf="mandatoryColumns.includes('Email')" nz-dropdown [nzDropdownMenu]="email">Description</th>
-                    <th class="thead-bold" *ngIf="mandatoryColumns.includes('Status')" nz-dropdown [nzDropdownMenu]="status">Status</th>
-                    <th class="thead-bold" nzRight>Actions</th>
-                </tr>
-            </thead>
-            <tbody nzSize="small">
-                <tr *ngFor="let data of nzTable.data">
-                    <td >{{data.ID}}</td>
-                    <td *ngIf="mandatoryColumns.includes('UserName')">{{data.UserName}}</td>
-                    <td *ngIf="mandatoryColumns.includes('Full Name')">{{data.FullName}}</td>
-                    <td *ngIf="mandatoryColumns.includes('Email')">{{data.Email}}</td>
-                    <td *ngIf="mandatoryColumns.includes('Status')" class="pl-2">
-                        <app-label-active [value]="data.Active"></app-label-active>
-                    </td>
-
-                    <td nzRight class="pl-2">
-                        <button nz-button nzType="primary" nzSize="small" title="Edit User" nzSuccess nzGhost
-                            aria-describedby="Edit User" (click)="editUser(data)">
-                            <i nz-icon nzType="edit" nzTheme="outline"></i>
-                        </button>&nbsp;
-                        <button nz-button nzType="primary" nzSize="small" title="View User" nzSuccess nzGhost
-                            aria-describedby="View User" (click)="viewUserDetails(data)">
-                            <i nz-icon nzType="eye" nzTheme="outline"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+  <nz-card class="card" nzTitle="Cooler Allocation ({{total}} Records)" [nzExtra]="extraTemplate" style="font-size: 12px;"> 
+          
+      <div class="table">
+      <nz-table
+      #borderedTable nzBordered 
+      #coolerAllocationTable
+      id="coolerAllocationTable"
+      [nzData]="listOfDataToDisplay" 
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="perPage"
+      [nzPageIndex]="page" 
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th *ngIf="showHideColumn('ID')" nzCustomFilter>ID
+                <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+                <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
+                <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Asset Number')" nzCustomFilter>Asset Number
+                <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Status')" nzWidth="15%" nzCustomFilter>Status
+                <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Created By')" nzCustomFilter>Created By
+                <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Created On')" nzCustomFilter >Created On
+                <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                  <i nz-icon nzType="calendar"></i>
+                </nz-filter-trigger>
+              </th>
+              <th n *ngIf="showHideColumn('Actions')">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of coolerAllocationTable.data">
+              <td>{{ data.ID }}</td>
+              <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
+              <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td>
+              <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
+              <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
+              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
+              <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
+              <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
+              <td  *ngIf="showHideColumn('Actions')">
+                <div style="justify-items: center; text-align: center;">
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </nz-table>
-    </nz-card>
+            </div>
+  </nz-card>
 
-    <ng-template #extraTemplate>
+  <nz-dropdown-menu #menuID="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
       
-        <span *ngIf="total > 0">showing <span class="total">{{perPage}}</span> of <span class="total">{{total}}</span>items</span>&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-action pull-right" (click)="openDialog('create', '$event')">
-            <span class="fa fa-plus"></span>&nbsp; Add Product</button>
-        <!-- <button [matMenuTriggerFor]="export" class="pull-right mr-2 btn btn-action">
-            <i class="fas fa-file-export"></i>
-            Export Data
-            <br>
-        </button>
-        <mat-menu #export="matMenu" x-position="before" [overlapTrigger]="false">
+        <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuType="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+      </div>
+    </div>
+  </nz-dropdown-menu>
 
-            <button mat-menu-item title="Export users to XLSX" (click)="exportUsersXLSX()"
-                aria-describedby="Export users to XLSX">
-                <mat-icon class="text-success">file_copy</mat-icon>XLSX
-            </button>
-            <button mat-menu-item title="Export users to pdf" (click)="exportUsersPDF()"
-                aria-describedby="Export users to pdf">
-                <mat-icon>picture_as_pdf</mat-icon>
-                PDF
-            </button>
 
-        </mat-menu> -->
-       
-    </ng-template>
-    <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="search code" [(ngModel)]="searchValue">
-                <button nz-button nzSize="small" nzType="primary" (click)="search()"
-                    class="search-button">Search</button>
-                <button nz-button nzSize="small" (click)="reset()">Reset</button>
-            </div>
-        </div>
-    </nz-dropdown-menu> -->
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Cooler Allocation" nzOkText="Allocate Cooler" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formAdd">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="model">Cooler Model</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cooler Model" formControlName="model">
+              <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
+              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
+              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
+              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
+              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="coolerSize" nzRequired>Cooler Size</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder=" Cooler Size"
+              id="coolerSize"
+              formControlName="coolerSize"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="assetNumber">Asset Number</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Asset Number" formControlName="assetNumber">
+              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
+              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
+              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
+              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="serialNumber" nzRequired>Serial Number</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder="Serial Number"
+              id="serialNumber"
+              formControlName="serialNumber"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder="Status"
+              id="status"
+              formControlName="status"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        
+      
+    </form>
+  </ng-container>
+  </nz-modal>
 
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="search username" [(ngModel)]="searchValue" (ngModelChange)="userNameSearch()">
-            </div>
+  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Cooler Allocation" nzOkText="Edit Cooler Allocation" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
+    <ng-container *nzModalContent>
+      <form nz-form [formGroup]="formEdit">
+        <div nz-row [nzGutter]="14" class="label">
+        <label  nz-col nzFlex="2.5">Cd Name:</label>
+        <label  nz-col nzFlex="2.5">Cd Code:</label>
+      </div>
+        <div nz-row [nzGutter]="14">
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Name"
+                  formControlName="cdName"
+                  id="cdName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Cd Code"
+                  formControlName="cdCode"
+                  id="cdCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
         </div>
-    </nz-dropdown-menu>
-    <nz-dropdown-menu #fullName="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="search full name" [(ngModel)]="searchfullName" (ngModelChange)="fullnameSearch()">
-            </div>
-        </div>
-    </nz-dropdown-menu>
-    <nz-dropdown-menu #email="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="search-box">
-                <input type="text" nz-input placeholder="search email" [(ngModel)]="searchEmail" (ngModelChange)="emailSearch()">
-            </div>
-        </div>
-    </nz-dropdown-menu>
 
-    <nz-dropdown-menu #status="nzDropdownMenu">
-        <div class="ant-table-filter-dropdown">
-            <div class="form-check form-check-inline">
-                <input type="checkbox" id="active" class="form-check-input" [(ngModel)]="searchStatus"
-                    (ngModelChange)="statusSearch()">
-                <label for="active">Active</label>
-            </div>
-            <!-- <br>
-            <div class="form-check form-check-inline">
-                <input type="checkbox" id="active" class="form-check-input" [(ngModel)]="searchStatus"
-                    (ngModelChange)="statusSearch()">
-                <label for="active">Inactive</label>
-            </div> -->
-            <br>
-            <div class="form-check form-check-inline">
-                <input type="checkbox" id="all" class="form-check-input" [(ngModel)]="allStatus"
-                    (ngModelChange)="removeStatusFilter()">
-                <label for="all">All</label>
-            </div>
+        <div nz-row [nzGutter]="14" class="label">
+          <label  nz-col nzFlex="2.5">Contact FullName:</label>
+          <label  nz-col nzFlex="2.5">Contact Mobile Number:</label>
         </div>
-    </nz-dropdown-menu>
-</div>
+          <div nz-row [nzGutter]="14">
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact FullName"
+                    formControlName="cdContactFullName"
+                    id="cdContactFullName"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div nz-col nzFlex="2.5">
+              <nz-form-item>
+                <nz-form-control nzErrorTip="This field is required">
+                  <input
+                    nz-input
+                    placeholder="Contact Mobile Number:"
+                    formControlName="cdContactMobileNumber"
+                    id="cdContactMobileNumber"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        
+          <div nz-row [nzGutter]="14" class="label">
+            <label  nz-col nzFlex="2.5">Region Code:</label>
+            <label  nz-col nzFlex="2.5">Territory Code:</label>
+          </div>
+            <div nz-row [nzGutter]="14">
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control id="regionCode" nzErrorTip="This field is required">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Region Code" formControlName="regionCode">
+                      <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
+                      <nz-option nzLabel="68904" nzValue="68904"></nz-option>
+                      <nz-option nzLabel="68905" nzValue="68905"></nz-option>
+                      <nz-option nzLabel="68906" nzValue="68906"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+              <div nz-col nzFlex="2.5">
+                <nz-form-item>
+                  <nz-form-control id="territoryCode" nzErrorTip="This field is required">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Territory Code" formControlName="territoryCode">
+                      <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
+                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000165"></nz-option>
+                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000159"></nz-option>
+                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000158"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div nz-row [nzGutter]="14" class="label">
+              <label  nz-col nzFlex="2.5">Email:</label>
+              <label  nz-col nzFlex="2.5">Remarks:</label>
+            </div>
+              <div nz-row [nzGutter]="14">
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control nzErrorTip="This field is required">
+                      <input
+                        type="email"
+                        nz-input
+                        placeholder="Email"
+                        formControlName="cdEmail"
+                        id="cdEmail"
+                      />
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+                <div nz-col nzFlex="2.5">
+                  <nz-form-item>
+                    <nz-form-control  nzErrorTip="Please write something here!">
+                        <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
+                      </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+      
+    </form>
+  </ng-container>
+  </nz-modal>
+
+  <ng-template #extraTemplate>
+    <nz-space>
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+        Show/Hide Columns
+        <i nz-icon nzType="down"></i>
+      </button>&nbsp;
+      <nz-dropdown-menu #menu4="nzDropdownMenu">
+        <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+        <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+        <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+        
+        </ul>
+      </nz-dropdown-menu>
+
+      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp;
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+      <nz-dropdown-menu #fileType="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a (click)="exportCoolerAllocationPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportCoolerAllocationExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)=" exportCoolerAllocationCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-space>
+  </ng-template>
+
+  
+

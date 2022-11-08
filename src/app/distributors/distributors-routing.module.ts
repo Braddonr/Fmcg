@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AllDistributorsComponent } from "./all-distributors/all-distributors.component";
 import { AllVehiclesComponent } from "./all-vehicles/all-vehicles.component";
+import { ViewDistributorComponent } from './view-distributor/view-distributor.component';
 
 const routes: Routes = [
 
@@ -12,6 +13,14 @@ const routes: Routes = [
         component: AllDistributorsComponent,
         data: {
             breadcrumb: "All Distributors"
+        }
+    },
+    // view outlets
+    {
+        path: 'view-distributor/:id',
+        component: ViewDistributorComponent,
+        data: {
+            breadcrumb: "view"
         }
     },
     // vehicles

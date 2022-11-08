@@ -1,0 +1,22 @@
+<nz-card style="margin: 20px;">
+    <nz-page-header
+      class="site-page-header"
+      nzbutton (click)="onBack()" 
+      nzBackIcon
+      nzTitle="Outlet Details"
+    ></nz-page-header>
+    <!-- nz-tooltip [nzTooltipTitle]="toolTipBackTitle" [nzTooltipColor]="toolTipBackColor" [nzTooltipPlacement]='toolTipBackPosition' -->
+<nz-descriptions [nzColumn]="4" nzBordered  style="padding:20px;">
+    
+    <nz-descriptions-item  nzTitle="Cd Code" [nzSpan]="2">{{distributorData.cdCode}} <br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Cd Name" [nzSpan]="2">{{distributorData.cdName}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="cd Contact FullName" [nzSpan]="2">{{distributorData.cdContactFullName}}<br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="cd Contact MobileNumber" [nzSpan]="2">{{distributorData.cdContactMobileNumber}}<br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Email">{{distributorData.cdEmail}}<br/></nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Contact Name" [nzSpan]="2">{{distributorData.contactName}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Contact Phone Number">{{distributorData.contactMobileNumber}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Region Code" [nzSpan]="2">{{distributorData.regionCode}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Territory Code" [nzSpan]="2">{{distributorData.territoryCode}}</nz-descriptions-item>
+    <nz-descriptions-item  nzTitle="Created On" [nzSpan]="4">{{distributorData.createdOn | date : 'short'}}</nz-descriptions-item>
+  </nz-descriptions>
+</nz-card>

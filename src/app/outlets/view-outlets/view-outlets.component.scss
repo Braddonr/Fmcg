@@ -1,0 +1,12 @@
+.nzTitle{
+    margin-left: 5px;
+    font-weight: 400px;
+}
+
+::ng-deep .ant-descriptions-bordered .ant-descriptions-item-label {
+    background-color: #e8e8e8;
+    font-weight: 500;
+}
+::ng-deep .ant-descriptions-view{
+    border: 3px solid;
+}
