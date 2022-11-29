@@ -29,6 +29,11 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
+              <th *ngIf="showHideColumn('Cooler Size')"nzCustomerFilter>Cooler Size
+                <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                  <i nz-icon nzType="search"></i>
+                </nz-filter-trigger>
+              </th>
               <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
                 <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
                   <i nz-icon nzType="search"></i>
@@ -62,6 +67,7 @@
               <td>{{ data.ID }}</td>
               <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
               <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td>
+              <td *ngIf="showHideColumn('Cooler Size')">{{ data.coolerSize }}</td>
               <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
               <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
               <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
@@ -148,11 +154,7 @@
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="model">Cooler Model</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cooler Model" formControlName="model">
-              <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
-              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
-              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
-              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
-              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
+              <nz-option nzLabel="{{model}}" nzValue="{{model}}" *ngFor="let model of models"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -170,12 +172,12 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="assetNumber">Asset Number</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Asset Number" formControlName="assetNumber">
-              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
-              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
-              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
-              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
-            </nz-select>
+            <input
+            nz-input
+            placeholder="Asset Number"
+            id="assetNumber"
+            formControlName="assetNumber"
+          />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -209,126 +211,58 @@
   <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Cooler" nzOkText="Edit Cooler" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formEdit">
-        <div nz-row [nzGutter]="14" class="label">
-        <label  nz-col nzFlex="2.5">Cd Name:</label>
-        <label  nz-col nzFlex="2.5">Cd Code:</label>
-      </div>
-        <div nz-row [nzGutter]="14">
-          <div nz-col nzFlex="2.5">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="This field is required">
-                <input
-                  nz-input
-                  placeholder="Cd Name"
-                  formControlName="cdName"
-                  id="cdName"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col nzFlex="2.5">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="This field is required">
-                <input
-                  nz-input
-                  placeholder="Cd Code"
-                  formControlName="cdCode"
-                  id="cdCode"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-
-        <div nz-row [nzGutter]="14" class="label">
-          <label  nz-col nzFlex="2.5">Contact FullName:</label>
-          <label  nz-col nzFlex="2.5">Contact Mobile Number:</label>
-        </div>
-          <div nz-row [nzGutter]="14">
-            <div nz-col nzFlex="2.5">
-              <nz-form-item>
-                <nz-form-control nzErrorTip="This field is required">
-                  <input
-                    nz-input
-                    placeholder="Contact FullName"
-                    formControlName="cdContactFullName"
-                    id="cdContactFullName"
-                  />
-                </nz-form-control>
-              </nz-form-item>
-            </div>
-            <div nz-col nzFlex="2.5">
-              <nz-form-item>
-                <nz-form-control nzErrorTip="This field is required">
-                  <input
-                    nz-input
-                    placeholder="Contact Mobile Number:"
-                    formControlName="cdContactMobileNumber"
-                    id="cdContactMobileNumber"
-                  />
-                </nz-form-control>
-              </nz-form-item>
-            </div>
-          </div>
-        
-          <div nz-row [nzGutter]="14" class="label">
-            <label  nz-col nzFlex="2.5">Region Code:</label>
-            <label  nz-col nzFlex="2.5">Territory Code:</label>
-          </div>
-            <div nz-row [nzGutter]="14">
-              <div nz-col nzFlex="2.5">
-                <nz-form-item>
-                  <nz-form-control id="regionCode" nzErrorTip="This field is required">
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Region Code" formControlName="regionCode">
-                      <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
-                      <nz-option nzLabel="68904" nzValue="68904"></nz-option>
-                      <nz-option nzLabel="68905" nzValue="68905"></nz-option>
-                      <nz-option nzLabel="68906" nzValue="68906"></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-              <div nz-col nzFlex="2.5">
-                <nz-form-item>
-                  <nz-form-control id="territoryCode" nzErrorTip="This field is required">
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Territory Code" formControlName="territoryCode">
-                      <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
-                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000165"></nz-option>
-                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000159"></nz-option>
-                      <nz-option nzLabel="TR-0000000165" nzValue="TR-0000000158"></nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                </nz-form-item>
-              </div>
-            </div>
-
-            <div nz-row [nzGutter]="14" class="label">
-              <label  nz-col nzFlex="2.5">Email:</label>
-              <label  nz-col nzFlex="2.5">Remarks:</label>
-            </div>
-              <div nz-row [nzGutter]="14">
-                <div nz-col nzFlex="2.5">
-                  <nz-form-item>
-                    <nz-form-control nzErrorTip="This field is required">
-                      <input
-                        type="email"
-                        nz-input
-                        placeholder="Email"
-                        formControlName="cdEmail"
-                        id="cdEmail"
-                      />
-                    </nz-form-control>
-                  </nz-form-item>
-                </div>
-                <div nz-col nzFlex="2.5">
-                  <nz-form-item>
-                    <nz-form-control  nzErrorTip="Please write something here!">
-                        <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
-                      </nz-form-control>
-                  </nz-form-item>
-                </div>
-              </div>
-      
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="model">Cooler Model</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cooler Model" formControlName="model">
+              <nz-option nzLabel="{{model}}" nzValue="{{model}}" *ngFor="let model of models"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="coolerSize" nzRequired>Cooler Size</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder=" Cooler Size"
+              id="coolerSize"
+              formControlName="coolerSize"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="assetNumber">Asset Number</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder="Asset Number"
+              id="assetNumber"
+              formControlName="assetNumber"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="serialNumber" nzRequired>Serial Number</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder="Serial Number"
+              id="serialNumber"
+              formControlName="serialNumber"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              placeholder="Status"
+              id="status"
+              formControlName="status"
+            />
+          </nz-form-control>
+        </nz-form-item>
     </form>
   </ng-container>
   </nz-modal>
@@ -347,7 +281,7 @@
         </ul>
       </nz-dropdown-menu>
 
-      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp;
+      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add HQ Cooler</button>&nbsp;
       <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
       <nz-dropdown-menu #fileType="nzDropdownMenu">
         <ul nz-menu>

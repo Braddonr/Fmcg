@@ -53,12 +53,14 @@ export class CompanyComponent implements OnInit {
 ];
 checkList: any[] = [
   { name: 'ID', status: false },
-  { name: 'Cooler Model', status: true },
-  { name: 'Serial Number', status: true },
-  { name: 'Asset Number', status: true },
-  { name: 'Status', status: true },
-  { name: 'Created By', status: false },
-  { name: 'Created On', status: true },
+  { name: 'Company Name', status: true },
+  { name: 'Contact Name', status: true },
+  { name: 'Email', status: true },
+  { name: 'Location', status: true },
+  { name: 'Contact Phone', status: true },
+  { name: 'Created By', status: true },
+  // { name: 'Created On', status: true },
+  { name: 'Remarks', status: false },
   { name: 'Actions', status: true },
 ]
 
@@ -125,11 +127,12 @@ checkList: any[] = [
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      assetNumber:new FormControl('', [<any>Validators.required]),
-      coolerSize:new FormControl('', [<any>Validators.required]),
-      model:new FormControl('', [<any>Validators.required]),
-      serialNumber:new FormControl('', [<any>Validators.required]),
-      status: new FormControl('', [<any>Validators.required]),
+      companyName:new FormControl('', [<any>Validators.required]),
+      contactName:new FormControl('', [<any>Validators.required]),
+      contactPhone:new FormControl('', [<any>Validators.required]),
+      email:new FormControl('', [<any>Validators.required]),
+      location: new FormControl('', [<any>Validators.required]),
+      remarks: new FormControl('', [<any>Validators.required]),
     }); 
     this.loadCoolerCompanies();
   }
@@ -206,67 +209,67 @@ loadCoolerCompanies(){
   this.loading = true;
 
 //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
 
-//  this.httpService.get("cooler/maintenance/company", this.page, this.perPage).subscribe(res => {
-//    if(res['responseCode'] == 200 || res['responseCode'] == 201){
-//      this.loading = false;
-//    this.listOfData = res['data'];
-//    console.log('Cooler-Companies');
-//    console.log(this.listOfData);
+ this.httpService.get("cooler/maintenance/company", this.page, this.perPage).subscribe(res => {
+   if(res['responseCode'] == 200 || res['responseCode'] == 201){
+     this.loading = false;
+   this.listOfData = res['data'];
+   console.log('Cooler-Companies');
+   console.log(this.listOfData);
 
-//    this.listOfDataToDisplay = [...this.listOfData];
+   this.listOfDataToDisplay = [...this.listOfData];
 
-//    // @ts-ignore
-//         this.dataSource= new MatTableDataSource(this.listOfData);
-//         this.dataSource.paginator = this.paginator
-//         this.dataSource.sort = this.sort
-//    this.total = res['totalCount'];
+   // @ts-ignore
+        this.dataSource= new MatTableDataSource(this.listOfData);
+        this.dataSource.paginator = this.paginator
+        this.dataSource.sort = this.sort
+   this.total = res['totalCount'];
 
-//    this.listOfData.map((value, i) => {
-//     value.ID = (this.page) * this.perPage + i+1;
-//   })
+   this.listOfData.map((value, i) => {
+    value.ID = (this.page) * this.perPage + i+1;
+  })
 
-//    this.listOfDisplayData = [...this.listOfData];
-//    let columns = [];
-//    this.listOfData.map(item => {
-//      Object.keys(item).map(itemKeys => {
-//        columns.push(itemKeys);
-//      })
-//    });
-//    this.columnsToExport = Array.from(new Set(columns));
-//    this.columnsToExport.map(item =>{
-//      switch(item){
+   this.listOfDisplayData = [...this.listOfData];
+   let columns = [];
+   this.listOfData.map(item => {
+     Object.keys(item).map(itemKeys => {
+       columns.push(itemKeys);
+     })
+   });
+   this.columnsToExport = Array.from(new Set(columns));
+   this.columnsToExport.map(item =>{
+     switch(item){
       
-//        case 'UserName':
-//          this.columnsJson['UserName'] = 'UserName';
-//          break;
-//        case 'FullName': 
-//          this.columnsJson['Full Name'] = 'FullName';
-//          break;
-//        case 'Email':
-//          this.columnsJson['Email'] = 'Email';
-//          break;
-//       case 'Active':
-//         this.columnsJson['Status'] = 'Active';
+       case 'UserName':
+         this.columnsJson['UserName'] = 'UserName';
+         break;
+       case 'FullName': 
+         this.columnsJson['Full Name'] = 'FullName';
+         break;
+       case 'Email':
+         this.columnsJson['Email'] = 'Email';
+         break;
+      case 'Active':
+        this.columnsJson['Status'] = 'Active';
       
-//        default: 
-//        break;
-//      }
-//    });
-//    this.displayColumns = Object.keys(this.columnsJson);
-//    this.loading=false;
-//  }
-//  })
+       default: 
+       break;
+     }
+   });
+   this.displayColumns = Object.keys(this.columnsJson);
+   this.loading=false;
+ }
+ })
 }
 
 //updates request body
@@ -454,7 +457,7 @@ toggleStatus(name: string) {
 
   showDeleteConfirm(element): void {
     this.modal.confirm({
-      nzTitle: 'Delete outlet',
+      nzTitle: 'Delete maintenance company',
       nzContent: '<p style="color: red;">Are you sure you want to delete this company?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
@@ -484,11 +487,12 @@ toggleStatus(name: string) {
  }
  editCoolerCompany(){
   const model = {
-    assetNumber: this.formAdd.value.assetNumber,
-    coolerSize: this.formAdd.value.coolerSize,
-    model: this.formAdd.value.model,
-    serialNumber: this.formAdd.value.serialNumber,
-    status: this.formAdd.value.status,
+    companyName: this.formEdit.value.companyName,
+    contactName: this.formEdit.value.contactName,
+    contactPhone: this.formEdit.value.contactPhone,
+    email: this.formEdit.value.email,
+    location: this.formEdit.value.location,
+    remarks: this.formEdit.value.remarks,
     id: this.company['id'],
     // previousData: {
     //   cdName: this.cooler["cdName"],
@@ -501,52 +505,47 @@ toggleStatus(name: string) {
     // }
   };
   
-  this.httpService.put("cooler/maintenance/company/edit", model).subscribe
-  
+  this.httpService.put("cooler/maintenance/company/edit", model)
+  .subscribe
   (res => {
     let message: any;
     message = res['message'];
-    if (res['responseCode'] == 200) {
-      if(res['message']==="Edited successfully"){
+    if (res['status'] = "Success") {
         this.toastr.success(message, "Success!");
-      }
-      else{
+    }
+    else{
         this.toastr.error(message, "Error!");
       }
-     
-    } 
-    else {
-      let errorMessage: any;
-      errorMessage = res["message"]
-      this.toastr.error(errorMessage, "Error!");
-      
-    }
-    this.loadCoolerCompanies();
+      this.loadCoolerCompanies();
   })
+
  }
 
   // Download PDF
   exportCompanyPDF() {
     let element = 'table'
-    let PDFTitle = 'Cooler Companies';
-   this.global.exportPDF(element, 'Cooler Companies', PDFTitle);
+    let PDFTitle = 'Cooler Maintenance Companies';
+   this.global.exportPDF(element, 'Cooler Maintenance Companies', PDFTitle);
 }
 
 //export excel file
  exportCompanyExcel(){
   let element = document.getElementById('coolerCompaniesTable');
-  this.global.exportTableElmToExcel(element, 'Cooler Companies');
+  this.global.exportTableElmToExcel(element, 'Cooler Maintenance Companies');
  }
+ 
  //export csv file
  exportCompanyCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
-    'Cooler Companies', ['id', 
-    'model',
-    'serialNumber',
-    'assetNumber',
-    'status', 
+    'Cooler Maintenance Companies', ['id', 
+    'companyName',
+    'contactName',
+    'contactPhone',
+    'email',
+    'location',
     'createdBy',
-    'createdOn',
+    'remarks',
+    // 'createdOn',
     ]);
  }
 }

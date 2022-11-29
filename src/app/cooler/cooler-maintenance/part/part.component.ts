@@ -52,12 +52,14 @@ export class PartComponent implements OnInit {
 
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
+    { name: 'Cooler ID', status: true },
+    { name: 'Sparepart Name', status: true },
+    { name: 'Sparepart Description', status: true },
+    { name: 'Currency', status: true },
+    { name: 'Price', status: true },
     { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    // { name: 'Created On', status: true },
+    { name: 'Remarks', status: false },
     { name: 'Actions', status: true },
   ]
     columnsJson: any = {};
@@ -107,6 +109,7 @@ export class PartComponent implements OnInit {
     formAdd: FormGroup;
     formEdit: FormGroup;
     part: any;
+    coolerIds: any[] = [];
 
     constructor(
       private dialog: MatDialog,
@@ -123,11 +126,11 @@ export class PartComponent implements OnInit {
   
     ngOnInit() {
       this.formAdd = this.formBuilder.group({
-        assetNumber:new FormControl('', [<any>Validators.required]),
-        coolerSize:new FormControl('', [<any>Validators.required]),
-        model:new FormControl('', [<any>Validators.required]),
-        serialNumber:new FormControl('', [<any>Validators.required]),
-        status: new FormControl('', [<any>Validators.required]),
+        coolerId:new FormControl('', [<any>Validators.required]),
+        currency:new FormControl('', [<any>Validators.required]),
+        price:new FormControl('', [<any>Validators.required]),
+        sparePartDescription:new FormControl('', [<any>Validators.required]),
+        sparePartName: new FormControl('', [<any>Validators.required]),
       }); 
       this.loadCoolerSpareParts();
     }
@@ -158,7 +161,7 @@ export class PartComponent implements OnInit {
     const snack = this.snackBar;
 
     this.loading = true;
-    this.httpService.delete("cooler/maintenance/part/delete", element.id)
+    this.httpService.deleteById("cooler/maintenance/part/delete", element.id)
       .subscribe({
         next: (res) => {
           console.log(res)
@@ -201,68 +204,90 @@ export class PartComponent implements OnInit {
   
   loadCoolerSpareParts(){
     this.loading = true;
-//use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+// //use local server as endpoints are down
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
    
-  //   this.httpService.get("cooler/maintenance/part", this.page, this.perPage).subscribe(res => {
-  //    if(res['responseCode'] == 200 || res['responseCode'] == 201){
-  //      this.loading = false;
-  //    this.listOfData = res['data'];
-  //    console.log('Cooler-Parts');
-  //    console.log(this.listOfData);
+    this.httpService.get("cooler/maintenance/part", this.page, this.perPage).subscribe(res => {
+     if(res['responseCode'] == 200 || res['responseCode'] == 201){
+       this.loading = false;
+     this.listOfData = res['data'];
+     console.log('Cooler-Parts');
+     console.log(this.listOfData);
+    
 
-  //    // @ts-ignore
-  //    this.dataSource= new MatTableDataSource(this.listOfData);
-  //    this.dataSource.paginator = this.paginator
-  //    this.dataSource.sort = this.sort
-  //    this.total = res['totalCount'];
+     this.listOfDataToDisplay = [...this.listOfData];
+
+      
+     this.listOfData.map((x: any) => {
+      if(!this.coolerIds.includes(x.coolerId)){
+      this.coolerIds.push(x.coolerId)
+     }
+    })
+    console.log(this.coolerIds);
+
+
+     //fetch all cooler IDs to be used in adding cooler part
+    //  this.httpService.get("cooler/maintenance/part", 1, 10).subscribe(res => {
+    //   this.coolerIds = res['data'];
+    //   console.log('Ids');
+    //   console.log(this.coolerIds);
+    //   });
+
+
+     // @ts-ignore
+     this.dataSource= new MatTableDataSource(this.listOfData);
+     this.dataSource.paginator = this.paginator
+     this.dataSource.sort = this.sort
+     this.total = res['totalCount'];
   
-  //    this.listOfData.map((value, i) => {
-  //     value.ID = (this.page) * this.perPage + i+1;
-  //   })
+     this.listOfData.map((value, i) => {
+      value.ID = (this.page) * this.perPage + i+1;
+    })
   
-  //    this.listOfDisplayData = [...this.listOfData];
-  //    let columns = [];
-  //    this.listOfData.map(item => {
-  //      Object.keys(item).map(itemKeys => {
-  //        columns.push(itemKeys);
-  //      })
-  //    });
-  //    console.log(this.listOfData)
-  //    console.log(columns)
-  //    this.columnsToExport = Array.from(new Set(columns));
-  //    this.columnsToExport.map(item =>{
-  //      switch(item){
+     this.listOfDisplayData = [...this.listOfData];
+     
+     let columns = [];
+     this.listOfData.map(item => {
+       Object.keys(item).map(itemKeys => {
+         columns.push(itemKeys);
+       })
+     });
+     console.log(this.listOfData)
+     
+    //  console.log(columns)
+     this.columnsToExport = Array.from(new Set(columns));
+     this.columnsToExport.map(item =>{
+       switch(item){
         
-  //        case 'UserName':
-  //          this.columnsJson['UserName'] = 'UserName';
-  //          break;
-  //        case 'FullName': 
-  //          this.columnsJson['Full Name'] = 'FullName';
-  //          break;
-  //        case 'Email':
-  //          this.columnsJson['Email'] = 'Email';
-  //          break;
-  //       case 'Active':
-  //         this.columnsJson['Status'] = 'Active';
+         case 'UserName':
+           this.columnsJson['UserName'] = 'UserName';
+           break;
+         case 'FullName': 
+           this.columnsJson['Full Name'] = 'FullName';
+           break;
+         case 'Email':
+           this.columnsJson['Email'] = 'Email';
+           break;
+        case 'Active':
+          this.columnsJson['Status'] = 'Active';
         
-  //        default: 
-  //        break;
-  //      }
-  //    });
-  //    this.displayColumns = Object.keys(this.columnsJson);
-  //    this.loading=false;
-  //  }
-  //  })
+         default: 
+         break;
+       }
+     });
+     this.displayColumns = Object.keys(this.columnsJson);
+     this.loading=false;
+   }
+   })
 
   }
   
@@ -450,7 +475,7 @@ toggleStatus(name: string) {
 
   showDeleteConfirm(element): void {
     this.modal.confirm({
-      nzTitle: 'Delete outlet',
+      nzTitle: 'Delete cooler part',
       nzContent: '<p style="color: red;">Are you sure you want to delete this spare part?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
@@ -481,11 +506,11 @@ toggleStatus(name: string) {
 
   editCoolerSpareParts(){
     const model = {
-      assetNumber: this.formAdd.value.assetNumber,
-      coolerSize: this.formAdd.value.coolerSize,
-      model: this.formAdd.value.model,
-      serialNumber: this.formAdd.value.serialNumber,
-      status: this.formAdd.value.status,
+      coolerId: this.formEdit.value.coolerId,
+      currency: this.formEdit.value.currency,
+      price: this.formEdit.value.price,
+      sparePartDescription: this.formEdit.value.sparePartDescription,
+      sparePartName: this.formEdit.value.sparePartName,
       id: this.part['id'],
       // previousData: {
       //   cdName: this.cooler["cdName"],
@@ -498,28 +523,22 @@ toggleStatus(name: string) {
       // }
     };
     
-    this.httpService.put("cooler/maintenance/part/edit", model).subscribe
-    
-    (res => {
-      let message: any;
-      message = res['message'];
-      if (res['responseCode'] == 200) {
-        if(res['message']==="Edited successfully"){
-          this.toastr.success(message, "Success!");
-        }
-        else{
-          this.toastr.error(message, "Error!");
-        }
-       
-      } 
-      else {
-        let errorMessage: any;
-        errorMessage = res["message"]
+    this.httpService.put("cooler/maintenance/part/edit", model)
+    .subscribe({
+      next:(res)=> { 
+       let message: any;
+       message = res['message']
+        this.toastr.success(message, "Success!");
+        this.formAdd.reset();
+        this.loadCoolerSpareParts();
+      },
+      error:(err)=>{
+       let errorMessage: any;
+       errorMessage = err.error['message']
+   
         this.toastr.error(errorMessage, "Error!");
-        
-      }
-      this.loadCoolerSpareParts();
-    })
+      },
+     })
   }
   // Download PDF
   exportCoolerSparePartsPDF() {
@@ -537,12 +556,13 @@ toggleStatus(name: string) {
  exportCooolerSparePartsCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
     'Cooler Spare Parts', ['id', 
-    'model',
-    'serialNumber',
-    'assetNumber',
-    'status', 
+    'coolerId',
+    'sparePartName',
+    'sparePartDescription',
+    'currency', 
+    'price',
     'createdBy',
-    'createdOn',
+    'remarks',
     ]);
  }
 }

@@ -8,7 +8,7 @@ export class MenuService {
   getAll() {
     return [
       {
-        label: this.translate.instant("Dashboard"),
+        label: this.translate.instant("Dashboards"),
         icon: "dashboard",
         items: [
           { link: "dashboards/sales-analytics", label: this.translate.instant("Sales Dashboard") , icon: "crop_square"},
@@ -31,7 +31,8 @@ export class MenuService {
         items: [
           { link: "/distributors/all-distributors", label: this.translate.instant("Contracted Distributors") , icon: "crop_square"},
           {link : "/distributors/all-vehicles", label: this.translate.instant("Van List"), icon: "crop_square"},
-          {link : "/distributors/van-stock-list", label: this.translate.instant("Van Stock List"), icon: "crop_square"}
+          {link : "/distributors/van-stock-list", label: this.translate.instant("Van Stock List"), icon: "crop_square"},
+          {link : "/distributors/pending-items", label: this.translate.instant("Pending Items"), icon: "crop_square"}
         ]
       },
 
@@ -40,18 +41,19 @@ export class MenuService {
         icon: "dashboard",
         items: [
           { link: "/cooler/all-coolers", label: this.translate.instant("HQ Coolers") , icon: "crop_square"},
-          {link : "/cooler/coolers-allocation", label: this.translate.instant("HQ Cooler Allocation"), icon: "crop_square"},
-          {link : "/", label: this.translate.instant("Depot Cooler Allocation"), icon: "crop_square"}
+          {link : "/cooler/coolers-allocation", label: this.translate.instant("Cooler Allocation"), icon: "crop_square"},
+          // {link : "/", label: this.translate.instant("Depot Cooler Allocation"), icon: "crop_square"},
+          {link : "/cooler/pending-coolers", label: this.translate.instant("Pending Items"), icon: "crop_square"}
         ]
       },
       {
         label: this.translate.instant("Cooler Maintenance"),
         icon: "dashboard",
         items: [
-          {link : "/cooler/cooler-maintenance-company", label: this.translate.instant("Cooler Companies"), icon: "crop_square"},
-          { link: "/cooler/cooler-maintenance-parts", label: this.translate.instant("Cooler Parts Price") , icon: "crop_square"},
-          { link: "/cooler/cooler-maintenance-technician", label: this.translate.instant("Cooler Technicians") , icon: "crop_square"}
-
+          {link : "/cooler/cooler-maintenance/company", label: this.translate.instant("Companies"), icon: "crop_square"},
+          { link: "/cooler/cooler-maintenance/parts", label: this.translate.instant("Cooler Parts Price") , icon: "crop_square"},
+          { link: "/cooler/cooler-maintenance/technician", label: this.translate.instant("Technicians") , icon: "crop_square"},
+          {link : "/cooler/cooler-maintenance/pending-maintenance", label: this.translate.instant("Pending Items"), icon: "crop_square"}
         ]
       },
       {
@@ -59,7 +61,7 @@ export class MenuService {
         icon: "dashboard",
         items: [
           { link: "/outlets/list-outlets", label: this.translate.instant("Outlets List") , icon: "crop_square"},
-          { link: "/outlets/pending-add", label: this.translate.instant("Pending Add") , icon: "crop_square"},
+          { link: "/outlets/pending-outlets", label: this.translate.instant("Pending Items") , icon: "crop_square"},
           
           
         ]
@@ -69,7 +71,8 @@ export class MenuService {
         icon: "dashboard",
         items: [
           { link: "/orders/orders-list", label: this.translate.instant("HQ Orders List") , icon: "crop_square"},
-          {link : "/", label: this.translate.instant("HQ Credit List"), icon: "crop_square"}
+          {link : "/", label: this.translate.instant("HQ Credit List"), icon: "crop_square"},
+          { link: "/orders/pending-orders", label: this.translate.instant("Pending Items") , icon: "crop_square"}
         ]
       },
       {
@@ -113,39 +116,52 @@ export class MenuService {
           }
         ]
       },
-      // user management
+     // user management
       {
         label: this.translate.instant("User Management"),
-        icon: 'person',
+        icon: "person",
         items: [
-           // users
-           {
-            icon: 'view_list',
-            label: this.translate.instant("Users"),
-            link: "user-profile/list-users"
-          },
-          // profiles
-          {
-            label: this.translate.instant("Profiles"),
-            icon: 'view_list',
-            items: [
-              {
-                label: this.translate.instant("Profile"),
-                link: "user-profile/profile/list-profiles",
-                icon: 'crop_square'
-              },
-
-              {
-
-                link: 'user-profile/profile/roles',
-                icon: 'crop_square',
-                label: this.translate.instant("Roles")
-              }
-            ]
-          }
-
+          {link: "user-management/list-users", label: this.translate.instant("Users") , icon: "crop_square"},
+          {link : "user-management/profiles", label: this.translate.instant("Profiles"), icon: "crop_square"},
+          {link : "user-management/audit-trail", label: this.translate.instant("Audit Trail"), icon: "crop_square"},
+          {link : "user-management/roles", label: this.translate.instant("Roles"), icon: "crop_square"},
         ]
-      },
+      }
+
+      // user management
+      // {
+      //   label: this.translate.instant("User Management"),
+      //   icon: 'person',
+      //   items: [
+      //      // users
+      //      {
+      //       icon: 'view_list',
+      //       label: this.translate.instant("Users"),
+      //       link: "user-management/list-users"
+      //     },
+      //     // profiles
+      //     {
+      //       label: this.translate.instant("Profiles"),
+      //       icon: 'view_list',
+      //       link: "user-management/profiles",
+      //       // items: [
+      //       //   {
+      //       //     label: this.translate.instant("Profile"),
+      //       //     link: "user-management/profiles",
+      //       //     icon: 'crop_square'
+      //       //   },
+
+      //       //   // {
+
+      //       //   //   link: 'user-management/profile/roles',
+      //       //   //   icon: 'crop_square',
+      //       //   //   label: this.translate.instant("Roles")
+      //       //   // }
+      //       // ]
+      //     }
+
+      //   ]
+      // },
 
      ];
   }

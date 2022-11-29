@@ -46,12 +46,13 @@ export class HqCdPriceComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    { name: 'Cd Code', status: true },
+    { name: 'Depot Name', status: true },
+    { name: 'Product Code', status: true },
+    { name: 'Product Description', status: true },
+    { name: 'Product Unit Price', status: true },
+    { name: 'Region Code', status: true },
+    { name: 'Territory Code', status: true },
     { name: 'Actions', status: true },
   ]
 
@@ -196,71 +197,73 @@ export class HqCdPriceComponent implements OnInit {
     this.loading = true;
 
   //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
 
-//     this.httpService.get("config/hq-cd-prices", this.page, this.perPage).subscribe(res => {
-//       if (res['responseCode'] == 200 || res['responseCode'] == 201) {
-//         this.loading = false;
-//         this.listOfData = res['data'];
-//         console.log('hq-cd-prices');
-//         console.log(this.listOfData);
+    this.httpService.get("config/hq-cd-prices", this.page, this.perPage).subscribe(res => {
+      if (res['status'] == 'success') {
+        this.loading = false;
+        this.listOfData = res['data'];
+        console.log('hq-cd-prices');
+        console.log(this.listOfData);
 
-//         // @ts-ignore
-//         this.dataSource= new MatTableDataSource(this.listOfData);
-//         this.dataSource.paginator = this.paginator;
-//         this.dataSource.sort = this.sort;
-//         this.total = res['totalCount'];
+      this.listOfDataToDisplay = [...this.listOfData];
 
-//         this.listOfData.map((value, i) => {
-//           value.ID = (this.page - 1) * this.perPage + i + 1;
-//         })
+        // @ts-ignore
+        this.dataSource= new MatTableDataSource(this.listOfData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.total = res['totalCount'];
 
-//         this.listOfDisplayData = [...this.listOfData];
-//         console.log("list of Data", this.listOfDisplayData);
+        this.listOfData.map((value, i) => {
+          value.ID = (this.page - 1) * this.perPage + i + 1;
+        })
+
+        this.listOfDisplayData = [...this.listOfData];
+        console.log("list of Data", this.listOfDisplayData);
         
-//         let columns = [];
-//         this.listOfData.map(item => {
-//           Object.keys(item).map(itemKeys => {
-//             columns.push(itemKeys);
-//           })
-//         });
-//         this.columnsToExport = Array.from(new Set(columns));
-// //         this.columnsToExport.map(item => {
-// //           switch (item) {
+        let columns = [];
+        this.listOfData.map(item => {
+          Object.keys(item).map(itemKeys => {
+            columns.push(itemKeys);
+          })
+        });
+        this.columnsToExport = Array.from(new Set(columns));
+        this.columnsToExport.map(item => {
+          switch (item) {
       
-// //        case 'territoryCode':
-// //           this.columnsJson['territoryCode'] = 'territoryCode';
-// //           break;
-// //        case 'territoryName':
-// //           this.columnsJson['territoryName'] = 'territoryName';
-// //           break;
-// //        case 'createdBy':
-// //           this.columnsJson['createdBy'] = 'createdBy';
-// //           break;
-// //       case 'remarks':
-// //           this.columnsJson['remarks'] = 'remarks';
-// //           break;
-// //         case 'territoryManager':
-// //           this.columnsJson['territoryManager'] = 'territoryManager';
-// //           break;
+       case 'territoryCode':
+          this.columnsJson['territoryCode'] = 'territoryCode';
+          break;
+       case 'territoryName':
+          this.columnsJson['territoryName'] = 'territoryName';
+          break;
+       case 'createdBy':
+          this.columnsJson['createdBy'] = 'createdBy';
+          break;
+      case 'remarks':
+          this.columnsJson['remarks'] = 'remarks';
+          break;
+        case 'territoryManager':
+          this.columnsJson['territoryManager'] = 'territoryManager';
+          break;
       
-// //        default:
-// //     break;
-// // }
-// //    });
-// this.displayColumns = Object.keys(this.columnsJson);
-// this.loading = false;
-//  }
-//  })
+       default:
+    break;
+}
+   });
+this.displayColumns = Object.keys(this.columnsJson);
+this.loading = false;
+ }
+ })
 
 }
 
@@ -530,13 +533,14 @@ toggleStatus(name: string) {
  //export csv file
  exportHQPricesCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
-    'Hq Distributor Prices', ['id', 
-    'model',
-    'serialNumber',
-    'assetNumber',
-    'status', 
-    'createdBy',
-    'createdOn',
+    'Hq Distributor Prices', ['id',
+    'cdCode',
+    'depotName',
+    'productCode',
+    'productDescription',
+    'productUnitPrice',
+    'regionCode',
+    'territoryCode',
     ]);
  }
 }

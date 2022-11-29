@@ -170,6 +170,9 @@ export class AllDistributorsComponent implements OnInit {
   
   distributor: any;
 
+  regionNames: any[]= [];
+  listOfRegions: any;
+
   public popoverTitle: string = 'Popover Title';
   public popoverMessage: string = 'Popover description'
   public confirmClicked: boolean = false;
@@ -347,6 +350,22 @@ loadDistributors(){
  }
  })
 }
+loadRegions(){
+  this.httpService.getNoParams("config/region/all").subscribe(res => {
+   
+    this.listOfRegions = res['data'];
+    
+    this.listOfRegions.map((x: any) => {
+     if(!this.regionNames.includes(x.regionName)){
+     this.regionNames.push(x.regionName)
+    }
+  })
+ 
+    console.log(this.regionNames);
+
+})
+
+}
 
 //updates request body
 onQueryParamsChange(params: NzTableQueryParams): void {
@@ -503,6 +522,7 @@ toggleStatus(name: string) {
   //       //open nzEditModal 
   showModalEdit(element): void {
     this.loadDistributors();
+    this.loadRegions();
     this.distributor = element;
     this.formEdit = this.formBuilder.group(this.distributor);
     this.isVisibleEdit = true;
@@ -524,8 +544,8 @@ toggleStatus(name: string) {
 
   showDeleteConfirm(element): void {
     this.modal.confirm({
-      nzTitle: 'Delete outlet',
-      nzContent: '<p style="color: red;">Are you sure you want to delete this outlet?</p>',
+      nzTitle: 'Delete distributor',
+      nzContent: '<p style="color: red;">Are you sure you want to delete this distributor?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -591,13 +611,14 @@ toggleStatus(name: string) {
 
   editDistributor(){
     const model = {
-      cdName: this.form.value.cdName,
-      cdCode: this.form.value.cdCode,
-      cdContactFullName: this.form.value.cdContactFullName,
-      cdEmail: this.form.value.cdEmail,
-      regionCode: this.form.value.regionCode,
-      territoryCode: this.form.value.territoryCode,
-      remarks: this.form.value.remarks,
+      cdName: this.formEdit.value.cdName,
+      cdCode: this.formEdit.value.cdCode,
+      cdContactFullName: this.formEdit.value.cdContactFullName,
+      cdContactMobileNumber: this.formEdit.value.cdContactMobileNumber,
+      cdEmail: this.formEdit.value.cdEmail,
+      regionCode: this.formEdit.value.regionCode,
+      territoryCode: this.formEdit.value.territoryCode,
+      remarks: this.formEdit.value.remarks,
       id: this.distributor['id'],
       // previousData: {
       //   cdName: this.cooler["cdName"],
@@ -610,29 +631,21 @@ toggleStatus(name: string) {
       // }
     };
     
-    this.httpService.put("distributor/edit-distributor", model).subscribe
-    
+    this.httpService.put("distributor/edit-distributor", model)
+    .subscribe
     (res => {
       let message: any;
       message = res['message'];
-      if (res['responseCode'] == 200) {
-        if(res['message']==="Edited successfully"){
+      if (res['status'] = "Success") {
           this.toastr.success(message, "Success!");
-        }
-        else{
+      }
+      else{
           this.toastr.error(message, "Error!");
         }
-       
-      } 
-      else {
-        let errorMessage: any;
-        errorMessage = res["message"]
-        this.toastr.error(errorMessage, "Error!");
-        
-      }
       this.loadDistributors();
     })
-  }
+   }
+  
 
   
     //export PDF file

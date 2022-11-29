@@ -46,12 +46,16 @@ export class OrdersListComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
+    { name: 'Cd Code', status: false },
+    { name: 'Cd Name', status: true },
+    { name: 'Product Code', status: true },
+    { name: 'Product Description', status: true },
+    { name: 'Order Ref', status: true },
+    { name: 'Order Quantity', status: true },
+    { name: 'Order Value', status: true },
+    { name: 'Mode of Payment', status: true },
+    { name: 'Proof of Payment', status: true },
     { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
     { name: 'Actions', status: true },
   ]
   columnsJson: any = {};
@@ -197,84 +201,86 @@ loadOrders(){
 
   
 //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
 
-//  this.httpService.get("order/all", this.page, this.perPage).subscribe(res => {
-//    console.log(res);
+ this.httpService.get("order/all", this.page, this.perPage).subscribe(res => {
+   console.log(res);
    
-//    if(res['responseCode'] == 200 || res['responseCode'] == 0){
+   if(res['responseCode'] == 200 || res['responseCode'] == 0){
       
-//      this.loading = false;
-//    this.listOfData = res['data'];
-//    console.log('Order-list');
-//    console.log(this.listOfData);
-   
-//    // @ts-ignore
-//    this.dataSource= new MatTableDataSource(this.listOfData);
-//    this.dataSource.paginator = this.paginator
-//    this.dataSource.sort = this.sort
-//    this.total = res['totalCount'];
+     this.loading = false;
+   this.listOfData = res['data'];
+   console.log('Order-list');
+   console.log(this.listOfData);
 
-//    this.listOfData.map((value, i) => {
+   this.listOfDataToDisplay = [...this.listOfData];
    
-//     value.ID = (this.page) * this.perPage + i+1;
-//   })
+   // @ts-ignore
+   this.dataSource= new MatTableDataSource(this.listOfData);
+   this.dataSource.paginator = this.paginator
+   this.dataSource.sort = this.sort
+   this.total = res['totalCount'];
 
-//    this.listOfDisplayData = [...this.listOfData];
-//    let columns = [];
-//    this.listOfData.map(item => {
-//      Object.keys(item).map(itemKeys => {
-//        columns.push(itemKeys);
-//      })
-//    });
-//    this.columnsToExport = Array.from(new Set(columns));
-//    this.columnsToExport.map(item =>{
-//      switch(item){
+   this.listOfData.map((value, i) => {
+   
+    value.ID = (this.page) * this.perPage + i+1;
+  })
+
+   this.listOfDisplayData = [...this.listOfData];
+   let columns = [];
+   this.listOfData.map(item => {
+     Object.keys(item).map(itemKeys => {
+       columns.push(itemKeys);
+     })
+   });
+   this.columnsToExport = Array.from(new Set(columns));
+   this.columnsToExport.map(item =>{
+     switch(item){
       
-//        case 'cdCode':
-//          this.columnsJson['cdCode'] = 'cdCode';
-//          break;
-//        case 'cdName': 
-//          this.columnsJson['cdName'] = 'cdName';
-//          break;
-//        case 'productCode':
-//          this.columnsJson['productCode'] = 'productCode';
-//          break;
-//          case 'productDescription':
-//          this.columnsJson['productDescription'] = 'productDescription';
-//          break;
-//          case 'orderQuantity':
-//          this.columnsJson['orderQuantity'] = 'orderQuantity';
-//          break;
-//          case 'orderValue':
-//          this.columnsJson['orderValue'] = 'orderValue';
-//          break;
-//          case 'modeOfPayment':
-//          this.columnsJson['modeOfPayment'] = 'modeOfPayment';
-//          break;
-//          case 'proofOfPayment':
-//          this.columnsJson['proofOfPayment'] = 'proofOfPayment';
+       case 'cdCode':
+         this.columnsJson['cdCode'] = 'cdCode';
+         break;
+       case 'cdName': 
+         this.columnsJson['cdName'] = 'cdName';
+         break;
+       case 'productCode':
+         this.columnsJson['productCode'] = 'productCode';
+         break;
+         case 'productDescription':
+         this.columnsJson['productDescription'] = 'productDescription';
+         break;
+         case 'orderQuantity':
+         this.columnsJson['orderQuantity'] = 'orderQuantity';
+         break;
+         case 'orderValue':
+         this.columnsJson['orderValue'] = 'orderValue';
+         break;
+         case 'modeOfPayment':
+         this.columnsJson['modeOfPayment'] = 'modeOfPayment';
+         break;
+         case 'proofOfPayment':
+         this.columnsJson['proofOfPayment'] = 'proofOfPayment';
         
-//       case 'status':
-//         this.columnsJson['status'] = 'status';
+      case 'status':
+        this.columnsJson['status'] = 'status';
       
-//        default: 
-//        break;
-//      }
-//    });
-//    this.displayColumns = Object.keys(this.columnsJson);
-//    this.loading=false;
-//  }
-//  })
+       default: 
+       break;
+     }
+   });
+   this.displayColumns = Object.keys(this.columnsJson);
+   this.loading=false;
+ }
+ })
 }
 
 //updates request body

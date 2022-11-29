@@ -45,12 +45,13 @@ export class RegionListComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    { name: 'Region Code', status: true },
+    { name: 'Region Name', status: true },
+    { name: 'Region Description', status: true },
+    { name: 'Governor Id', status: false },
+    { name: 'Pg First Name', status: true },
+    { name: 'Pg Last Name', status: true },
+    { name: 'Pg Email', status: true },
     { name: 'Actions', status: true },
   ]
 
@@ -103,6 +104,7 @@ export class RegionListComponent implements OnInit {
   formAdd: FormGroup;
   formEdit: FormGroup;
   region: any;
+  governorIds: any[]= [];
 
   constructor(
     private dialog: MatDialog,
@@ -119,11 +121,14 @@ export class RegionListComponent implements OnInit {
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      assetNumber:new FormControl('', [<any>Validators.required]),
-      coolerSize:new FormControl('', [<any>Validators.required]),
-      model:new FormControl('', [<any>Validators.required]),
-      serialNumber:new FormControl('', [<any>Validators.required]),
-      status: new FormControl('', [<any>Validators.required]),
+      governorId:new FormControl('', [<any>Validators.required]),
+      pgEmail:new FormControl('', [<any>Validators.required]),
+      pgFirstName:new FormControl('', [<any>Validators.required]),
+      pgLastName:new FormControl('', [<any>Validators.required]),
+      regionCode: new FormControl('', [<any>Validators.required]),
+      regionDescription: new FormControl('', [<any>Validators.required]),
+      regionName: new FormControl('', [<any>Validators.required]),
+      remarks: new FormControl('', [<any>Validators.required])
     });
     this.loadProducts();
   }
@@ -202,68 +207,77 @@ loadProducts(){
   this.loading = true;
 
   //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
 
-//  this.httpService.get("config/region/all", this.page, this.perPage).subscribe(res => {
-//    if(res['responseCode'] == 200 || res['responseCode'] == 201){
-//      this.loading = false;
-//    this.listOfData = res['data'];
-//    console.log('Region List');
-//    console.log(this.listOfData);
+ this.httpService.getNoParams("config/region/all").subscribe(res => {
+   if(res['status'] = "Success"){
+     this.loading = false;
+   this.listOfData = res['data'];
+   
+   this.listOfData.map((x: any) => {
+    if(!this.governorIds.includes(x.governorId)){
+    this.governorIds.push(x.governorId)
+   }
+    })
 
-//    // @ts-ignore
-//    this.dataSource= new MatTableDataSource(this.listOfData);
-//    this.dataSource.paginator = this.paginator;
-//    this.dataSource.sort = this.sort;
-//    this.total = res['totalCount'];
+   console.log(this.governorIds);
+   console.log(this.listOfData);
 
-//    this.listOfData.map((value, i) => {
-//     value.ID = (this.page - 1) * this.perPage + i+1;
-//   })
+   this.listOfDataToDisplay = [...this.listOfData];
 
-//    this.listOfDisplayData = [...this.listOfData];
-//    let columns = [];
-//    this.listOfData.map(item => {
-//      Object.keys(item).map(itemKeys => {
-//        columns.push(itemKeys);
-//      })
-//    });
-//    this.columnsToExport = Array.from(new Set(columns));
-//    this.columnsToExport.map(item =>{
-//      switch(item){
-//        case 'regionCode':
-//          this.columnsJson['regionCode'] = 'regionCode';
-//          break;
-//        case 'regionName': 
-//          this.columnsJson['regionName'] = 'regionName';
-//          break;
-//        case 'createdOn':
-//          this.columnsJson['createdOn'] = 'createdOn';
-//          break;
-//          case 'createdBy':
-//            this.columnsJson['createdBy'] = 'createdBy';
-//            break;
-//       case 'remarks':
-//         this.columnsJson['remarks'] = 'remarks';
-//         break;
+   // @ts-ignore
+   this.dataSource= new MatTableDataSource(this.listOfData);
+   this.dataSource.paginator = this.paginator;
+   this.dataSource.sort = this.sort;
+   this.total = res['totalCount'];
+
+   this.listOfData.map((value, i) => {
+    value.ID = (this.page - 1) * this.perPage + i+1;
+  })
+
+   this.listOfDisplayData = [...this.listOfData];
+   let columns = [];
+   this.listOfData.map(item => {
+     Object.keys(item).map(itemKeys => {
+       columns.push(itemKeys);
+     })
+   });
+   this.columnsToExport = Array.from(new Set(columns));
+   this.columnsToExport.map(item =>{
+     switch(item){
+       case 'regionCode':
+         this.columnsJson['regionCode'] = 'regionCode';
+         break;
+       case 'regionName': 
+         this.columnsJson['regionName'] = 'regionName';
+         break;
+       case 'createdOn':
+         this.columnsJson['createdOn'] = 'createdOn';
+         break;
+         case 'createdBy':
+           this.columnsJson['createdBy'] = 'createdBy';
+           break;
+      case 'remarks':
+        this.columnsJson['remarks'] = 'remarks';
+        break;
       
-//        default: 
-//        break;
-//      }
-//    });
-//    this.displayColumns = Object.keys(this.columnsJson);
-//    this.loading=false;
-//  }
-//  })
+       default: 
+       break;
+     }
+   });
+   this.displayColumns = Object.keys(this.columnsJson);
+   this.loading=false;
+ }
+ })
 }
 
 //updates request body
@@ -479,11 +493,11 @@ toggleStatus(name: string) {
  }
  editRegion(){
   const model = {
-    assetNumber: this.formAdd.value.assetNumber,
-    coolerSize: this.formAdd.value.coolerSize,
-    model: this.formAdd.value.model,
-    serialNumber: this.formAdd.value.serialNumber,
-    status: this.formAdd.value.status,
+    assetNumber: this.formEdit.value.assetNumber,
+    coolerSize: this.formEdit.value.coolerSize,
+    model: this.formEdit.value.model,
+    serialNumber: this.formEdit.value.serialNumber,
+    status: this.formEdit.value.status,
     id: this.region['id'],
     // previousData: {
     //   cdName: this.cooler["cdName"],
@@ -536,12 +550,13 @@ toggleStatus(name: string) {
  exportRegionsCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
     'Regions', ['id', 
-    'model',
-    'serialNumber',
-    'assetNumber',
-    'status', 
-    'createdBy',
-    'createdOn',
+    'regionName',
+    'regionCode',
+    'regionDescription',
+    'governorId', 
+    'pgFirstName',
+    'pgLastName',
+    'pgEmail'
     ]);
  }
 }

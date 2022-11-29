@@ -24,17 +24,17 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+              <th *ngIf="showHideColumn('Username')"nzCustomerFilter>Username
                 <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
+              <th *ngIf="showHideColumn('Full Name')" nzCustomFilter>Full Name
                 <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Asset Number')" nzCustomFilter>Asset Number
+              <th *ngIf="showHideColumn('Email')" nzCustomFilter>Email
                 <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
@@ -44,16 +44,6 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Created By')" nzCustomFilter>Created By
-                <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
-                  <i nz-icon nzType="search"></i>
-                </nz-filter-trigger>
-              </th>
-              <th *ngIf="showHideColumn('Created On')" nzCustomFilter >Created On
-                <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
-                  <i nz-icon nzType="calendar"></i>
-                </nz-filter-trigger>
-              </th>
               <th n *ngIf="showHideColumn('Actions')">Actions</th>
             </tr>
           </thead>
@@ -61,12 +51,10 @@
             <tr *ngFor="let data of coolerTechniciansTable.data">
               <td>{{ data.ID }}</td>
               <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
-              <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td>
-              <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
-              <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
+              <td *ngIf="showHideColumn('Username')">{{ data.userName }}</td>
+              <td *ngIf="showHideColumn('Full Name')">{{ data.fullName }}</td>
+              <td *ngIf="showHideColumn('Email')">{{ data.email }}</td>
               <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
-              <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
-              <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
               <td  *ngIf="showHideColumn('Actions')">
                 <div style="justify-items: center; text-align: center;">
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;

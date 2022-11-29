@@ -1,47 +1,277 @@
-<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="35px">
+<!-- <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="35px">
     <div fxFlex.gt-sm="30%"> 
-        <nz-card>
-            <!-- [nzCover]="coverTemplate" [nzActions]="[actionPassword, actionDeactivate]" [nzLoading]="loading" -->
-                <div fxLayout="row">
-                    <div fxFlex.gt-sm="100.00%">
-                        <h3 class="atma-text"><b>USER DETAILS</b></h3>
-                        <hr>
-                    </div> 
-                </div>
-                <div fxLayout="row" class="mb-2">
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="atma-text"><b>Full Name: {{userData.firstName}} {{userData.middleName}} {{userData.lastName}} </b></p>
-                    </div>
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="descText">&nbsp;&nbsp;</p>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="atma-text"><b>Email: {{userData.email}} </b></p>
-                    </div>
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="descText" style="word-wrap: break-word;"></p>
-                    </div>
-                </div>
-                <div fxLayout="row">
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="atma-text"><b>Phone Number: {{userData.mobileNumber}} </b></p>
-                    </div>
-                    <div fxFlex.gt-sm="50.00%">
-                        <p class="descText"></p>
-                    </div>
-                </div>
-        </nz-card>
     </div>
-    <div fxFlex.gt-sm="70%">
-        <mat-tab-group>
-            <mat-tab label="Audit Trail" aria-label="Audit Trail">
-                <!-- <app-user-audit-trail [user]="user"></app-user-audit-trail> -->
-            </mat-tab>
-            <mat-tab label="User Profiles" aria-label="User Profiles">
-                <!-- <app-user-profiles [user]="user"></app-user-profiles> -->
-            </mat-tab>
-        </mat-tab-group>
+    <div fxFlex.gt-sm="70%">  
     </div>
-</div>
+</div> -->
+<nz-tabset nzCentered>
+    <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+  <nz-card>
+
+    <nz-tab nzTitle="User Details" class="tab">
+        <nz-page-header
+      class="site-page-header"
+      nzbutton (click)="onBack()" 
+      nzBackIcon
+      nzTitle="User Details"
+    ></nz-page-header>
+        <nz-descriptions  nzBordered [nzSize]="small" [nzColumn]="4" style="padding: 20px">
+            <nz-descriptions-item nzTitle="ID">{{userData.id}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Profile ID">{{userData.profileId}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="UserName">{{userData.userName}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="First Login">
+                <nz-tag *ngIf="userData.firstLogin" nzColor="processing" style="font-size: 14px;">Yes</nz-tag>
+                <nz-tag *ngIf="!userData.firstLogin" nzColor="warning" style="font-size: 14px;">No</nz-tag>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="First Name" [nzSpan]="2">{{userData.firstName}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Middle Name">{{userData.middleName}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Last Name">{{userData.lastName}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Email">{{userData.email}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Mobile Number">
+                {{userData.mobileNumber}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Region Code">
+                {{userData.regionCode}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Territory Code">{{userData.territoryCode}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Trials">
+                {{userData.trials}}
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Locked" [nzSpan]="3">
+                <nz-tag *ngIf="userData.locked" nzColor="error" style="font-size: 14px;">Locked</nz-tag>
+                <nz-tag *ngIf="!userData.locked" nzColor="success" style="font-size: 14px;">Not Locked</nz-tag>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Created On" [nzSpan]="2">{{userData.createdOn | date : 'short' }}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Created By" [nzSpan]="2">{{userData.createdBy}}</nz-descriptions-item>
+          </nz-descriptions>
+    </nz-tab>
+</nz-card>
+
+    <nz-tab nzTitle="User Profile">
+        <nz-descriptions nzTitle="User Profile" nzBordered [nzSize]="small" style="padding: 20px" >
+            <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Order Time">2018-04-24 18:00:00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Usage Time" [nzSpan]="2">
+              2018-04-24 18:00:00 To 2019-04-24 18:00:00
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Status" [nzSpan]="3">
+              <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Negotiated Amount">$80.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Official Receipts">$60.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Config Info">
+              Data disk type: MongoDB
+              <br />
+              Database version: 3.4
+              <br />
+              Package: dds.mongo.mid
+              <br />
+              Storage space: 10 GB
+              <br />
+              Replication_factor:3
+              <br />
+              Region: East China 1
+              <br />
+            </nz-descriptions-item>
+          </nz-descriptions>
+      </nz-tab>
+  
+    <nz-tab nzTitle="Audit Trail">
+        <nz-descriptions nzTitle="Audit Trail" nzBordered [nzSize]="small" style="padding: 20px">
+            <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Order Time">2018-04-24 18:00:00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Usage Time" [nzSpan]="2">
+              2018-04-24 18:00:00 To 2019-04-24 18:00:00
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Status" [nzSpan]="3">
+              <nz-badge nzStatus="processing" nzText="Running"></nz-badge>
+            </nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Negotiated Amount">$80.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Discount">$20.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Official Receipts">$60.00</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Config Info">
+              Data disk type: MongoDB
+              <br />
+              Database version: 3.4
+              <br />
+              Package: dds.mongo.mid
+              <br />
+              Storage space: 10 GB
+              <br />
+              Replication_factor:3
+              <br />
+              Region: East China 1
+              <br />
+            </nz-descriptions-item>
+          </nz-descriptions>
+    </nz-tab>
+
+  
+  </nz-tabset>
+  
+    <nz-dropdown-menu #menuID="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
+        
+          <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+          <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuType="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+  
+    <ng-template #pendingApprovalTemplate>
+      <nz-space>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+          Show/Hide Columns
+          <i nz-icon nzType="down"></i>
+        </button>&nbsp;
+        <nz-dropdown-menu #menu4="nzDropdownMenu">
+          <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+          <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+          <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+          
+          </ul>
+        </nz-dropdown-menu>
+  
+        <!-- <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+        <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+        <nz-dropdown-menu #fileType="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <a (click)="exportCoolersPendingApprovalPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="exportCoolersPendingApprovalExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)=" exportCoolersPendingApprovalCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-space>
+    </ng-template>
+  
+    <ng-template #pendingAllocateTemplate>
+      <nz-space>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+          Show/Hide Columns
+          <i nz-icon nzType="down"></i>
+        </button>&nbsp;
+        <nz-dropdown-menu #menu4="nzDropdownMenu">
+          <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+          <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all2()">Show/Hide All Columns</label>
+          <label nz-checkbox *ngFor="let item of checkList2" [(ngModel)]="item.status" (click)="toggleStatus2(item.name)">{{item.name}}</label>
+          
+          </ul>
+        </nz-dropdown-menu>
+  
+        <!-- <button nz-button nzType="default" (click)="showModalAdd2()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+        <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+        <nz-dropdown-menu #fileType="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <a (click)="exportPendingAllocatedCoolersPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="exportPendingAllocatedExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)=" exportPendingAllocatedCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-space>
+    </ng-template>
+  
+    <ng-template #pendingDeAllocateTemplate>
+        <nz-space>
+          <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+            Show/Hide Columns
+            <i nz-icon nzType="down"></i>
+          </button>&nbsp;
+          <nz-dropdown-menu #menu4="nzDropdownMenu">
+            <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+            <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all3()">Show/Hide All Columns</label>
+            <label nz-checkbox *ngFor="let item of checkList2" [(ngModel)]="item.status" (click)="toggleStatus3(item.name)">{{item.name}}</label>
+            
+            </ul>
+          </nz-dropdown-menu>
+    
+          <!-- <button nz-button nzType="default" (click)="showModalAdd2()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+          <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+          <nz-dropdown-menu #fileType="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedCoolersPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </nz-space>
+      </ng-template>
+    
+  
+  

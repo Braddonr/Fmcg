@@ -23,10 +23,10 @@ const routes: Routes = [
         }
     },
     {
-        path: 'pending-add',
+        path: 'pending-outlets',
         component: PendingAddComponent,
         data: {
-            breadcrumb: "Pending Add"
+            breadcrumb: "Pending Outlets"
         }
     },
 

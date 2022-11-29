@@ -164,7 +164,7 @@ export class AllVehiclesComponent implements OnInit {
   ngOnInit() {
     
     this.formAdd = this.formBuilder.group({
-      remarks:new FormControl('', [<any>Validators.required]),
+      cdCode:new FormControl('', [<any>Validators.required]),
       vehicleType:new FormControl('', [<any>Validators.required]),
       plateNumber:new FormControl('', [<any>Validators.required]),
       salespersonId:new FormControl('', [<any>Validators.required]),
@@ -542,8 +542,8 @@ toggleStatus(name: string) {
 
   showDeleteConfirm(element): void {
     this.modal.confirm({
-      nzTitle: 'Delete outlet',
-      nzContent: '<p style="color: red;">Are you sure you want to delete this outlet?</p>',
+      nzTitle: 'Delete vehicle',
+      nzContent: '<p style="color: red;">Are you sure you want to delete this vehicle?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -574,41 +574,31 @@ toggleStatus(name: string) {
   editVehicle(){
     const model={
       id: this.vehicle["id"],
-      cdCode: this.form.value.cdCode,
-      vehicleType: this.form.value.vehicleType,
-      plateNumber: this.form.value.plateNumber,
-      salespersonId: this.form.value.salespersonId,
-      previousdata: {
-        id: this.vehicle["id"],
-        cdCode : this.vehicle["cdCode"],
-        vehicleType: this.vehicle["vehicleType"],
-        plateNumber: this.vehicle["plateNumber"],
-        salespersonId: this.vehicle["salespersonId"]
-      }
+      cdCode: this.formEdit.value.cdCode,
+      vehicleType: this.formEdit.value.vehicleType,
+      plateNumber: this.formEdit.value.plateNumber,
+      salespersonId: this.formEdit.value.salespersonId,
+      // previousdata: {
+      //   id: this.vehicle["id"],
+      //   cdCode : this.vehicle["cdCode"],
+      //   vehicleType: this.vehicle["vehicleType"],
+      //   plateNumber: this.vehicle["plateNumber"],
+      //   salespersonId: this.vehicle["salespersonId"]
+      // }
     };
     this.httpService.put("distributor/edit-vehicle", model)
-    .subscribe({
-      next:(res)=> { 
-        let message: any;
-        message = res['message']
-         this.toastr.success(message, "Success!");
-         this.form.reset();
-         this.loadVehicles();
-       },
-       error:(err)=>{
-        let errorMessage: any;
-        errorMessage = err.error['message']
-        if(errorMessage === "null"){
-          let error: any;
-          error = "An error occurred. Try again later"
-          this.toastr.error(error, "Error!");
+    .subscribe
+    (res => {
+      let message: any;
+      message = res['message'];
+      if (res['status'] = "Success") {
+          this.toastr.success(message, "Success!");
+      }
+      else{
+          this.toastr.error(message, "Error!");
         }
-        else{
-         this.toastr.error(errorMessage, "Error!");
-        }
-       },
-      }) 
       this.loadVehicles();
+    })
   }
   // Download PDF
   // exportVanPDF() {

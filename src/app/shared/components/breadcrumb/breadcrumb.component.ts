@@ -49,6 +49,10 @@ export class BreadcrumbComponent implements OnInit {
 
   /** Array of breadcrumbs. */
   breadcrumbs: Breadcrumb[];
+
+  //filter out current page so it does become a link
+  currentPage :any;
+  
   /**
    * Generates the breadcrumbs.
    * @param {ActivatedRoute} activatedRoute Activated Route.
@@ -69,6 +73,7 @@ export class BreadcrumbComponent implements OnInit {
     const onNavigationEnd = this.router.events.pipe(filter(event => event instanceof NavigationEnd));
 
     onNavigationEnd.subscribe(() => {
+
       this.breadcrumbs = [];
       let currentRoute = this.activatedRoute.root;
       let currentUrl = '';
@@ -79,6 +84,8 @@ export class BreadcrumbComponent implements OnInit {
         let url: any;
 
         childrenRoutes.forEach(route => {
+          console.log(route);
+          
           currentRoute = route;
           breadcrumbLabel = false;
           if (route.outlet !== 'primary') {
@@ -98,18 +105,24 @@ export class BreadcrumbComponent implements OnInit {
             if (route.snapshot.data.hasOwnProperty(routeResolveBreadcrumb) && route.snapshot.data[routeResolveBreadcrumb]) {
               breadcrumbLabel = route.snapshot.data;
               route.snapshot.data[routeResolveBreadcrumb].forEach((property: any) => {
+                
                 breadcrumbLabel = breadcrumbLabel[property];
+                // console.log(property);
               });
             } else if (route.snapshot.data.hasOwnProperty(routeParamBreadcrumb) && route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb])) {
               breadcrumbLabel = route.snapshot.paramMap.get(route.snapshot.data[routeParamBreadcrumb]);
+              console.log(breadcrumbLabel);
             } else if (route.snapshot.data.hasOwnProperty(routeDataBreadcrumb)) {
               breadcrumbLabel = route.snapshot.data[routeDataBreadcrumb];
+              // console.log(breadcrumbLabel);
             }
-
+            
             if (route.snapshot.data.hasOwnProperty(routeAddBreadcrumbLink)) {
               url = route.snapshot.data[routeAddBreadcrumbLink];
+              // console.log(url);
             } else {
               url = currentUrl;
+              // console.log(url);
             }
           }
 
@@ -120,10 +133,13 @@ export class BreadcrumbComponent implements OnInit {
 
           if (breadcrumbLabel) {
             this.breadcrumbs.push(breadcrumb);
-          }
+            console.log('>>>>', this.breadcrumbs);
+          }  
         });
       }
+     
+      this.currentPage = this.breadcrumbs.pop()
+      console.log(this.currentPage);
     });
-  }
-
+  }      
 }

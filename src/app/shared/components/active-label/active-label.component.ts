@@ -10,6 +10,7 @@ export class ActiveLabelComponent implements OnInit {
   label: any;
   labelClass: any;
   @Input() labelValue: any;
+  @Input() labelTheme: any;
 
   constructor() { }
 

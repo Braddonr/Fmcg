@@ -1,4 +1,4 @@
-<nav class="breadcrumb-wrapper">
+<!-- <nav class="breadcrumb-wrapper">
   <ul class="breadcrumb">
     <span class="breadcrumb-title">{{ breadcrumbs[breadcrumbs.length-1].label }}</span>
     <span *ngIf="breadcrumbs.length-1 !== 0" class="separator">
@@ -11,4 +11,22 @@
       </li>
     </span>
   </ul>
-</nav>
+</nav> -->
+
+<nz-breadcrumb>
+   
+  <nz-breadcrumb-item style="color:#1dacd6; font-size: 15px;" *ngFor="let breadcrumb of breadcrumbs">
+    <a [routerLink]="breadcrumb.url" >{{ breadcrumb.label }}</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>{{currentPage.label}}</nz-breadcrumb-item> 
+
+  <!-- <nz-breadcrumb-item style="color:orange;">
+    <a [routerLink]="breadcrumbs[0].url" >{{ breadcrumbs[0].label }}</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item style="color:#1dacd6;">
+    <a [routerLink]="breadcrumbs[1].url" >{{ breadcrumbs[1].label }}</a>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item >
+    {{ breadcrumbs[2].label }}
+  </nz-breadcrumb-item> -->
+</nz-breadcrumb>

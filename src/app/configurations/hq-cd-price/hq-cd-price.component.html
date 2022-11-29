@@ -24,49 +24,55 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+              <th *ngIf="showHideColumn('Cd Code')"nzCustomerFilter>Cd Code
                 <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
+              <th *ngIf="showHideColumn('Depot Name')" nzCustomFilter>Depot Name
                 <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Asset Number')" nzCustomFilter>Asset Number
+              <th *ngIf="showHideColumn('Product Code')" nzCustomFilter>Product Code
                 <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Status')" nzWidth="15%" nzCustomFilter>Status
+              <th *ngIf="showHideColumn('Product Description')" nzCustomFilter>Product Description
                 <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Created By')" nzCustomFilter>Created By
+              <th *ngIf="showHideColumn('Product Unit Price')" nzCustomFilter>Product Unit Price
                 <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Created On')" nzCustomFilter >Created On
+              <th *ngIf="showHideColumn('Region Code')" nzCustomFilter >Region Code
                 <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
                   <i nz-icon nzType="calendar"></i>
                 </nz-filter-trigger>
               </th>
-              <th n *ngIf="showHideColumn('Actions')">Actions</th>
+              <th *ngIf="showHideColumn('Territory Code')" nzCustomFilter >Territory Code
+                <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                  <i nz-icon nzType="calendar"></i>
+                </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Actions')">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of hqPricesTable.data">
               <td>{{ data.ID }}</td>
               <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
-              <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td>
-              <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
-              <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
-              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
-              <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
-              <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
+              <td *ngIf="showHideColumn('Cd Code')">{{ data.cdCode }}</td>
+              <td *ngIf="showHideColumn('Depot Name')">{{ data.depotName }}</td>
+              <td *ngIf="showHideColumn('Product Code')">{{ data.productCode }}</td>
+              <td *ngIf="showHideColumn('Product Description')">{{ data.productDescription }}</td>
+              <td *ngIf="showHideColumn('Product Unit Price')">{{ data.productUnitPrice }}</td>
+              <td *ngIf="showHideColumn('Region Code')">{{ data.regionCode}}</td>
+              <td *ngIf="showHideColumn('Territory Code')">{{ data.territoryCode }}</td>
               <td  *ngIf="showHideColumn('Actions')">
                 <div style="justify-items: center; text-align: center;">
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;

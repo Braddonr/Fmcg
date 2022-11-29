@@ -4,6 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AllDistributorsComponent } from "./all-distributors/all-distributors.component";
 import { AllVehiclesComponent } from "./all-vehicles/all-vehicles.component";
 import { ViewDistributorComponent } from './view-distributor/view-distributor.component';
+import { PendingDistributorsComponent } from './pending-distributors/pending-distributors.component';
 
 const routes: Routes = [
 
@@ -37,6 +38,14 @@ const routes: Routes = [
         component: VanStockListComponent,
         data: {
             breadcrumb: "Van Stock List"
+        }
+    },
+    //pending items
+    {
+        path: 'pending-items',
+        component: PendingDistributorsComponent,
+        data: {
+            breadcrumb: "Pending Items"
         }
     },
 

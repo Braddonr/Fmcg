@@ -1,0 +1,18 @@
+.card{
+    padding: 10px;
+    margin: 20px;
+   }
+   .checkbox{
+     padding-left: 15px;
+   }
+   
+   .table{
+     margin-top: 2px;
+    }
+   ::ng-deep .ant-table table {
+     font-size: 12px;
+   }
+   ::ng-deep .ant-table-thead>tr>th {
+     position: relative;
+     overflow-wrap: break-word;
+   } 

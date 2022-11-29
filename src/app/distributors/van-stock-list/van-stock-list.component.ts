@@ -465,7 +465,7 @@ searchCdName(event: Event) {
   showDeleteConfirm(element): void {
     this.modal.confirm({
       nzTitle: 'Delete outlet',
-      nzContent: '<p style="color: red;">Are you sure you want to delete this outlet?</p>',
+      nzContent: '<p style="color: red;">Are you sure you want to delete this vehicle?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
@@ -478,45 +478,48 @@ searchCdName(event: Event) {
   addNewVehicle(){
     this.httpService.post("distributor/vehicle/add", this.formAdd.value)
     .subscribe({
-     next:(res)=> {
-       this.toastr.success("Outlet details added", "Success!");
-       this.formAdd.reset();
-     },
-     error:()=>{
-       this.toastr.error("Outlet details were not added", "Error!");
-     },
-    })
+      next:(res)=> { 
+       let message: any;
+       message = res['message']
+        this.toastr.success(message, "Success!");
+        this.formAdd.reset();
+      },
+      error:(err)=>{
+       let errorMessage: any;
+       errorMessage = err.error['message']
+ 
+        this.toastr.error(errorMessage, "Error!");
+      },
+     })
   }
   editVehicle(){
     const model={
       id: this.vanStock["id"],
-      cdCode: this.formAdd.value.cdCode,
-      vehicleType: this.formAdd.value.vehicleType,
-      plateNumber: this.formAdd.value.plateNumber,
-      salespersonId: this.formAdd.value.salespersonId,
-      previousdata: {
-        id: this.vanStock["id"],
-        cdCode : this.vanStock["cdCode"],
-        vehicleType: this.vanStock["vehicleType"],
-        plateNumber: this.vanStock["plateNumber"],
-        salespersonId: this.vanStock["salespersonId"]
-      }
+      cdCode: this.formEdit.value.cdCode,
+      vehicleType: this.formEdit.value.vehicleType,
+      plateNumber: this.formEdit.value.plateNumber,
+      salespersonId: this.formEdit.value.salespersonId,
+      // previousdata: {
+      //   id: this.vanStock["id"],
+      //   cdCode : this.vanStock["cdCode"],
+      //   vehicleType: this.vanStock["vehicleType"],
+      //   plateNumber: this.vanStock["plateNumber"],
+      //   salespersonId: this.vanStock["salespersonId"]
+      // }
     };
-    this.httpService.put("distributor/edit-vehicle", model).subscribe(res => {
-      if (res['status'] === "Success") {
-        if(res["message"] = "Outlet added successfully!") {
-          this.toastr.success("Outlet details updated, awaiting approval", "Success!");
-          this.loadVehicles();
-        } else {
-          this.toastr.success("Outlet details updated,", "Success!");
-          this.loadVehicles();
+    this.httpService.put("distributor/edit-vehicle", model)
+      .subscribe
+      (res => {
+        let message: any;
+        message = res['message'];
+        if (res['status'] = "Success") {
+            this.toastr.success(message, "Success!");
         }
-        
-      } else {
-        this.toastr.error("Outlet details were not updated", "Error!");
-      }
-      this.loadVehicles();
-    })
+        else{
+            this.toastr.error(message, "Error!");
+          }
+        this.loadVehicles();
+      })
   }
 
   delete(element){

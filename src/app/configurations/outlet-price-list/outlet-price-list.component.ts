@@ -46,12 +46,10 @@ export class OutletPriceListComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    { name: 'Product Code', status: true },
+    { name: 'Product Description', status: true },
+    { name: 'Unit Price', status: true },
+    { name: 'Remarks', status: true },
     { name: 'Actions', status: true },
   ]
 
@@ -102,6 +100,7 @@ export class OutletPriceListComponent implements OnInit {
   formAdd: FormGroup;
   formEdit: FormGroup;
   price: any;
+  productCodes: any[]=[];
 
   constructor(
     private dialog: MatDialog,
@@ -118,11 +117,10 @@ export class OutletPriceListComponent implements OnInit {
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      assetNumber:new FormControl('', [<any>Validators.required]),
-      coolerSize:new FormControl('', [<any>Validators.required]),
-      model:new FormControl('', [<any>Validators.required]),
-      serialNumber:new FormControl('', [<any>Validators.required]),
-      status: new FormControl('', [<any>Validators.required]),
+      productCode:new FormControl('', [<any>Validators.required]),
+      productDescription:new FormControl('', [<any>Validators.required]),
+      remarks:new FormControl('', [<any>Validators.required]),
+      unitPrice:new FormControl('', [<any>Validators.required])
     }); 
     this.loadProducts();
   }
@@ -198,66 +196,77 @@ export class OutletPriceListComponent implements OnInit {
 loadProducts(){
   this.loading = true;
 
-//use local server as endpoints are down
-this.httpService.getMockData()
-.subscribe(res => {
+// //use local server as endpoints are down
+// this.httpService.getMockData()
+// .subscribe(res => {
  
- this.loading = false;
- this.listOfData = res
- // console.log('Cooler-Companies');
- // console.log(this.listOfData);
+//  this.loading = false;
+//  this.listOfData = res
+//  // console.log('Cooler-Companies');
+//  // console.log(this.listOfData);
 
- this.listOfDataToDisplay = [...this.listOfData];
-});  
+//  this.listOfDataToDisplay = [...this.listOfData];
+// });  
  
-//   this.httpService.get("config/outlet-price", this.page, this.perPage).subscribe(res => {
-//    if(res['responseCode'] == 200 || res['responseCode'] == 201){
-//      this.loading = false;
-//    this.listOfData = res['data'];
-//    console.log('Outlet-Price');
-//    console.log(this.listOfData);
-//    // @ts-ignore
-//    this.dataSource= new MatTableDataSource(this.listOfData);
-//    this.dataSource.paginator = this.paginator
-//    this.dataSource.sort = this.sort
-//    this.total = res['totalCount'];
+  this.httpService.get("config/outlet-price", this.page, this.perPage).subscribe(res => {
+   if(res['responseCode'] == 200 || res['responseCode'] == 201){
+     this.loading = false;
+   this.listOfData = res['data'];
+   console.log('Outlet-Price');
+   console.log(this.listOfData);
 
-//    this.listOfData.map((value, i) => {
 
-//     value.ID = (this.page) * this.perPage + i+1;
-//   })
+   this.listOfData.map((x: any) => {
+    if(!this.productCodes.includes(x.productCode)){
+    this.productCodes.push(x.productCode)
+   }
+  })
+  console.log(this.productCodes);
 
-//    this.listOfDisplayData = [...this.listOfData];
-//    let columns = [];
-//    this.listOfData.map(item => {
-//      Object.keys(item).map(itemKeys => {
-//        columns.push(itemKeys);
-//      })
-//    });
-//    this.columnsToExport = Array.from(new Set(columns));
-//    this.columnsToExport.map(item =>{
-//      switch(item){
+   this.listOfDataToDisplay = [...this.listOfData];
+
+   // @ts-ignore
+   this.dataSource= new MatTableDataSource(this.listOfData);
+   this.dataSource.paginator = this.paginator
+   this.dataSource.sort = this.sort
+   this.total = res['totalCount'];
+
+   this.listOfData.map((value, i) => {
+
+    value.ID = (this.page) * this.perPage + i+1;
+  })
+
+   this.listOfDisplayData = [...this.listOfData];
+   let columns = [];
+   this.listOfData.map(item => {
+     Object.keys(item).map(itemKeys => {
+       columns.push(itemKeys);
+     })
+   });
+   this.columnsToExport = Array.from(new Set(columns));
+   this.columnsToExport.map(item =>{
+     switch(item){
       
-//        case 'productCode':
-//          this.columnsJson['productCode'] = 'productCode';
-//          break;
-//        case 'FullName': 
-//          this.columnsJson['productDescription'] = 'FullName';
-//          break;
-//        case 'unitPrice':
-//          this.columnsJson['unitPrice'] = 'unitPrice';
-//          break;
-//       case 'remarks':
-//         this.columnsJson['remarks'] = 'remarks';
+       case 'productCode':
+         this.columnsJson['productCode'] = 'productCode';
+         break;
+       case 'FullName': 
+         this.columnsJson['productDescription'] = 'FullName';
+         break;
+       case 'unitPrice':
+         this.columnsJson['unitPrice'] = 'unitPrice';
+         break;
+      case 'remarks':
+        this.columnsJson['remarks'] = 'remarks';
       
-//        default: 
-//        break;
-//      }
-//    });
-//    this.displayColumns = Object.keys(this.columnsJson);
-//    this.loading=false;
-//  }
-//  })
+       default: 
+       break;
+     }
+   });
+   this.displayColumns = Object.keys(this.columnsJson);
+   this.loading=false;
+ }
+ })
 }
 
 //updates request body
@@ -429,7 +438,7 @@ show_hide_details() {
       this.price = element;
       this.formEdit = this.formBuilder.group(this.price);
       this.isVisibleEdit = true;
-      console.log(this.price)
+      console.log(this.price.id)
     }
   
     handleOkEdit(): void {
@@ -477,11 +486,10 @@ show_hide_details() {
    }
    editOutletPricing(){
     const model = {
-      assetNumber: this.formAdd.value.assetNumber,
-      coolerSize: this.formAdd.value.coolerSize,
-      model: this.formAdd.value.model,
-      serialNumber: this.formAdd.value.serialNumber,
-      status: this.formAdd.value.status,
+      productCode: this.formEdit.value.productCode,
+      productDescription: this.formEdit.value.productDescription,
+      remarks: this.formEdit.value.remarks,
+      unitPrice: this.formEdit.value.unitPrice,
       id: this.price['id'],
       // previousData: {
       //   cdName: this.cooler["cdName"],
@@ -494,30 +502,42 @@ show_hide_details() {
       // }
     };
     
-    this.httpService.put("config/outlet-price/edit", model).subscribe
-    
+    this.httpService.put("config/outlet-price/edit", model)
+    // .subscribe({
+    //   next:(res)=> { 
+    //   if(res['status'] != "Failed") {
+    //    let message: any;
+    //    message = res['message']
+    //     this.toastr.success(message, "Success!");
+    //     this.formAdd.reset();
+    //     }
+    //   },
+      
+    //   error:(err)=>{
+    //    let errorMessage: any;
+    //    errorMessage = err.error['message']
+   
+    //     this.toastr.error(errorMessage, "Error!");
+    //   },
+    //  })
+    //  this.loadProducts();
+
+    .subscribe
     (res => {
       let message: any;
       message = res['message'];
-      if (res['responseCode'] == 200) {
-        if(res['message']==="Edited successfully"){
+      if (res['status'] = "Success") {
           this.toastr.success(message, "Success!");
-        }
-        else{
+      }
+      else{
           this.toastr.error(message, "Error!");
         }
-       
-      } 
-      else {
-        let errorMessage: any;
-        errorMessage = res["message"]
-        this.toastr.error(errorMessage, "Error!");
-        
-      }
       this.loadProducts();
     })
    }
   
+  
+
     // Download PDF
     exportOutletPricingPDF() {
       let element = 'table'
@@ -534,12 +554,10 @@ show_hide_details() {
    exportOutletPricingCSV(){
     this.global.exportToCsv(this.listOfDataToDisplay,
       'Outlet Prices', ['id', 
-      'model',
-      'serialNumber',
-      'assetNumber',
-      'status', 
-      'createdBy',
-      'createdOn',
+      'productCode',
+      'productDescription',
+      'unitPrice',
+      'remarks',
       ]);
    }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -22,6 +22,10 @@ export class ViewUserComponent implements OnInit {
   user: any;
   page: number = 1;
   perPage: number = 10;
+  loading: boolean = true;
+  listOfData: any[]= [];
+  listOfDataToDisplay: any[]= [];
+  total: any;
 
   userName !: string;
   userData: any;
@@ -31,7 +35,8 @@ export class ViewUserComponent implements OnInit {
     public dialog: MatDialog,
     private _httpService: HttpService,
     private route: ActivatedRoute,
-    private activatedRoute: ActivatedRoute, 
+    private activatedRoute: ActivatedRoute,
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
@@ -41,13 +46,14 @@ export class ViewUserComponent implements OnInit {
     })
     this.viewUser();
     this.loadData();
+    this.loadRoles();
   }
 
   viewUser(){
     this._httpService.getUserByUsername("user/user-details", this.userName)
       .subscribe(res=>{
         this.userData = res['data'];
-        // console.log(this.userData);
+        console.log(this.userData);
         // console.log(this.userData.firstName);
         // console.log(this.userData.email);
         // console.log(this.userData.mobileNumber);       
@@ -72,6 +78,27 @@ export class ViewUserComponent implements OnInit {
     })
   }
 
+  loadRoles(){
+    let apd: string;
+    let pid: number;
+    this.loading = true;
+    this._httpService.getRoles('workflow/roles', apd, pid ).subscribe(data => {
+      if(data['status'] = "Success") {
+        this.loading = false;
+        this.listOfData = data['data'];
+        this.total = data['totalCount']
+
+    
+          console.log('Roles');
+          console.log(this.listOfData);
+
+    this.listOfDataToDisplay = [...this.listOfData];
+      }
+  })
+}
+onBack(){
+  this.router.navigate(['/user-profile/list-users'])
+}
   //blocks user
   blockThisUser(): void {
     let id = this.idUser;

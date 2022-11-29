@@ -17,6 +17,10 @@ import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzMenuModule } from "ng-zorro-antd/menu";
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { PendingComponent } from './pending/pending.component';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { PendingMaintenanceComponent } from './pending-maintenance/pending-maintenance.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +33,8 @@ import { NzToolTipModule } from "ng-zorro-antd/tooltip";
         AddCompanyComponent, 
         AddSparePartComponent,
         DialogComponent,
+        PendingComponent,
+        PendingMaintenanceComponent,
     ],
     imports: [
         CommonModule,
@@ -39,7 +45,9 @@ import { NzToolTipModule } from "ng-zorro-antd/tooltip";
         NzDropDownModule,
         NzMenuModule,
         NzModalModule,
-        NzToolTipModule
+        NzToolTipModule,
+        NzTabsModule,
+        NzSpaceModule
     ],
     providers: [],
     entryComponents:[]

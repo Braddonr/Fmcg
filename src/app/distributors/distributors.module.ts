@@ -20,6 +20,7 @@ import { NzToolTipModule } from "ng-zorro-antd/tooltip";
 import { ViewDistributorComponent } from './view-distributor/view-distributor.component';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { PendingDistributorsComponent } from './pending-distributors/pending-distributors.component';
 @NgModule({
     declarations: [
         AllDistributorsComponent,
@@ -30,6 +31,7 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
         AddVanStockComponent,
         DialogComponent,
         ViewDistributorComponent,
+        PendingDistributorsComponent,
         
     ],
     imports: [

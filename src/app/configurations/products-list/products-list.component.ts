@@ -46,12 +46,13 @@ export class ProductsListComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
+    { name: 'Product Code', status: true },
+    { name: 'Product Description', status: true },
+    { name: 'Brand', status: true },
+    { name: 'Pack', status: true },
+    { name: 'Packaging Type', status: true },
     { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    { name: 'Remarks', status: true },
     { name: 'Actions', status: true },
   ]
   
@@ -118,11 +119,15 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      assetNumber:new FormControl('', [<any>Validators.required]),
-      coolerSize:new FormControl('', [<any>Validators.required]),
-      model:new FormControl('', [<any>Validators.required]),
-      serialNumber:new FormControl('', [<any>Validators.required]),
-      status: new FormControl('', [<any>Validators.required]),
+      brand:new FormControl('', [<any>Validators.required]),
+      categoryId:new FormControl('', [<any>Validators.required]),
+      pack:new FormControl('', [<any>Validators.required]),
+      packagingType:new FormControl('', [<any>Validators.required]),
+      productCode: new FormControl('', [<any>Validators.required]),
+      productDescription: new FormControl('', [<any>Validators.required]),
+      units: new FormControl('', [<any>Validators.required]),
+      unitId: new FormControl('', [<any>Validators.required]),
+      remarks: new FormControl('', [<any>Validators.required]),
     });
     this.loadProducts();
   }
@@ -184,69 +189,71 @@ loadProducts(){
   this.loading = true;
  
   //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
   
-//   this.httpService.get("config/product/all", this.page, this.perPage).subscribe(res => {
-//    if(res['responseCode'] == 200 || res['responseCode'] == 201){
-//      this.loading = false;
-//    this.listOfData = res['data'];
-//    console.log('Products');
-//    console.log(this.listOfData);
+  this.httpService.get("config/product/all", this.page, this.perPage).subscribe(res => {
+   if(res['responseCode'] == 200 || res['responseCode'] == 201){
+     this.loading = false;
+   this.listOfData = res['data'];
+   console.log('Products');
+   console.log(this.listOfData);
 
-//    // @ts-ignore
-//    this.dataSource= new MatTableDataSource(this.listOfData);
-//    this.dataSource.paginator = this.paginator
-//    this.dataSource.sort = this.sort
-//    this.total = res['totalCount'];
+   this.listOfDataToDisplay = [...this.listOfData];
 
-//    this.listOfData.map((value, i) => {
+   // @ts-ignore
+   this.dataSource= new MatTableDataSource(this.listOfData);
+   this.dataSource.paginator = this.paginator
+   this.dataSource.sort = this.sort
+   this.total = res['totalCount'];
+
+   this.listOfData.map((value, i) => {
     
-//     value.ID = (this.page - 1) * this.perPage + i+1;
-//   });
+    value.ID = (this.page - 1) * this.perPage + i+1;
+  });
 
-//    this.listOfDisplayData = [...this.listOfData];
-//    let columns = [];
-//    this.listOfData.map(item => {
-//      Object.keys(item).map(itemKeys => {
-//        columns.push(itemKeys);
-//      });
-//    });
-//    this.columnsToExport = Array.from(new Set(columns));
-//    this.columnsToExport.map(item =>{
-//      switch(item){
+   this.listOfDisplayData = [...this.listOfData];
+   let columns = [];
+   this.listOfData.map(item => {
+     Object.keys(item).map(itemKeys => {
+       columns.push(itemKeys);
+     });
+   });
+   this.columnsToExport = Array.from(new Set(columns));
+   this.columnsToExport.map(item =>{
+     switch(item){
       
-//        case 'productCode':
-//          this.columnsJson['productCode'] = 'productCode';
-//          break;
-//        case 'productDescription': 
-//          this.columnsJson['productDescription'] = 'productDescription';
-//          break;
-//        case 'brand':
-//          this.columnsJson['brand'] = 'brand';
-//          break;
-//       case 'pack':
-//         this.columnsJson['pack'] = 'pack';
-//         break;
-//         case 'packagingType': 
-//         this.columnsJson['packagingType'] = 'packagingType';
-//         break;
-//        default: 
-//        break;
-//      }
-//    });
-//    this.displayColumns = Object.keys(this.columnsJson);
-//    this.loading=false;
-//  }
-//  });
+       case 'productCode':
+         this.columnsJson['productCode'] = 'productCode';
+         break;
+       case 'productDescription': 
+         this.columnsJson['productDescription'] = 'productDescription';
+         break;
+       case 'brand':
+         this.columnsJson['brand'] = 'brand';
+         break;
+      case 'pack':
+        this.columnsJson['pack'] = 'pack';
+        break;
+        case 'packagingType': 
+        this.columnsJson['packagingType'] = 'packagingType';
+        break;
+       default: 
+       break;
+     }
+   });
+   this.displayColumns = Object.keys(this.columnsJson);
+   this.loading=false;
+ }
+ });
 }
 
 //updates request body
@@ -399,11 +406,15 @@ this.httpService.post("config/product/add", this.formAdd.value)
 }
 editProduct(){
 const model = {
-  assetNumber: this.formAdd.value.assetNumber,
-  coolerSize: this.formAdd.value.coolerSize,
-  model: this.formAdd.value.model,
-  serialNumber: this.formAdd.value.serialNumber,
-  status: this.formAdd.value.status,
+  brand: this.formEdit.value.brand,
+  categoryId: this.formEdit.value.categoryId,
+  pack: this.formEdit.value.pack,
+  packagingType: this.formEdit.value.packagingType,
+  productCode: this.formEdit.value.productCode,
+  productDescription: this.formEdit.value.productDescription,
+  units: this.formEdit.value.units,
+  unitId: this.formEdit.value.unitId,
+  remarks: this.formEdit.value.remarks,
   id: this.product['id'],
   // previousData: {
   //   cdName: this.cooler["cdName"],
@@ -416,26 +427,17 @@ const model = {
   // }
 };
 
-this.httpService.put("config/edit-product", model).subscribe
-
+this.httpService.put("config/edit-product", model)
+.subscribe
 (res => {
   let message: any;
   message = res['message'];
-  if (res['responseCode'] == 200) {
-    if(res['message']==="Edited successfully"){
+  if (res['status'] = "Success") {
       this.toastr.success(message, "Success!");
-    }
-    else{
+  }
+  else{
       this.toastr.error(message, "Error!");
     }
-   
-  } 
-  else {
-    let errorMessage: any;
-    errorMessage = res["message"]
-    this.toastr.error(errorMessage, "Error!");
-    
-  }
   this.loadProducts();
 })
 }
@@ -455,13 +457,15 @@ this.global.exportTableElmToExcel(element, 'Products');
 //export csv file
 exportProductsCSV(){
 this.global.exportToCsv(this.listOfDataToDisplay,
-  'Products', ['id', 
-  'model',
-  'serialNumber',
-  'assetNumber',
-  'status', 
+  'Products', ['id',
+  'productCode',
+  'productDescription',
+  'brand', 
+  'pack', 
+  'packagingType',
   'createdBy',
-  'createdOn',
+  'remarks', 
+  'actions', 
   ]);
 }
 

@@ -31,7 +31,7 @@ export class HttpService {
     });
   }
 
-  public get(endpoint: string,  page?:number, size?:number, id?: number): any {
+  public get(endpoint: string,  page?:number, size?:number): any {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString());
@@ -46,7 +46,37 @@ export class HttpService {
         return response;
     }
     ));
+}
 
+public getAllocations(endpoint: string,  cdCode?: string, page?:number, size?:number): any {
+  let params = new HttpParams()
+  .set('cdCode', cdCode.toString())
+  .set('page', page.toString())
+  .set('size', size.toString());
+  
+  return this.http.get(this._globalService.fmcgHost + endpoint,
+      { headers: this.getHeaders() , params: params
+          }
+  ).pipe(
+      map(
+          response => {
+      response = response;
+      return response;
+  }
+  ));
+}
+public getNoParams(endpoint: string): any {
+  
+  return this.http.get(this._globalService.fmcgHost + endpoint,
+      { headers: this.getHeaders() 
+          }
+  ).pipe(
+      map(
+          response => {
+      response = response;
+      return response;
+  }
+  ));
 }
 // get mock data to use when end points are down
 public getMockData(): any {
@@ -202,6 +232,17 @@ public getUserByUsername(endpoint: string, userName: string){
   }));
 }
 
+public getRoles(endpoint: string, apd: string, pid: number){
+  let params = new HttpParams()
+  .set('apd', apd.toString())
+  .set('pid', pid.toString())
+  return this.http.get(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders(), params: params}
+  ).pipe(map(response => {
+      response = response;
+      return response;
+  }));
+}
+
 public post(endpoint: string, model?: any): any {
     
   return this.http.post(this._globalService.fmcgHost + endpoint, model, { headers: this.getHeaders() }
@@ -218,6 +259,15 @@ public put(endpoint: string, model: any): any {
       response = response;
       return response;
   }));
+}
+
+public approveById(endpoint: string, id: string, ): any{
+  return this.http.put(this._globalService.fmcgHost + endpoint + '/'+ id, {}, { headers: this.getHeaders()}
+  ).pipe(map(response => {
+      response = response;
+      return response;
+  }));
+
 }
 
 // public delete(endpoint: string, id: string): any {
@@ -241,6 +291,22 @@ public delete(endpoint: string, id?: string): any {
 public deleteId(endpoint: string, id: string){
   let parameter = new HttpParams().set('vehicleEntityDto', id);
   return this.http.delete(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders(),  params: parameter}
+  ).pipe(map(response => {
+      response = response;
+      return response;
+  }));
+}
+public deleteByUserName(endpoint: string, userName: string){
+  let parameter = new HttpParams().set('username', userName);
+  return this.http.delete(this._globalService.fmcgHost + endpoint, { headers: this.getHeaders(),  params: parameter}
+  ).pipe(map(response => {
+      response = response;
+      return response;
+  }));
+}
+public deleteById(endpoint: string, id: string){
+  // let parameter = new HttpParams().set('', id);
+  return this.http.delete(this._globalService.fmcgHost + endpoint + '/'+ id, { headers: this.getHeaders()}
   ).pipe(map(response => {
       response = response;
       return response;

@@ -24,35 +24,38 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+              <th *ngIf="showHideColumn('Territory Code')"nzCustomerFilter>Territory Code
                 <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
+              <th *ngIf="showHideColumn('Territory Name')" nzCustomFilter>Territory Name
                 <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Asset Number')" nzCustomFilter>Asset Number
+              <th *ngIf="showHideColumn('Territory Manager')" nzCustomFilter>Territory Manager
                 <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Status')" nzWidth="15%" nzCustomFilter>Status
-                <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
-                  <i nz-icon nzType="search"></i>
-                </nz-filter-trigger>
-              </th>
-              <th *ngIf="showHideColumn('Created By')" nzCustomFilter>Created By
+              <th *ngIf="showHideColumn('Region Code')" nzCustomFilter>Region Code
                 <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Created On')" nzCustomFilter >Created On
+              <th *ngIf="showHideColumn('Region Name')">Region Name
+              </th>
+              <th *ngIf="showHideColumn('Region Governor')" nzCustomFilter >Region Governor
                 <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
-                  <i nz-icon nzType="calendar"></i>
+                  <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
+              </th>
+              <th *ngIf="showHideColumn('Tsm FirstName')">Tsm FirstName
+              </th>
+              <th *ngIf="showHideColumn('Tsm SecondName')">Tsm SecondName
+              </th>
+              <th *ngIf="showHideColumn('Tsm Email')">Tsm Email
               </th>
               <th n *ngIf="showHideColumn('Actions')">Actions</th>
             </tr>
@@ -61,17 +64,20 @@
             <tr *ngFor="let data of territoriesTable.data">
               <td>{{ data.ID }}</td>
               <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
-              <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td>
-              <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
-              <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
-              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
-              <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
-              <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
-              <td  *ngIf="showHideColumn('Actions')">
+              <td *ngIf="showHideColumn('Territory Code')">{{ data.territoryCode }}</td>
+              <td *ngIf="showHideColumn('Territory Name')">{{ data.territoryName }}</td>
+              <td *ngIf="showHideColumn('Territory Manager')">{{ data.territoryManager }}</td>
+              <td *ngIf="showHideColumn('Region Code')">{{ data.regionCode }}</td>
+              <td *ngIf="showHideColumn('Region Name')">{{ data.regionName }}</td>
+              <td *ngIf="showHideColumn('Region Governor')">{{ data.regionGovernor }}</td>
+              <td *ngIf="showHideColumn('Tsm FirstName')">{{ data.tsmFirstName }}</td>
+              <td *ngIf="showHideColumn('Tsm SecondName')">{{ data.tsmSecondName }}</td>
+              <td *ngIf="showHideColumn('Tsm Email')">{{ data.tsmEmail }}</td>
+              <td *ngIf="showHideColumn('Actions')">
                 <div style="justify-items: center; text-align: center;">
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
-                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp;
-                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button>
+                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp; -->
+                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button> -->
                 </div>
               </td>
             </tr>
@@ -141,62 +147,146 @@
   </nz-dropdown-menu>
 
 
-  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Territory" nzOkText="Add Territory" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Territory" nzOkText="Add Territory" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()" [nzStyle]="{ top: '20px' }" [nzWidth]="700">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formAdd">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="model">Cooler Model</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="id">User</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Cooler Model" formControlName="model">
-              <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
-              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
-              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
-              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
-              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="User" formControlName="id">
+              <nz-option nzLabel="{{i.userName}}" nzValue="{{i.id}}" *ngFor="let i of listOfUsers"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="coolerSize" nzRequired>Cooler Size</nz-form-label>
+
+        <div nz-row [nzGutter]="19">
+          <div nz-col nzFlex="1.17">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="14" nzRequired nzFor="regionCode">Region Code</nz-form-label>
+                <nz-form-control nzErrorTip="This field is required!">
+                  <input
+                  nz-input
+                  placeholder="Region Code"
+                  id="regionCode"
+                  formControlName="regionCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+         </div>
+         <div nz-col nzFlex="1.5">
+          <nz-form-item>
+              <nz-form-label nzRequired nzFor="regionGovernor">Region Governor</nz-form-label>
+              <nz-form-control [nzSpan]="8" nzErrorTip="This field is required!">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Governor" formControlName="regionGovernor">
+                  <nz-option nzLabel="{{regionGovernor}}" nzValue="{{regionGovernor}}" *ngFor="let regionGovernor of regionGovernors"></nz-option>
+                </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+      </div>
+
+         <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="regionName">Region Name</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
-              nz-input
-              placeholder=" Cooler Size"
-              id="coolerSize"
-              formControlName="coolerSize"
-            />
+            nz-input
+            placeholder="Region Name"
+            id="regionName"
+            formControlName="regionName"
+          />
+          </nz-form-control>
+        </nz-form-item>
+
+        <div nz-row [nzGutter]="9">
+          <div nz-col nzFlex="1.15">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="14" nzRequired nzFor="territoryCode">Territory Code</nz-form-label>
+                <nz-form-control nzErrorTip="This field is required!">
+                  <input
+                  nz-input
+                  placeholder="Territory Code"
+                  id="territoryCode"
+                  formControlName="territoryCode"
+                />
+              </nz-form-control>
+            </nz-form-item>
+         </div>
+         <div nz-col nzFlex="1.5">
+          <nz-form-item>
+              <nz-form-label nzRequired nzFor="territoryManager">Territory Manager</nz-form-label>
+              <nz-form-control [nzSpan]="8" nzErrorTip="This field is required!">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Manager" formControlName="territoryManager">
+                  <nz-option nzLabel="{{territoryManager}}" nzValue="{{territoryManager}}" *ngFor="let territoryManager of territoryManagers"></nz-option>
+                </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+      </div>
+
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="territoryName" nzRequired>Territory Name</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+            nz-input
+            placeholder="Territory Name"
+            id="territoryName"
+            formControlName="territoryName"
+          />
+          </nz-form-control>
+        </nz-form-item>
+
+
+
+
+        <div nz-row [nzGutter]="28">
+          <div nz-col nzFlex="1.19">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="14" nzRequired nzFor="tsmFirstName"> Tsm FirstName</nz-form-label>
+                <nz-form-control nzErrorTip="This field is required!">
+                  <input
+                  nz-input
+                  placeholder="FirstName"
+                  id="tsmFirstName"
+                  formControlName="tsmFirstName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+         </div>
+         <div nz-col nzFlex="1.5">
+          <nz-form-item>
+              <nz-form-label nzRequired nzFor="tsmSecondName">SecondName</nz-form-label>
+              <nz-form-control [nzSpan]="9" nzErrorTip="This field is required!">
+                <input
+                nz-input
+                placeholder="SecondName"
+                id="tsmSecondName"
+                formControlName="tsmSecondName"
+              />
+            </nz-form-control>
+          </nz-form-item>
+       </div>
+      </div>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="tsmEmail" nzRequired>Tsm Email</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+            nz-input
+            placeholder="Tsm Email"
+            id="tsmEmail"
+            formControlName="tsmEmail"
+          />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="assetNumber">Asset Number</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Asset Number" formControlName="assetNumber">
-              <nz-option nzLabel="TRUCK" nzValue="TRUCK"></nz-option>
-              <nz-option nzLabel="TRICYLE" nzValue="TRICYLE"></nz-option>
-              <nz-option nzLabel="VAN" nzValue="VAN"></nz-option>
-              <nz-option nzLabel="PICKUP" nzValue="PICKUP"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="serialNumber" nzRequired>Serial Number</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks" nzRequired>Remarks</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
               nz-input
-              placeholder="Serial Number"
-              id="serialNumber"
-              formControlName="serialNumber"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="Status"
-              id="status"
-              formControlName="status"
+              placeholder="Remarks"
+              id="remarks"
+              formControlName="remarks"
             />
           </nz-form-control>
         </nz-form-item>
@@ -282,7 +372,7 @@
         </ul>
       </nz-dropdown-menu>
 
-      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp;
+      <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Territory</button>&nbsp;
       <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
       <nz-dropdown-menu #fileType="nzDropdownMenu">
         <ul nz-menu>

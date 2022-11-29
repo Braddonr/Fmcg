@@ -44,12 +44,15 @@ export class TerritoryComponent implements OnInit {
   
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
-    { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
+    { name: 'Territory Code', status: false },
+    { name: 'Territory Name', status: true },
+    { name: 'Territory Manager', status: true },
+    { name: 'Region Code', status: false },
+    { name: 'Region Name', status: true },
+    { name: 'Region Governor', status: true },
+    { name: 'Tsm FirstName', status: true },
+    { name: 'Tsm SecondName', status: true },
+    { name: 'Tsm Email', status: true },
     { name: 'Actions', status: true },
   ]
 
@@ -100,6 +103,11 @@ export class TerritoryComponent implements OnInit {
   formAdd: FormGroup;
   formEdit: FormGroup;
   territory: any;
+  listOfUsers: any[] =[];
+
+  territoryManagers: any[] =[];
+  regionGovernors: any[] =[];
+
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -115,11 +123,17 @@ export class TerritoryComponent implements OnInit {
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      assetNumber:new FormControl('', [<any>Validators.required]),
-      coolerSize:new FormControl('', [<any>Validators.required]),
-      model:new FormControl('', [<any>Validators.required]),
-      serialNumber:new FormControl('', [<any>Validators.required]),
-      status: new FormControl('', [<any>Validators.required]),
+      id:new FormControl('', [<any>Validators.required]),
+      territoryManager:new FormControl('', [<any>Validators.required]),
+      territoryCode:new FormControl('', [<any>Validators.required]),
+      territoryName:new FormControl('', [<any>Validators.required]),
+      tsmEmail:new FormControl('', [<any>Validators.required]),
+      tsmFirstName:new FormControl('', [<any>Validators.required]),
+      tsmSecondName:new FormControl('', [<any>Validators.required]),
+      regionCode: new FormControl('', [<any>Validators.required]),
+      regionGovernor: new FormControl('', [<any>Validators.required]),
+      regionName: new FormControl('', [<any>Validators.required]),
+      remarks: new FormControl('', [<any>Validators.required])
     });
     this.loadTerritories();
   }
@@ -205,72 +219,111 @@ view(element): void {
   loadTerritories() {
     this.loading = true;
    
-    //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
+//     //use local server as endpoints are down
+//  this.httpService.getMockData()
+//  .subscribe(res => {
   
-  this.loading = false;
-  this.listOfData = res
-  // console.log('Cooler-Companies');
-  // console.log(this.listOfData);
+//   this.loading = false;
+//   this.listOfData = res
+//   // console.log('Cooler-Companies');
+//   // console.log(this.listOfData);
 
-  this.listOfDataToDisplay = [...this.listOfData];
-});
+//   this.listOfDataToDisplay = [...this.listOfData];
+// });
 
-//     this.httpService.get("config/territory/all", this.page, this.perPage).subscribe(res => {
-//       if (res['responseCode'] == 200 || res['responseCode'] == 201) {
-//         this.loading = false;
-//         this.listOfData = res['data'];
-//         console.log('Territories');
-//         console.log(this.listOfData);
+    this.httpService.get("config/territory/all", this.page, this.perPage).subscribe(res => {
+      if (res['status'] == "Success") {
+        this.loading = false;
+        this.listOfData = res['data'];
+        console.log('Territories');
+        console.log(this.listOfData);
 
-//         // @ts-ignore
-//         this.dataSource= new MatTableDataSource(this.listOfData);
-//         this.dataSource.paginator = this.paginator;
-//         this.dataSource.sort = this.sort;
-//         this.total = res['totalCount'];
 
-//         this.listOfData.map((value, i) => {
-//           value.ID = (this.page - 1) * this.perPage + i + 1;
-//         })
+        this.listOfData.map((x: any) => {
+          if(!this.regionGovernors.includes(x.regionGovernor)){
+          this.regionGovernors.push(x.regionGovernor)
+          console.log('00000',this.regionGovernors);
+          }
+        })
+        this.listOfData.map((x: any) => {
+          if(!this.territoryManagers.includes(x.territoryManager)){
+          this.territoryManagers.push(x.territoryManager)
+          console.log('1111',this.territoryManagers);
+          }
+        })
 
-//         this.listOfDisplayData = [...this.listOfData];
-//         console.log("list of Data", this.listOfDisplayData);
+        this.listOfDataToDisplay = [...this.listOfData];
+
+        // @ts-ignore
+        this.dataSource= new MatTableDataSource(this.listOfData);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.total = res['totalCount'];
+
+        this.listOfData.map((value, i) => {
+          value.ID = (this.page - 1) * this.perPage + i + 1;
+        })
+
+        this.listOfDisplayData = [...this.listOfData];
+        console.log("list of Data", this.listOfDisplayData);
         
-//         let columns = [];
-//         this.listOfData.map(item => {
-//           Object.keys(item).map(itemKeys => {
-//             columns.push(itemKeys);
-//           })
-//         });
-//         this.columnsToExport = Array.from(new Set(columns));
-//         this.columnsToExport.map(item => {
-//           switch (item) {
+        let columns = [];
+        this.listOfData.map(item => {
+          Object.keys(item).map(itemKeys => {
+            columns.push(itemKeys);
+          })
+        });
+        this.columnsToExport = Array.from(new Set(columns));
+        this.columnsToExport.map(item => {
+          switch (item) {
       
-//        case 'territoryCode':
-//           this.columnsJson['territoryCode'] = 'territoryCode';
-//           break;
-//        case 'territoryName':
-//           this.columnsJson['territoryName'] = 'territoryName';
-//           break;
-//        case 'createdBy':
-//           this.columnsJson['createdBy'] = 'createdBy';
-//           break;
-//       case 'remarks':
-//           this.columnsJson['remarks'] = 'remarks';
-//           break;
-//         case 'territoryManager':
-//           this.columnsJson['territoryManager'] = 'territoryManager';
-//           break;
+       case 'territoryCode':
+          this.columnsJson['territoryCode'] = 'territoryCode';
+          break;
+       case 'territoryName':
+          this.columnsJson['territoryName'] = 'territoryName';
+          break;
+       case 'createdBy':
+          this.columnsJson['createdBy'] = 'createdBy';
+          break;
+      case 'remarks':
+          this.columnsJson['remarks'] = 'remarks';
+          break;
+        case 'territoryManager':
+          this.columnsJson['territoryManager'] = 'territoryManager';
+          break;
       
-//        default:
-//     break;
-// }
-//    });
-// this.displayColumns = Object.keys(this.columnsJson);
-// this.loading = false;
-//  }
-//  })
+       default:
+    break;
+}
+   });
+this.displayColumns = Object.keys(this.columnsJson);
+this.loading = false;
+ }
+ })
+}
+
+loadUsers(){
+  this.httpService.get("user/all", this.page, this.perPage).subscribe(res => {
+   
+    let data: any;
+    data = res['data'];
+    console.log('ooo',data);
+    
+    data.map((x: any) => {
+      if(!this.listOfUsers.includes(x.id)){
+      this.listOfUsers.push({id: x.id, userName: x.userName})
+      console.log(this.listOfUsers);
+      }
+    })
+  });
+
+  // this.listOfData.map((x: any) => {
+  //   if(!this.governorIds.includes(x.governorId)){
+  //   this.governorIds.push(x.governorId)
+  //  }
+  //   })
+
 }
 
 //updates request body
@@ -418,6 +471,7 @@ toggleStatus(name: string) {
   showModalAdd(): void {
     this.isVisibleAdd = true;
     this.loadTerritories();
+    this.loadUsers();
   }
 
   handleOkAdd(): void {
@@ -543,12 +597,15 @@ toggleStatus(name: string) {
  exportTerritoriesCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
     'Territories', ['id', 
-    'model',
-    'serialNumber',
-    'assetNumber',
-    'status', 
-    'createdBy',
-    'createdOn',
+    'territoryCode',
+    'territoryName',
+    'territoryManager',
+    'regionCode', 
+    'regionName',
+    'regionGovernor',
+    'tsmFirstName',
+    'tsmSecondName',
+    'tsmEmail',
     ]);
  }
 }

@@ -1,0 +1,433 @@
+
+<nz-tabset nzCentered>
+    <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+    <nz-tab nzTitle="Coolers Pending Approval">
+      <nz-card class="card" nzTitle="Cooler Allocation ({{totalAllocated}} Records)" [nzExtra]="pendingApprovalTemplate" style="font-size: 12px;"> 
+            
+        <div class="table">
+        <nz-table
+        #borderedTable nzBordered 
+        #pendingCoolersTable
+        id="pendingCoolersTable"
+        [nzData]="listOfPendingCoolersToDisplay" 
+        [nzFrontPagination]="false"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="perPage"
+        [nzPageIndex]="page" 
+        (nzQueryParams)="onQueryParamsChange($event)"
+        >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th *ngIf="showHideColumn('ID')" nzCustomFilter>ID
+                  <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <!-- <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+                  <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th> -->
+                <th *ngIf="showHideColumn('Cooler Size')"nzCustomerFilter>Cooler Size
+                  <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn('Serial Number')" nzCustomFilter>Serial Number
+                  <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn('Asset Number')" nzCustomFilter>Asset Number
+                  <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn('Status')" nzCustomFilter>Status
+                  <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn('Created By')" nzCustomFilter>Created By
+                  <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn('Created On')" nzCustomFilter >Created On
+                  <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                    <i nz-icon nzType="calendar"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th n *ngIf="showHideColumn('Remarks')">Remarks</th>
+                <th n *ngIf="showHideColumn('Actions')">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of pendingCoolersTable.data">
+                <td>{{ data.ID }}</td>
+                <td *ngIf="showHideColumn('ID')">{{ data.id }}</td>
+                <!-- <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td> -->
+                <td *ngIf="showHideColumn('Cooler Size')">{{ data.coolerSize }}</td>
+                <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
+                <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
+                <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
+                <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
+                <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
+                <td *ngIf="showHideColumn('Remarks')">{{ data.remarks }}</td>
+                <td  *ngIf="showHideColumn('Actions')">
+                  <div style="justify-items: center; text-align: center;">
+                  <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                  <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="approveCooler(data)" style="background-color: green; color: white">A</button>&nbsp;
+                  <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button> -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+              </div>
+    </nz-card>
+    </nz-tab>
+
+    <nz-tab nzTitle="Allocated Coolers Pending Approval">
+        <nz-card class="card" nzTitle="Cooler Allocation ({{totalAllocated}} Records)" [nzExtra]="pendingAllocateTemplate" style="font-size: 12px;"> 
+              
+          <div class="table">
+          <nz-table
+          #borderedTable nzBordered 
+          #pendingAllocatedTable
+          id="pendingAllocatedTable"
+          [nzData]="listOfPendingCoolersToDisplay" 
+          [nzFrontPagination]="false"
+          [nzLoading]="loading"
+          [nzTotal]="total"
+          [nzPageSize]="perPage"
+          [nzPageIndex]="page" 
+          (nzQueryParams)="onQueryParamsChange($event)"
+          >
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th *ngIf="showHideColumn2('ID')" nzCustomFilter>ID
+                    <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <!-- <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+                    <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th> -->
+                  <th *ngIf="showHideColumn2('Cooler Size')"nzCustomerFilter>Cooler Size
+                    <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th *ngIf="showHideColumn2('Serial Number')" nzCustomFilter>Serial Number
+                    <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th *ngIf="showHideColumn2('Asset Number')" nzCustomFilter>Asset Number
+                    <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th *ngIf="showHideColumn2('Status')" nzCustomFilter>Status
+                    <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th *ngIf="showHideColumn2('Created By')" nzCustomFilter>Created By
+                    <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                      <i nz-icon nzType="search"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th *ngIf="showHideColumn2('Created On')" nzCustomFilter >Created On
+                    <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                      <i nz-icon nzType="calendar"></i>
+                    </nz-filter-trigger>
+                  </th>
+                  <th n *ngIf="showHideColumn2('Remarks')">Remarks</th>
+                  <th n *ngIf="showHideColumn2('Actions')">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of pendingAllocatedTable.data">
+                  <td>{{ data.ID }}</td>
+                  <td *ngIf="showHideColumn2('ID')">{{ data.id }}</td>
+                  <!-- <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td> -->
+                  <td *ngIf="showHideColumn2('Cooler Size')">{{ data.coolerSize }}</td>
+                  <td *ngIf="showHideColumn2('Serial Number')">{{ data.serialNumber }}</td>
+                  <td *ngIf="showHideColumn2('Asset Number')">{{ data.assetNumber }}</td>
+                  <td *ngIf="showHideColumn2('Status')">{{ data.status }}</td>
+                  <td *ngIf="showHideColumn2('Created By')">{{ data.createdBy }}</td>
+                  <td *ngIf="showHideColumn2('Created On')">{{ data.createdOn | date : 'short' }}</td>
+                  <td *ngIf="showHideColumn2('Remarks')">{{ data.remarks }}</td>
+                  <td  *ngIf="showHideColumn2('Actions')">
+                    <div style="justify-items: center; text-align: center;">
+                    <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                    <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="approveAllocatedCooler(data)" style="background-color: green; color: white">A</button>&nbsp;
+                    <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp; -->
+                    <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipReallocateTitle" [nzTooltipColor]="toolTipReallocateColor" [nzTooltipPlacement]='toolTipReallocatePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">R</button> -->
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+                </div>
+      </nz-card>
+      </nz-tab>
+  
+    <nz-tab nzTitle="Deallocated Coolers Pending Approval">
+      <nz-card class="card" nzTitle="Cooler Allocation ({{totalAllocated}} Records)" [nzExtra]="pendingDeAllocateTemplate" style="font-size: 12px;"> 
+            
+        <div class="table">
+        <nz-table
+        #borderedTable nzBordered 
+        #pendingDeAllocateTable
+        id="pendingDeAllocateTable"
+        [nzData]="listOfPendingDeAllocationsToDisplay" 
+        [nzFrontPagination]="false"
+        [nzLoading]="loading"
+        [nzTotal]="total"
+        [nzPageSize]="perPage"
+        [nzPageIndex]="page" 
+        (nzQueryParams)="onQueryParamsChange($event)"
+        >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th *ngIf="showHideColumn3('ID')" nzCustomFilter>ID
+                  <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <!-- <th *ngIf="showHideColumn('Cooler Model')"nzCustomerFilter>Cooler Model
+                  <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th> -->
+                <th *ngIf="showHideColumn3('Cooler Size')"nzCustomerFilter>Cooler Size
+                  <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn3('Serial Number')" nzCustomFilter>Serial Number
+                  <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn3('Asset Number')" nzCustomFilter>Asset Number
+                  <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn3('Status')" nzCustomFilter>Status
+                  <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn3('Created By')" nzCustomFilter>Created By
+                  <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+                    <i nz-icon nzType="search"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th *ngIf="showHideColumn3('Created On')" nzCustomFilter >Created On
+                  <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+                    <i nz-icon nzType="calendar"></i>
+                  </nz-filter-trigger>
+                </th>
+                <th n *ngIf="showHideColumn3('Remarks')">Remarks</th>
+                <th n *ngIf="showHideColumn3('Actions')">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of pendingDeAllocateTable.data">
+                <td>{{ data.ID }}</td>
+                <td *ngIf="showHideColumn3('ID')">{{ data.id }}</td>
+                <!-- <td *ngIf="showHideColumn('Cooler Model')">{{ data.model }}</td> -->
+                <td *ngIf="showHideColumn3('Cooler Size')">{{ data.coolerSize }}</td>
+                <td *ngIf="showHideColumn3('Serial Number')">{{ data.serialNumber }}</td>
+                <td *ngIf="showHideColumn3('Asset Number')">{{ data.assetNumber }}</td>
+                <td *ngIf="showHideColumn3('Status')">{{ data.status }}</td>
+                <td *ngIf="showHideColumn3('Created By')">{{ data.createdBy }}</td>
+                <td *ngIf="showHideColumn3('Created On')">{{ data.createdOn | date : 'short' }}</td>
+                <td *ngIf="showHideColumn3('Remarks')">{{ data.remarks }}</td>
+                <td  *ngIf="showHideColumn3('Actions')">
+                  <div style="justify-items: center; text-align: center;">
+                  <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                  <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="approveDeallocatedCooler(data)" style="background-color: green; color: white">A</button>&nbsp;
+                  <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp; -->
+                  <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipReallocateTitle" [nzTooltipColor]="toolTipReallocateColor" [nzTooltipPlacement]='toolTipReallocatePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">R</button> -->
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+              </div>
+    </nz-card>
+    </nz-tab>
+
+  
+  </nz-tabset>
+  
+    <nz-dropdown-menu #menuID="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
+        
+          <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+          <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuType="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+    <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+      <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+          <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+      </div>
+    </nz-dropdown-menu>
+  
+    <ng-template #pendingApprovalTemplate>
+      <nz-space>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+          Show/Hide Columns
+          <i nz-icon nzType="down"></i>
+        </button>&nbsp;
+        <nz-dropdown-menu #menu4="nzDropdownMenu">
+          <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+          <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+          <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+          
+          </ul>
+        </nz-dropdown-menu>
+  
+        <!-- <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+        <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+        <nz-dropdown-menu #fileType="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <a (click)="exportCoolersPendingApprovalPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="exportCoolersPendingApprovalExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)=" exportCoolersPendingApprovalCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-space>
+    </ng-template>
+  
+    <ng-template #pendingAllocateTemplate>
+      <nz-space>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+          Show/Hide Columns
+          <i nz-icon nzType="down"></i>
+        </button>&nbsp;
+        <nz-dropdown-menu #menu4="nzDropdownMenu">
+          <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+          <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all2()">Show/Hide All Columns</label>
+          <label nz-checkbox *ngFor="let item of checkList2" [(ngModel)]="item.status" (click)="toggleStatus2(item.name)">{{item.name}}</label>
+          
+          </ul>
+        </nz-dropdown-menu>
+  
+        <!-- <button nz-button nzType="default" (click)="showModalAdd2()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+        <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+        <nz-dropdown-menu #fileType="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item>
+              <a (click)="exportPendingAllocatedCoolersPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)="exportPendingAllocatedExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+            </li>
+            <li nz-menu-item>
+              <a (click)=" exportPendingAllocatedCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+      </nz-space>
+    </ng-template>
+  
+    <ng-template #pendingDeAllocateTemplate>
+        <nz-space>
+          <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+            Show/Hide Columns
+            <i nz-icon nzType="down"></i>
+          </button>&nbsp;
+          <nz-dropdown-menu #menu4="nzDropdownMenu">
+            <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+            <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all3()">Show/Hide All Columns</label>
+            <label nz-checkbox *ngFor="let item of checkList2" [(ngModel)]="item.status" (click)="toggleStatus3(item.name)">{{item.name}}</label>
+            
+            </ul>
+          </nz-dropdown-menu>
+    
+          <!-- <button nz-button nzType="default" (click)="showModalAdd2()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+          <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+          <nz-dropdown-menu #fileType="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedCoolersPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+              </li>
+              <li nz-menu-item>
+                <a (click)="exportPendingDeAllocatedCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </nz-space>
+      </ng-template>
+    
+  
+  

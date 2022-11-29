@@ -6,6 +6,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
 import { MyProfileComponent } from "./my-profile/my-profile.component";
 import { ViewUserComponent } from './view-user/view-user.component';
 import { ViewAuditTrailComponent } from './audit-trail/view-audit-trail/view-audit-trail.component';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 const routes: Routes = [
     {
@@ -20,7 +21,8 @@ const routes: Routes = [
         path: 'view-user/:userName',
         component: ViewUserComponent,
         data: {
-            title: 'View User'
+            title: 'View User',
+            breadcrumb: 'View User'
         }
     },
     {
@@ -42,6 +44,24 @@ const routes: Routes = [
         component: MyProfileComponent,
         data: {
             title: 'My profile'
+        }
+    },
+    //profiles
+    {
+        path: 'profiles',
+        component: ProfilesComponent,
+        data: {
+            title: 'Profiles',
+            breadcrumb: 'Profiles'
+        }
+    },
+    //audit trail
+    {
+        path: 'audit-trail',
+        component: AuditTrailComponent,
+        data: {
+            title: 'Audit Trail',
+            breadcrumb: 'Audit Trail'
         }
     }
 ]

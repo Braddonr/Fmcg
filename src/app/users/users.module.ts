@@ -25,7 +25,17 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { UserDetailsComponent } from './user-details/user-details.component';
-
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { ProfilesComponent } from './profiles/profiles.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +54,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     MyProfileComponent,
     MyRolesComponent,
     UserDetailsComponent,
+    ProfilesComponent,
   ],
   imports: [
     CommonModule,
@@ -51,7 +62,17 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     SharedModule,
     MatTableExporterModule,
     NzDropDownModule,
-    NzMenuModule
+    NzMenuModule,
+    NzModalModule,
+    NzToolTipModule,
+    NzSpaceModule,
+    NzTagModule,
+    NzInputModule,
+    NzDescriptionsModule,
+    NzListModule,
+    NzTabsModule,
+    NzBadgeModule,
+    NzPageHeaderModule
   ],
   
 })

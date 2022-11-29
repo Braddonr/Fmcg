@@ -10,13 +10,15 @@ import { MatTableExporterModule } from "mat-table-exporter";
 import { DialogComponent } from './dialog/dialog.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { PendingOrdersComponent } from './pending-orders/pending-orders.component';
 
 @NgModule({
     declarations: [
        OrdersListComponent,
        AddOrderComponent,
        ViewOrderComponent,
-       DialogComponent
+       DialogComponent,
+       PendingOrdersComponent
     ],
     imports: [
         CommonModule,

@@ -49,7 +49,7 @@
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('cdContactMobileNumber')" nzWidth="15%" nzCustomFilter>Contact MobileNumber
+              <th *ngIf="showHideColumn('cdContactMobileNumber')" nzCustomFilter>Contact MobileNumber
                 <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
                   <i nz-icon nzType="search"></i>
                 </nz-filter-trigger>
@@ -345,18 +345,15 @@
           </div>
         
           <div nz-row [nzGutter]="14" class="label">
-            <label  nz-col nzFlex="2.5">Region Code:</label>
+            <label  nz-col nzFlex="2.5">Region Name:</label>
             <label  nz-col nzFlex="2.5">Territory Code:</label>
           </div>
             <div nz-row [nzGutter]="14">
               <div nz-col nzFlex="2.5">
                 <nz-form-item>
                   <nz-form-control id="regionCode" nzErrorTip="This field is required">
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Region Code" formControlName="regionCode">
-                      <!-- <nz-option nzLabel="{{type}}" nzValue="{{type}}" *ngFor="let type of outletTypes"></nz-option> -->
-                      <nz-option nzLabel="68904" nzValue="68904"></nz-option>
-                      <nz-option nzLabel="68905" nzValue="68905"></nz-option>
-                      <nz-option nzLabel="68906" nzValue="68906"></nz-option>
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Region Name" formControlName="regionCode">
+                      <nz-option nzLabel="{{regionName}}" nzValue="{{regionName}}" *ngFor="let regionName of regionNames"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>

@@ -1,15 +1,23 @@
-mat-icon {
-    vertical-align: middle;
-    font-size: 18px;
-}
+// mat-icon {
+//     vertical-align: middle;
+//     font-size: 18px;
+// }
 
-.descText {
-    font-size: 90%;
-}
+// .descText {
+//     font-size: 90%;
+// }
 
-.mb-2 {
-    margin-top: 5px;
+// .mb-2 {
+//     margin-top: 5px;
+// }
+// * {
+//     font-size: small;
+// }
+
+::ng-deep .ant-descriptions-bordered .ant-descriptions-item-label {
+    background-color: #e8e8e8;
+    font-weight: 500;
 }
-* {
-    font-size: small;
+::ng-deep .ant-descriptions-view{
+    border: 20px solid;
 }

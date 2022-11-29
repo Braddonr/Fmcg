@@ -69,6 +69,7 @@ export class AllCoolersComponent implements OnInit {
   checkList: any[] = [
     { name: 'ID', status: false },
     { name: 'Cooler Model', status: true },
+    { name: 'Cooler Size', status: true },
     { name: 'Serial Number', status: true },
     { name: 'Asset Number', status: true },
     { name: 'Status', status: true },
@@ -134,6 +135,7 @@ export class AllCoolersComponent implements OnInit {
   formAdd: FormGroup;
   formEdit: FormGroup;
   cooler: any;
+  models: any[] = [];
 
     model: string;
     assetNumber: string;
@@ -244,10 +246,14 @@ export class AllCoolersComponent implements OnInit {
         this.totalCoolers = res['totalCount'];
         console.log('All-Coolers');
         console.log(this.listOfData);
-
-        let models: any;
-        models= this.listOfData['model']; 
-        console.log(models);
+        
+        this.listOfData.map((x: any) => {
+          if(!this.models.includes(x.model)){
+          this.models.push(x.model)
+         }
+        })
+        console.log(this.models);
+        
         
 
         this.listOfDataToDisplay = [...this.listOfData];
@@ -483,7 +489,7 @@ export class AllCoolersComponent implements OnInit {
       
         showDeleteConfirm(element): void {
           this.modal.confirm({
-            nzTitle: 'Delete outlet',
+            nzTitle: 'Delete cooler',
             nzContent: '<p style="color: red;">Are you sure you want to delete this cooler?</p>',
             nzOkText: 'Yes',
             nzOkType: 'primary',
@@ -531,26 +537,17 @@ export class AllCoolersComponent implements OnInit {
             // }
           };
           
-          this.httpService.put("cooler/edit-cooler", model).subscribe
-          
+          this.httpService.put("cooler/edit-cooler", model)
+          .subscribe
           (res => {
             let message: any;
             message = res['message'];
-            if (res['responseCode'] == 200) {
-              if(res['message']==="Edited successfully"){
+            if (res['status'] = "Success") {
                 this.toastr.success(message, "Success!");
-              }
-              else{
+            }
+            else{
                 this.toastr.error(message, "Error!");
               }
-             
-            } 
-            else {
-              let errorMessage: any;
-              errorMessage = res["message"]
-              this.toastr.error(errorMessage, "Error!");
-              
-            }
             this.loadCoolerSpareParts();
           })
         }

@@ -78,7 +78,7 @@
               <td *ngIf="showHideColumn('userLastName')">{{ data.userLastName }}</td>
               <td *ngIf="showHideColumn('salesPersonId')">{{ data.salespersonId }}</td>
               <td *ngIf="showHideColumn('createdBy')">{{ data.createdBy }}</td>
-              <td *ngIf="showHideColumn('createdOn')">{{ data.createdOn }}</td>
+              <td *ngIf="showHideColumn('createdOn')">{{ data.createdOn | date: 'short' }}</td>
               <td nzRight *ngIf="showHideColumn('actions')">
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp;
@@ -155,6 +155,16 @@
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formAdd">
         <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cdCode" nzRequired>Cd Code</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              id="cdCode"
+              formControlName="cdCode"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="vehicleType">Vehicle Type</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Vehicle Type" formControlName="vehicleType">
@@ -171,7 +181,6 @@
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
               nz-input
-        
               id="plateNumber"
               formControlName="plateNumber"
             />
@@ -183,12 +192,6 @@
             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="sales Person ID" formControlName="salespersonId">
               <nz-option nzLabel="{{i.userName}}" nzValue="{{i.id}}" *ngFor="let i of listOfUsers"></nz-option>
             </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please write something here">
-            <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
           </nz-form-control>
         </nz-form-item>
           
@@ -200,6 +203,16 @@
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formEdit">
         <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="cdCode" nzRequired>Cd Code</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <input
+              nz-input
+              id="cdCode"
+              formControlName="cdCode"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="vehicleType">Vehicle Type</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Vehicle Type" formControlName="vehicleType">
@@ -230,13 +243,6 @@
             </nz-select>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="remarks">Remarks</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please write something here">
-            <textarea formControlName="remarks" id="remarks" nz-input placeholder="Remarks"></textarea>
-          </nz-form-control>
-        </nz-form-item>
-      
     </form>
   </ng-container>
   </nz-modal>

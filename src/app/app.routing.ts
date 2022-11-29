@@ -13,7 +13,7 @@ export const AppRoutes: Routes = [
   {
     path: "",
     component: AdminLayoutComponent,
-    // canActivate: [AuthGuardService],
+    canActivate: [AuthGuardService],
     children: [
       {
         path: "dashboards",
@@ -41,11 +41,11 @@ export const AppRoutes: Routes = [
       // },  
       
       {
-        path: 'user-profile',
+        path: 'user-management',
         loadChildren: () => 
         import('./users/users.module').then(m => m.UsersModule),
         data: {
-          breadcrumb: "User Profile"
+          breadcrumb: "User Management"
         }
       },  
       {
@@ -124,11 +124,11 @@ export const AppRoutes: Routes = [
   },
 
   // auth
-  // {
-  //   path: "auth",
-  //   loadChildren:() => 
-  //   import("./auth/auth.module").then(m => m.AuthModule)
-  // },
+  {
+    path: "auth",
+    loadChildren:() => 
+    import("./auth/auth.module").then(m => m.AuthModule)
+  },
   // end of auth
   {
     path: "",

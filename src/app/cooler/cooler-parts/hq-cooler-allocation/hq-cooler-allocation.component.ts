@@ -27,18 +27,36 @@ export class HqCoolerAllocationComponent implements OnInit {
    @Input() toolTipEditColor: string = "";
    @Input() toolTipEditPosition = 'bottom';
  
-   @Input() toolTipDeleteTitle: string = "Delete";
+   @Input() toolTipDeleteTitle: string = "Deallocate";
    @Input() toolTipDeleteColor: string = "red";
    @Input() toolTipDeletePosition = 'bottom';
+
+   @Input() toolTipReallocateTitle: string = "Reallocate";
+   @Input() toolTipReallocateColor: string = "orange";
+   @Input() toolTipReallocatePosition = 'bottom';
  
    checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
+    // { name: 'Cooler Model', status: true },
+    { name: 'Cooler Size', status: true },
     { name: 'Serial Number', status: true },
     { name: 'Asset Number', status: true },
     { name: 'Status', status: true },
-    { name: 'Created By', status: false },
+    { name: 'Created By', status: true },
     { name: 'Created On', status: true },
+    { name: 'Remarks', status: true },
+    { name: 'Actions', status: true },
+  ]
+  checkList2: any[] = [
+    { name: 'ID', status: false },
+    // { name: 'Cooler Model', status: true },
+    { name: 'Cooler Size', status: true },
+    { name: 'Serial Number', status: true },
+    { name: 'Asset Number', status: true },
+    { name: 'Status', status: true },
+    { name: 'Created By', status: true },
+    { name: 'Created On', status: true },
+    { name: 'Remarks', status: true },
     { name: 'Actions', status: true },
   ]
   mandatoryColumns: any[] = ["UserName", "Full Name", "Email", "Status"];
@@ -48,11 +66,14 @@ export class HqCoolerAllocationComponent implements OnInit {
   usersColumns: string[];
   usersRows: any[];
   editData: boolean;
+  cdCode: string ='';
   page: number = 0;
   perPage: number = 10;
   total: number;
   searchValue: string = '';
   visible: boolean = false;
+  listOfAllocations: any[] = [];
+  listOfUnallocations: any[] = [];
   listOfData: any[] = [];
   listOfDisplayData: any;
   searchInput: string = '';
@@ -66,10 +87,13 @@ export class HqCoolerAllocationComponent implements OnInit {
   allStatus: boolean;
 
   showAll = false;
+  showAll2 = false;
 
   searchTerm = '';
-  totalCoolerAllocation: any;
+  totalAllocated: any;
   listOfDataToDisplay: any = [];
+  listOfAllocationsToDisplay: any = [];
+  listOfUnallocationsToDisplay: any = [];
 
   isVisibleEdit = false;
   isVisibleAdd = false;
@@ -108,7 +132,9 @@ export class HqCoolerAllocationComponent implements OnInit {
       serialNumber:new FormControl('', [<any>Validators.required]),
       status: new FormControl('', [<any>Validators.required]),
     });
-    this.loadProducts();
+    // this.loadProducts();
+    this.loadAllocatedCoolers();
+    this.loadUnallocatedCoolers();
   }
 
   // openDialog(mode, data) {
@@ -145,64 +171,109 @@ export class HqCoolerAllocationComponent implements OnInit {
 //     });
 // }
 
-loadProducts(){
-  this.loading = true;
- this.httpService.get("config/product/all", this.page, this.perPage).subscribe(res => {
-   if(res['status'] == 200 || res['status'] == 201){
-     this.loading = false;
-   this.listOfData = res['data']['content'];
-   this.totalCoolerAllocation = res['totalCount'];
-   this.total = res['data']['totalPages'];
+// loadProducts(){
+//   this.loading = true;
+//  this.httpService.get("config/product/all", this.page, this.perPage).subscribe(res => {
+//    if(res['status'] == 200 || res['status'] == 201){
+//      this.loading = false;
+//    this.listOfData = res['data']['content'];
+//    this.total = res['totalCount'];
+//    this.total = res['data']['totalPages'];
 
-   this.listOfDataToDisplay = [...this.listOfData];
+//    this.listOfDataToDisplay = [...this.listOfData];
     
-   this.listOfData.map((value, i) => {
-    let firstname = value.FirstName;
-    let middlename = value.MiddleName;
-    let lastname = value.LastName;
-    value.ID = (this.page - 1) * this.perPage + i+1;
-    return value.FullName = firstname + " " + middlename + " " + lastname;
-  })
+//    this.listOfData.map((value, i) => {
+//     let firstname = value.FirstName;
+//     let middlename = value.MiddleName;
+//     let lastname = value.LastName;
+//     value.ID = (this.page - 1) * this.perPage + i+1;
+//     return value.FullName = firstname + " " + middlename + " " + lastname;
+//   })
 
-   this.listOfDisplayData = [...this.listOfData];
-   let columns = [];
-   this.listOfData.map(item => {
-     Object.keys(item).map(itemKeys => {
-       columns.push(itemKeys);
-     })
-   });
-   this.columnsToExport = Array.from(new Set(columns));
-   this.columnsToExport.map(item =>{
-     switch(item){
+//    this.listOfDisplayData = [...this.listOfData];
+//    let columns = [];
+//    this.listOfData.map(item => {
+//      Object.keys(item).map(itemKeys => {
+//        columns.push(itemKeys);
+//      })
+//    });
+//    this.columnsToExport = Array.from(new Set(columns));
+//    this.columnsToExport.map(item =>{
+//      switch(item){
       
-       case 'UserName':
-         this.columnsJson['UserName'] = 'UserName';
-         break;
-       case 'FullName': 
-         this.columnsJson['Full Name'] = 'FullName';
-         break;
-       case 'Email':
-         this.columnsJson['Email'] = 'Email';
-         break;
-      case 'Active':
-        this.columnsJson['Status'] = 'Active';
+//        case 'UserName':
+//          this.columnsJson['UserName'] = 'UserName';
+//          break;
+//        case 'FullName': 
+//          this.columnsJson['Full Name'] = 'FullName';
+//          break;
+//        case 'Email':
+//          this.columnsJson['Email'] = 'Email';
+//          break;
+//       case 'Active':
+//         this.columnsJson['Status'] = 'Active';
       
-       default: 
-       break;
-     }
-   });
-   this.displayColumns = Object.keys(this.columnsJson);
-   this.loading=false;
- }
- })
+//        default: 
+//        break;
+//      }
+//    });
+//    this.displayColumns = Object.keys(this.columnsJson);
+//    this.loading=false;
+//  }
+//  })
+// }
+
+loadAllocatedCoolers(){
+  this.loading = true;
+  this.httpService.getAllocations("cooler/allocations", this.cdCode, this.page, this.perPage).subscribe(res => {
+    if(res['responseCode'] == 200){
+    this.loading = false;
+    this.listOfAllocations = res['data'];
+    this.totalAllocated = res['totalCount'];
+    this.total = res['data']['totalPages'];
+    console.log(this.listOfAllocations);
+    
+ 
+    this.listOfAllocationsToDisplay = [...this.listOfAllocations];
+    }
+    this.loading = false;
+  })
 }
 
+loadUnallocatedCoolers(){
+  this.loading = true;
+// //use local server as endpoints are down
+ this.httpService.getMockData()
+ .subscribe(res => {
+  this.loading = false;
+  this.listOfUnallocations = res;
+
+  // console.log(this.listOfUnallocations);
+
+  this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
+  
+});
+
+  // this.loading = true;
+  // this.httpService.getNoParams("cooler/unallocated-coolers").subscribe(res => {
+  //   if(res['status'] = "Success"){
+  //   this.loading = false;
+  //   this.listOfUnallocations = res['data'];
+  //   this.totalAllocated = res['totalCount'];
+  //   this.total = res['data']['totalPages'];
+  //   console.log(this.listOfUnallocations);
+    
+ 
+  //   this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
+  //   }
+  // })
+}
 //updates request body
 onQueryParamsChange(params: NzTableQueryParams): void {
  const {pageSize, pageIndex} = params;
  this.page = pageIndex;
  this.perPage = pageSize;
- this.loadProducts();
+//  this.loadProducts();
 }
 
 selectedColumns(event):void{
@@ -237,7 +308,7 @@ removeStatusFilter(){
 
 userNameSearch(){
   if(this.searchValue.length < 1){
-    return this.loadProducts();
+    // return this.loadProducts();
   } else {
     this.listOfDisplayData = this.listOfData.filter((item)=>
       item.UserName.toLowerCase().indexOf(this.searchValue) !== -1
@@ -246,7 +317,7 @@ userNameSearch(){
 }
 emailSearch(){
   if(this.searchEmail.length < 1){
-    return this.loadProducts();
+    // return this.loadProducts();
   } else {
     this.listOfDisplayData = this.listOfData.filter((item)=>
       item.Email.toLowerCase().indexOf(this.searchEmail) !== -1
@@ -255,7 +326,7 @@ emailSearch(){
 }
 fullnameSearch(){
   if(this.searchfullName.length < 1){
-    return this.loadProducts();
+    // return this.loadProducts();
   } else {
     this.listOfDisplayData = this.listOfData.filter((item)=>
       item.FullName.toLowerCase().indexOf(this.searchfullName) !== -1
@@ -265,7 +336,7 @@ fullnameSearch(){
 
 globalSearch(){
  if(this.searchInput.length < 1){
-return this.loadProducts();
+// return this.loadProducts();
  } else{
    this.listOfDisplayData = this.listOfData.filter((item) => {
      return item.UserName.toLocaleLowerCase().match(this.searchInput.toLocaleLowerCase()) ||
@@ -293,7 +364,7 @@ delete(element): void {
         this.snackBar.open('Data deleted successfully', 'Eclectics International', {
           duration: 2000,
         });
-        this.loadProducts();
+      //   this.loadProducts();
       },
       error: () => {
         this.snackBar.open('Error deleting data', 'Eclectics International', {
@@ -303,11 +374,47 @@ delete(element): void {
       }
     })
 }
+deallocate(element): void{
+  const id = {
+    id: element.id
+  }
+  this.httpService.put("cooler/deallocate", id)
+  .subscribe
+    (res => {
+      let message: any;
+      message = res['message'];
+      if (res['status'] = "Success") {
+          this.toastr.success(message, "Success!");
+      }
+      else{
+          this.toastr.error(message, "Error!");
+        }
+      this.loadAllocatedCoolers();
+    })
+}
+reallocate(element): void{
+  const id = {
+    id: element.id
+  }
+  this.httpService.put("cooler/reallocate", id) 
+  .subscribe
+    (res => {
+      let message: any;
+      message = res['message'];
+      if (res['status'] = "Success") {
+          this.toastr.success(message, "Success!");
+      }
+      else{
+          this.toastr.error(message, "Error!");
+        }
+      this.loadUnallocatedCoolers();
+    })
+}
 
 view(element): void {
   this.router.navigate(['/distributors/view-distributor', element.id]);
 }
-
+// for allocated table
 show_hide_all() {
   this.checkList.forEach(item => {
       item.status = this.showAll
@@ -324,6 +431,25 @@ toggleStatus(name: string) {
       item.status = !item.status
     }
       this.showAll = false;
+  });
+}
+//for Unallocated table
+show_hide_all2() {
+  this.checkList2.forEach(item => {
+      item.status = this.showAll2
+  });
+}
+ showHideColumn2(name: string): boolean {
+  let temp2 = this.checkList2.filter(item => item.name == name);
+  return temp2[0].status
+}
+
+toggleStatus2(name: string) {
+  this.checkList2.forEach(item => {
+    if (item.name == name) {
+      item.status = !item.status
+    }
+      this.showAll2 = false;
   });
 }
 
@@ -351,7 +477,7 @@ toggleStatus(name: string) {
   //open nzAddModal 
   showModalAdd(): void {
     this.isVisibleAdd = true;
-    this.loadProducts();
+    // this.loadProducts();
   }
 
   handleOkAdd(): void {
@@ -368,7 +494,7 @@ toggleStatus(name: string) {
   
   //       //open nzEditModal 
   showModalEdit(element): void {
-    this.loadProducts();
+    // this.loadProducts();
     this.coolerAllocation = element;
     this.formEdit = this.formBuilder.group(this.coolerAllocation);
     this.isVisibleEdit = true;
@@ -388,14 +514,26 @@ toggleStatus(name: string) {
 
   //open delete confirmation modal
 
-  showDeleteConfirm(element): void {
+  showDeAllocateConfirm(element): void {
     this.modal.confirm({
-      nzTitle: 'Delete outlet',
-      nzContent: '<p style="color: red;">Are you sure you want to delete this outlet?</p>',
+      nzTitle: 'Deallocate cooler',
+      nzContent: '<p style="color: red;">Are you sure you want to deallocate this cooler?</p>',
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOkDanger: true,
-      nzOnOk: () => this.delete(element),
+      nzOnOk: () => this.deallocate(element),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+  showReAllocateConfirm(element): void {
+    this.modal.confirm({
+      nzTitle: 'Reallocate cooler',
+      nzContent: '<p style="color: red;">Are you sure you want to reallocate this cooler?</p>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      // nzOkDanger: true,
+      nzOnOk: () => this.reallocate(element),
       nzCancelText: 'No',
       nzOnCancel: () => console.log('Cancel')
     });
@@ -458,35 +596,66 @@ toggleStatus(name: string) {
         this.toastr.error(errorMessage, "Error!");
         
       }
-      this.loadProducts();
+      // this.loadProducts();
     })
   }
 
   
-    //export PDF file
+    //export Allocated Coolers PDF
 
-    exportCoolerAllocationPDF(){
+    exportAllocatedCoolersPDF(){
       let element = 'table'
-       let PDFTitle = 'Cooler Allocation';
-       this.global.exportPDF(element, 'Cooler Allocation', PDFTitle);
-
-    }
-    //export excel file
-    exportCoolerAllocationExcel(){
-      let element = document.getElementById('coolerAllocationTable');
-      this.global.exportTableElmToExcel(element, 'Cooler Allocation');
+       let PDFTitle = 'Allocated Coolers';
+       this.global.exportPDF(element, 'Allocated Coolers', PDFTitle);
     }
 
-    //export csv file
-    exportCoolerAllocationCSV(){
-      this.global.exportToCsv(this.listOfDataToDisplay,
-      'Cooler Allocation', ['id', 
-      'model',
+    //export UnAllocated Coolers PDF
+
+    exportUnAllocatedCoolersPDF(){
+      let element = 'table'
+       let PDFTitle = 'Unallocated Coolers';
+       this.global.exportPDF(element, 'Unallocated Coolers', PDFTitle);
+    }
+
+    //export Allocated Coolers excel file
+    exportAllocatedCoolersExcel(){
+      let element = document.getElementById('allocatedTable');
+      this.global.exportTableElmToExcel(element, 'Allocated Coolers');
+    }
+  
+     //export Unallocated Coolers excel file
+     exportUnAllocatedCoolersExcel(){
+      let element = document.getElementById('unallocatedTable');
+      this.global.exportTableElmToExcel(element, 'Unallocated Coolers');
+    }
+
+    
+
+    //export Allocated Coolers csv file
+    exportAllocatedCoolersCSV(){
+      this.global.exportToCsv(this.listOfAllocationsToDisplay,
+      ' Allocated Coolers', ['id', 
+      'coolerSize',
       'serialNumber',
       'assetNumber',
       'status', 
       'createdBy',
       'createdOn',
+      'remarks'
+      ]);
+    }
+
+    //export Unallocated Coolers csv file
+    exportUnAllocatedCoolersCSV(){
+      this.global.exportToCsv(this.listOfUnallocationsToDisplay,
+      'Unallocated Coolers', ['id', 
+      'coolerSize',
+      'serialNumber',
+      'assetNumber',
+      'status', 
+      'createdBy',
+      'createdOn',
+      'remarks'
       ]);
     }
 

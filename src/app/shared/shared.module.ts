@@ -86,7 +86,8 @@ import { SuccessLabelComponent } from "./components/success-label/success-label.
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { LoaderComponent } from './loader/loader.component';
 import { TablefiltersPipe } from './pipes/tablefilters.pipe';
-
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import { LabelComponent } from './components/label/label.component';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -107,6 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
     ActiveStatusLabelComponent,
     ColumnsComponent,
     LoaderComponent,
+    LabelComponent,
     // TablefiltersPipe,
   ],
   imports: [
@@ -130,6 +132,7 @@ export function createTranslateLoader(http: HttpClient) {
     NzDropDownModule,
     NzIconModule,
     NzCheckboxModule,
+    NzBreadCrumbModule,
     NzTagModule,
     NzSpinModule,
     MatListModule,
@@ -289,7 +292,8 @@ export function createTranslateLoader(http: HttpClient) {
     BlockedStatusComponent,
     EditNotificationLabelComponent,
     ActiveStatusLabelComponent,
-    ColumnsComponent
+    ColumnsComponent,
+    LabelComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

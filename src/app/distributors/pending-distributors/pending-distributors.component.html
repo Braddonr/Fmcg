@@ -1,0 +1,316 @@
+<span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
+<nz-tabset nzCentered>
+  <nz-tab nzTitle="Unapproved Distributors">
+    <nz-card class="card" nzTitle="Unapproved Distributors ({{totalUnapprovedCompanies}} Records)" [nzExtra]="unApprovedCompaniesTemplate" style="font-size: 12px;"> 
+          
+      <div class="table">
+      <nz-table
+      #borderedTable nzBordered 
+      #unApprovedDistributorsTable
+      id="unApprovedDistributorsTable"
+      [nzData]="listOfUnapprovedDistributorsToDisplay" 
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="perPage"
+      [nzPageIndex]="page" 
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+      <thead>
+        <tr>
+          <th>#</th>
+          <th *ngIf="showHideColumn('id')" nzCustomFilter>ID
+            <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('Distributor Name')" nzCustomFilter>Distributor Name
+            <nz-filter-trigger [(nzVisible)]="visible5" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletRoute">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('cdCode')"nzCustomerFilter>Cd Code
+            <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('regionCode')" nzCustomFilter>Region Code
+            <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('territoryCode')" nzCustomFilter>Territory Code
+            <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('cdContactFullName')">Contact FullName
+            <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('cdContactMobileNumber')" nzCustomFilter>Contact MobileNumber
+            <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('cdEmail')" nzCustomFilter>Email
+            <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn('createdOn')" nzCustomFilter >Created On
+            <nz-filter-trigger [(nzVisible)]="visible8" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCreatedOn">
+              <i nz-icon nzType="calendar"></i>
+            </nz-filter-trigger>
+          </th>
+          <th n *ngIf="showHideColumn('actions')">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of unApprovedDistributorsTable.data">
+            <td>{{ data.ID }}</td>
+            <td *ngIf="showHideColumn('id')">{{ data.id }}</td>
+            <td *ngIf="showHideColumn('Distributor Name')">{{ data.cdName }}</td>
+            <td *ngIf="showHideColumn('cdCode')">{{ data.cdCode }}</td>
+            <td *ngIf="showHideColumn('regionCode')">{{ data.regionCode }}</td>
+            <td *ngIf="showHideColumn('territoryCode')">{{ data.territoryCode }}</td>
+            <td *ngIf="showHideColumn('cdContactFullName')">{{ data.cdContactFullName }}</td>
+            <td *ngIf="showHideColumn('cdContactMobileNumber')">{{ data.cdContactMobileNumber }}</td>
+            <td *ngIf="showHideColumn('cdEmail')">{{ data.cdEmail }}</td>
+            <td *ngIf="showHideColumn('createdOn')">{{ data.createdOn | date : 'short' }}</td>
+              <td  *ngIf="showHideColumn('actions')">
+                <div style="justify-items: center; text-align: center;">
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="approveDistributor(data)" style="background-color: green; color: white">A</button>&nbsp;
+                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeAllocateConfirm(data)">D</button> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+            </div>
+  </nz-card>
+  </nz-tab>
+
+  <nz-tab nzTitle="Unapproved Vehicles">
+    <nz-card class="card" nzTitle="Unapproved Vehicles ({{totalUnapprovedParts}} Records)" [nzExtra]="unapprovedPartsTemplate" style="font-size: 12px;"> 
+          
+      <div class="table">
+      <nz-table
+      #borderedTable nzBordered 
+      #unApprovedVehiclesTable
+      id="unApprovedVehiclesTable"
+      [nzData]="listOfUnapprovedVehiclesToDisplay" 
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzPageSize]="perPage"
+      [nzPageIndex]="page" 
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+      <thead>
+        <tr>
+          <th nzLeft>#</th>
+          <th *ngIf="showHideColumn2('id')" nzCustomFilter>ID
+            <nz-filter-trigger [(nzVisible)]="visible1" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuID">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('cdCode')" nzCustomerFilter>Cd Code
+            <nz-filter-trigger [(nzVisible)]="visible2" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletName">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('vehicleType')">Vehicle Type
+            <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('plateNumber')" nzWidth="15%" nzCustomFilter>Plate Number
+            <nz-filter-trigger [(nzVisible)]="visible3" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdName">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('userFirstName')" nzCustomFilter>First Name
+            <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('userLastName')" nzCustomFilter>Last Name
+            <nz-filter-trigger [(nzVisible)]="visible4" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuType">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('salesPersonId')" nzCustomFilter>Sales Person ID
+            <nz-filter-trigger [(nzVisible)]="visible5" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuOutletRoute">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('createdBy')" nzCustomFilter>Created By
+            <nz-filter-trigger [(nzVisible)]="visible6" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuLocation">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th *ngIf="showHideColumn2('createdOn')" nzCustomFilter>Created On
+            <nz-filter-trigger [(nzVisible)]="visible7" [nzActive]="searchTerm.length > 0" [nzDropdownMenu]="menuCdCode">
+              <i nz-icon nzType="search"></i>
+            </nz-filter-trigger>
+          </th>
+          <th nzRight *ngIf="showHideColumn2('actions')" nzWidth="10%">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of unApprovedVehiclesTable.data">
+            <td nzLeft>{{ data.ID }}</td>
+            <td *ngIf="showHideColumn2('id')">{{ data.id }}</td>
+            <td *ngIf="showHideColumn2('cdCode')">{{ data.cdCode }}</td>
+            <td *ngIf="showHideColumn2('vehicleType')">{{ data.vehicleType }}</td>
+            <td *ngIf="showHideColumn2('plateNumber')">{{ data.plateNumber }}</td>
+            <td *ngIf="showHideColumn2('userFirstName')">{{ data.userFirstName }}</td>
+            <td *ngIf="showHideColumn2('userLastName')">{{ data.userLastName }}</td>
+            <td *ngIf="showHideColumn2('salesPersonId')">{{ data.salespersonId }}</td>
+            <td *ngIf="showHideColumn2('createdBy')">{{ data.createdBy }}</td>
+            <td *ngIf="showHideColumn2('createdOn')">{{ data.createdOn | date: 'short' }}</td>
+              <td  *ngIf="showHideColumn2('actions')">
+                <div style="justify-items: center; text-align: center;">
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="approveVehicle(data)" style="background-color: green; color: white">A</button>&nbsp;
+                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipReallocateTitle" [nzTooltipColor]="toolTipReallocateColor" [nzTooltipPlacement]='toolTipReallocatePosition' nzType="default" nzShape="circle" nzSize="small" (click)="showReAllocateConfirm(data)" style="background-color: orange; color: white">R</button> -->
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+            </div>
+  </nz-card>
+  </nz-tab>
+
+</nz-tabset>
+
+  <nz-dropdown-menu #menuID="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by ID" (keyup)="searchID()"/>
+      
+        <!-- <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button> -->
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Name" (keyup)="searchOutletName()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdName="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchCdName($event)"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuType="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search Credit Name" (keyup)="searchType()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuOutletRoute="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Outlet Route" (keyup)="searchOutletRoute()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuLocation="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Location" (keyup)="searchLocation()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCdCode="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search by Credit Code" (keyup)="searchCdCode()"/>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+  <nz-dropdown-menu #menuCreatedOn="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <nz-range-picker [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+  <ng-template #unApprovedCompaniesTemplate>
+    <nz-space>
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+        Show/Hide Columns
+        <i nz-icon nzType="down"></i>
+      </button>&nbsp;
+      <nz-dropdown-menu #menu4="nzDropdownMenu">
+        <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+        <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+        <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+        
+        </ul>
+      </nz-dropdown-menu>
+
+      <!-- <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+      <nz-dropdown-menu #fileType="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedDistributorsPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedDistributorsExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedDistributorsCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-space>
+  </ng-template>
+
+  <ng-template #unapprovedPartsTemplate>
+    <nz-space>
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+        Show/Hide Columns
+        <i nz-icon nzType="down"></i>
+      </button>&nbsp;
+      <nz-dropdown-menu #menu4="nzDropdownMenu">
+        <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+        <label nz-checkbox [(ngModel)]="showAll2" (click)="show_hide_all2()">Show/Hide All Columns</label>
+        <label nz-checkbox *ngFor="let item of checkList2" [(ngModel)]="item.status" (click)="toggleStatus2(item.name)">{{item.name}}</label>
+        
+        </ul>
+      </nz-dropdown-menu>
+
+      <!-- <button nz-button nzType="default" (click)="showModalAdd2()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add Distributor</button>&nbsp; -->
+      <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+      <nz-dropdown-menu #fileType="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedVehiclesPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedVehiclesExcel()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+          </li>
+          <li nz-menu-item>
+            <a (click)="exportUnapprovedVehiclesCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </nz-space>
+  </ng-template>
+
+  
+

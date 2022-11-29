@@ -54,12 +54,10 @@ export class TechnicianComponent implements OnInit {
 
   checkList: any[] = [
     { name: 'ID', status: false },
-    { name: 'Cooler Model', status: true },
-    { name: 'Serial Number', status: true },
-    { name: 'Asset Number', status: true },
+    { name: 'Username', status: true },
+    { name: 'Full Name', status: true },
+    { name: 'Email', status: true },
     { name: 'Status', status: true },
-    { name: 'Created By', status: false },
-    { name: 'Created On', status: true },
     { name: 'Actions', status: true },
   ]
 
@@ -159,7 +157,7 @@ this.httpService.getMockData()
  this.listOfDataToDisplay = [...this.listOfData];
 });
 
-//   this.httpService.get("config/product/all", this.page, this.perPage).subscribe(res => {
+//   this.httpService.get("cooler/maintenance/techs", this.page, this.perPage).subscribe(res => {
 //    if(res['status'] == 200 || res['status'] == 201){
 //      this.loading = false;
 //    this.listOfData = res['data']['content'];
