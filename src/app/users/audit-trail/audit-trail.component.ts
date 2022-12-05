@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
@@ -16,6 +16,16 @@ import { HttpService } from 'src/app/shared/services/http.service';
   styleUrls: ['./audit-trail.component.scss']
 })
 export class AuditTrailComponent implements OnInit {
+
+  @Input() toolTipViewTitle: string = "View Details";
+  @Input() toolTipViewColor: string = "blue";
+  @Input() toolTipViewPosition = 'bottom';
+  @Input() toolTipEditTitle: string = "Edit";
+  @Input() toolTipEditColor: string = "";
+  @Input() toolTipEditPosition = 'bottom';
+  @Input() toolTipDeleteTitle: string = "Delete";
+  @Input() toolTipDeleteColor: string = "red";
+  @Input() toolTipDeletePosition = 'bottom';
 
   lAuditTrail: any;
   exportAuditColumns: string[];
@@ -45,13 +55,16 @@ export class AuditTrailComponent implements OnInit {
   visible: boolean = false;
   visibleDate: boolean = false;
   visibleEmail: boolean = false;
+  listOfData:any[]=[];
+  listOfDataToDisplay:any[]=[];
 
   constructor(
     private _dataExportationService: DataExportationService,
     private _globalService: GlobalService,
     private _httpService: HttpService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private global: GlobalService
   ) {
     let today = new Date;
     this.startDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()-13).toISOString().slice(0,10);
@@ -60,7 +73,23 @@ export class AuditTrailComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadData();
+    this.loadMockAuditTrails();
     this.cardTitle = "Audit Trails";
+  }
+
+  loadMockAuditTrails(){
+  this.loading=true;
+    //use local server as endpoints are down
+this._httpService.getMockData()
+.subscribe(res => {
+ 
+ this.loading = false;
+ this.listOfData = res
+ // console.log('Cooler-Companies');
+ // console.log(this.listOfData);
+
+ this.listOfDataToDisplay = [...this.listOfData];
+});
   }
   
   //loads users' audit trails
@@ -168,68 +197,29 @@ export class AuditTrailComponent implements OnInit {
 
   //exports audit trails to xslx
   exportXLSX(): void {
-    let entriesToExport = [];
-    this.mandatoryColumns = Object.keys(this.columnsToJSON);
-    this.auditTrails.map(trail => {
-      if (trail["responseStatus"] == 200) {
-        trail["responseStatus"] = "Successful";
-      } else if (trail["responseStatus"] == 401 || trail["responseStatus"] == 403) {
-        trail["responseStatus"] = "Unauthorized";
-      } else {
-        trail["responseStatus"] = "Failed";
-      }
-      let container = {};
-      this.mandatoryColumns.map(col => {
-        container[col] = trail[this.columnsToJSON[col]];
-        entriesToExport.push(container);
-      })
-    })
-    let newEntries = this._globalService.getUniqueListBy(entriesToExport, "ID");
-    this._dataExportationService.exportDataXlsx(newEntries, "audit-trails");
+  let element = document.getElementById('basicTable');
+  this.global.exportTableElmToExcel(element, 'Audit Trails');
   }
 
   //exports audit trails to PDF
   exportToPDF(): void {
-    this.exportTitle = "audit-trails.pdf";
-    this.exportAuditColumns = Object.keys(this.columnsToJSON);
-    this.exportAuditRows = this.auditTrails.map(trail => {
-      if (trail["responseStatus"] == 200) {
-        trail["responseStatus"] = "Successful";
-      } else if (trail["responseStatus"] == 401 || trail["responseStatus"] == 403) {
-        trail["responseStatus"] = "Unauthorized";
-      } else {
-        trail["responseStatus"] = "Failed";
-      }
-      
-      let container = [];
-      this.exportAuditColumns.map(col => {
-        container.push(trail[this.columnsToJSON[col]]);
-      })
-      return container;
-    })
-    this._dataExportationService.exportToPdf(this.exportAuditColumns, this.exportAuditRows, this.exportTitle);
+    let element = 'table'
+  let PDFTitle = 'Audit Trails';
+  this.global.exportPDF(element, 'Audit Trails', PDFTitle);
   }
 
   //exports audit trail to CSV
   exportToCSV(): void {
-    let entries = [];
-    this.mandatoryColumns = Object.keys(this.columnsToJSON);
-    this.auditTrails.map(trail => {
-      if (trail["responseStatus"] == 200) {
-        trail["responseStatus"] = "Successful";
-      } else if (trail["responseStatus"] == 401 || trail["responseStatus"] == 403) {
-        trail["responseStatus"] = "Unauthorized";
-      } else {
-        trail["responseStatus"] = "Failed";
-      }
-      let container = {};
-      this.mandatoryColumns.map(col => {
-        container[col] = trail[this.columnsToJSON[col]];
-        entries.push(container);
-      })
-    });
-    this._dataExportationService.exportToCsv(entries, "audit-trails", this.mandatoryColumns);
+    this.global.exportToCsv(this.listOfDataToDisplay,
+      'Audit Trails', ['email', 
+      'uri',
+      'methodType',
+      'status',
+      'requestDate',
+      // 'createdOn',
+      ]);
   }
+  
 
   //resets filters
   reset(): void {

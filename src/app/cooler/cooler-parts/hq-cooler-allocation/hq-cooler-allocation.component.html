@@ -1,7 +1,7 @@
 <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
 <nz-tabset nzCentered>
-  <nz-tab nzTitle="Allocated Coolers">
-    <nz-card class="card" nzTitle="Cooler Allocation ({{totalAllocated}} Records)" [nzExtra]="allocateTemplate" style="font-size: 12px;"> 
+  <nz-tab nzTitle="Allocated Coolers ({{totalAllocated}})">
+    <nz-card class="card" nzTitle="Allocated Coolers ({{totalAllocated}} Records)" [nzExtra]="allocateTemplate" style="font-size: 12px;"> 
           
       <div class="table">
       <nz-table
@@ -71,7 +71,10 @@
               <td *ngIf="showHideColumn('Cooler Size')">{{ data.coolerSize }}</td>
               <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
               <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
-              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
+              <td *ngIf="showHideColumn('Status')">
+                <!-- {{ data.status }} -->
+                <app-label [labelValue]="data.status" labelTheme="status"></app-label>
+              </td>
               <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
               <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
               <td *ngIf="showHideColumn('Remarks')">{{ data.remarks }}</td>
@@ -89,9 +92,8 @@
   </nz-card>
   </nz-tab>
 
-  <nz-tab nzTitle="Unallocated Coolers">
-    <nz-card class="card" nzTitle="Cooler Allocation ({{totalAllocated}} Records)" [nzExtra]="unAllocateTemplate" style="font-size: 12px;"> 
-          
+  <nz-tab nzTitle="UnAllocated Coolers ({{totalUnAllocated}} )">
+    <nz-card class="card" nzTitle="UnAllocated Coolers ({{totalUnAllocated}}) Records" [nzExtra]="unAllocateTemplate" style="font-size: 12px;"> 
       <div class="table">
       <nz-table
       #borderedTable nzBordered 

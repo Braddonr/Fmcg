@@ -155,62 +155,63 @@
   </nz-dropdown-menu>
 
 
-  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add New Profile" nzOkText="Add Profile" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add New Profile" nzOkText="Add Profile" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()" [nzStyle]="{ top: '50px' }">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formAdd">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Company Name</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Profile Name</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
             nz-input
-            placeholder=" Company Name"
-            id="companyName"
-            formControlName="companyName"
+            placeholder="Profile Name"
+            id="profileName"
+            formControlName="profileName"
           />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="contactName" nzRequired>Contact Name</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Name"
-              id="contactName"
-              formControlName="contactName"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Status" formControlName="status">
+              <nz-option nzLabel="Active" nzValue="1"></nz-option>
+              <nz-option nzLabel="Inactive" nzValue="1"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="approved">Approved</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Phone"
-              id="contactPhone"
-              formControlName="contactPhone"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Approved" formControlName="approved">
+              <nz-option nzLabel="Approved" nzValue="1"></nz-option>
+              <nz-option nzLabel="Unapproved" nzValue="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email" nzRequired>Email</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enabled" nzRequired>Enabled</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="Email"
-              id="email"
-              formControlName="email"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Enabled" formControlName="enabled">
+              <nz-option nzLabel="Enabled" nzValue="1"></nz-option>
+              <nz-option nzLabel="Disabled" nzValue="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="location" nzRequired>Location</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="deleted" nzRequired>Deleted</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="location"
-              id="location"
-              formControlName="location"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Deleted" formControlName="deleted">
+              <nz-option nzLabel="Deleted" nzValue="1"></nz-option>
+              <nz-option nzLabel="Not Deleted" nzValue="0"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="reworked" nzRequired>Reworked</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Reworked" formControlName="reworked">
+              <nz-option nzLabel="Reworked" nzValue="1"></nz-option>
+              <nz-option nzLabel="Not Reworked" nzValue="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
@@ -218,7 +219,7 @@
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
               nz-input
-              placeholder="remarks"
+              placeholder="Remarks"
               id="remarks"
               formControlName="remarks"
             />
@@ -228,70 +229,71 @@
   </ng-container>
   </nz-modal>
 
-  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Profile" nzOkText="Edit Profile" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
+  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Profile Name" nzOkText="Edit Profile Name" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formEdit">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Company Name</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Profile Name</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
             nz-input
-            placeholder=" Company Name"
-            id="companyName"
-            formControlName="companyName"
+            placeholder="Profile Name"
+            id="profileName"
+            formControlName="profileName"
           />
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="contactName" nzRequired>Contact Name</nz-form-label>
+        <!-- <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="status" nzRequired>Status</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Name"
-              id="contactName"
-              formControlName="contactName"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Status" formControlName="status">
+              <nz-option nzLabel="Active" nzValue="1"></nz-option>
+              <nz-option nzLabel="Inactive" nzValue="1"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item> -->
+        <!-- <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="approved">Approved</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Approved" formControlName="approved">
+              <nz-option nzLabel="Approved" nzValue="1"></nz-option>
+              <nz-option nzLabel="Unapproved" nzValue="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="enabled" nzRequired>Enabled</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Phone"
-              id="contactPhone"
-              formControlName="contactPhone"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Enabled" formControlName="enabled">
+              <nz-option nzLabel="Enabled" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="Disabled" [nzValue]="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email" nzRequired>Email</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="deleted" nzRequired>Deleted</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="Email"
-              id="email"
-              formControlName="email"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Deleted" formControlName="deleted">
+              <nz-option nzLabel="Deleted" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="Not Deleted" [nzValue]="0"></nz-option>
+            </nz-select>
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="location" nzRequired>Location</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="reworked" nzRequired>Reworked</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="location"
-              id="location"
-              formControlName="location"
-            />
+            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Reworked" formControlName="reworked">
+              <nz-option nzLabel="Reworked" [nzValue]="1"></nz-option>
+              <nz-option nzLabel="Not Reworked" [nzValue]="0"></nz-option>
+            </nz-select>
           </nz-form-control>
-        </nz-form-item>
+        </nz-form-item> -->
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks" nzRequired>Remarks</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
             <input
               nz-input
-              placeholder="remarks"
+              placeholder="Remarks"
               id="remarks"
               formControlName="remarks"
             />

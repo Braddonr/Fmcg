@@ -28,8 +28,8 @@ export class PendingOrdersComponent implements OnInit {
   @Input() toolTipEditTitle: string = "Edit";
   @Input() toolTipEditColor: string = "";
   @Input() toolTipEditPosition = 'bottom';
-  @Input() toolTipDeleteTitle: string = "Delete";
-  @Input() toolTipDeleteColor: string = "red";
+  @Input() toolTipDeleteTitle: string = "Approve";
+  @Input() toolTipDeleteColor: string = "green";
   @Input() toolTipDeletePosition = 'bottom';
 
   public dataSource: MatTableDataSource<any>;
@@ -167,6 +167,9 @@ loadUnapprovedOrders(){
  })
 }
 
+approveSale(element){
+
+}
 //updates request body
 onQueryParamsChange(params: NzTableQueryParams): void {
  const {pageSize, pageIndex} = params;

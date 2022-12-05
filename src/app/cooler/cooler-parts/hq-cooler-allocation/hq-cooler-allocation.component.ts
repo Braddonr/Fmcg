@@ -91,6 +91,7 @@ export class HqCoolerAllocationComponent implements OnInit {
 
   searchTerm = '';
   totalAllocated: any;
+  totalUnAllocated: any;
   listOfDataToDisplay: any = [];
   listOfAllocationsToDisplay: any = [];
   listOfUnallocationsToDisplay: any = [];
@@ -242,31 +243,31 @@ loadAllocatedCoolers(){
 
 loadUnallocatedCoolers(){
   this.loading = true;
-// //use local server as endpoints are down
- this.httpService.getMockData()
- .subscribe(res => {
-  this.loading = false;
-  this.listOfUnallocations = res;
+// // //use local server as endpoints are down
+//  this.httpService.getMockData()
+//  .subscribe(res => {
+//   this.loading = false;
+//   this.listOfUnallocations = res;
 
-  // console.log(this.listOfUnallocations);
+//   // console.log(this.listOfUnallocations);
 
-  this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
+//   this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
   
-});
+// });
 
-  // this.loading = true;
-  // this.httpService.getNoParams("cooler/unallocated-coolers").subscribe(res => {
-  //   if(res['status'] = "Success"){
-  //   this.loading = false;
-  //   this.listOfUnallocations = res['data'];
-  //   this.totalAllocated = res['totalCount'];
-  //   this.total = res['data']['totalPages'];
-  //   console.log(this.listOfUnallocations);
+  this.loading = true;
+  this.httpService.getNoParams("cooler/unallocated-coolers").subscribe(res => {
+    if(res['status'] = "Success"){
+    this.loading = false;
+    this.listOfUnallocations = res['data'];
+    this.totalUnAllocated = res['totalCount'];
+    this.total = res['data']['totalPages'];
+    console.log(this.listOfUnallocations);
     
  
-  //   this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
-  //   }
-  // })
+    this.listOfUnallocationsToDisplay = [...this.listOfUnallocations];
+    }
+  })
 }
 //updates request body
 onQueryParamsChange(params: NzTableQueryParams): void {

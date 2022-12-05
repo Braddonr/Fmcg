@@ -25,20 +25,20 @@ const routes: Routes = [
             breadcrumb: 'View User'
         }
     },
-    {
-        path: 'audit-trail',
-        component: AuditTrailComponent,
-        data: {
-            title: 'Audit Trail'
-        }
-    },
-    {
-        path: 'view-audit-trail/:id',
-        component: ViewAuditTrailComponent,
-        data: {
-            title: 'View Audit Trail'
-        }
-    },
+    // {
+    //     path: 'audit-trail',
+    //     component: AuditTrailComponent,
+    //     data: {
+    //         title: 'Audit Trail'
+    //     }
+    // },
+    // {
+    //     path: 'view-audit-trail/:id',
+    //     component: ViewAuditTrailComponent,
+    //     data: {
+    //         title: 'View Audit Trail'
+    //     }
+    // },
     {
         path: 'my-profile',
         component: MyProfileComponent,
@@ -63,7 +63,15 @@ const routes: Routes = [
             title: 'Audit Trail',
             breadcrumb: 'Audit Trail'
         }
-    }
+    },
+    {
+            path: 'view-audit-trail/:id',
+            component: ViewAuditTrailComponent,
+            data: {
+                title: 'View Audit Trail',
+                breadcrumb: 'View Audit Trail'
+            }
+        },
 ]
 
 @NgModule({

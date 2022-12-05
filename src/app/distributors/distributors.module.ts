@@ -21,6 +21,8 @@ import { ViewDistributorComponent } from './view-distributor/view-distributor.co
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { PendingDistributorsComponent } from './pending-distributors/pending-distributors.component';
+import { NzSpaceModule } from "ng-zorro-antd/space";
+
 @NgModule({
     declarations: [
         AllDistributorsComponent,
@@ -44,6 +46,7 @@ import { PendingDistributorsComponent } from './pending-distributors/pending-dis
         MatTableExporterModule,
         NzDropDownModule,
         NzModalModule,
+        NzSpaceModule,
         NzMenuModule,
         NzToolTipModule,
         NzDescriptionsModule,

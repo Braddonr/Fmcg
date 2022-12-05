@@ -21,6 +21,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { PendingComponent } from './pending/pending.component';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { PendingMaintenanceComponent } from './pending-maintenance/pending-maintenance.component';
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
     declarations: [
@@ -47,7 +48,10 @@ import { PendingMaintenanceComponent } from './pending-maintenance/pending-maint
         NzModalModule,
         NzToolTipModule,
         NzTabsModule,
-        NzSpaceModule
+        NzSpaceModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyCeXaOKfJXQZuh-3wZmMmYSt5NruUJPVgU',
+          })
     ],
     providers: [],
     entryComponents:[]

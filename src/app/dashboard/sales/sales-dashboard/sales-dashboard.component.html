@@ -1,5 +1,81 @@
+<div style="background: #ECECEC; padding: 15px;">
+  <nz-row [nzGutter]="16">
+    <nz-col nzFlex="4">
+      <nz-card style="background: #FFCCCB; border-radius: 0.5rem;">
+        <div style="margin-left: 5px; font-weight: 600;">
+        <nz-statistic
+          [nzValue]="(11.28 | number: '1.0-2')!"
+          [nzTitle]="'Total Sales Value'"
+          [nzPrefix]="prefixTplOne"
+          [nzSuffix]="'%'"
+          [nzValueStyle]="{ color: '#3F8600' }"
+        ></nz-statistic>
+       </div>
+        <ng-template #prefixTplOne><span nz-icon nzType="arrow-up"></span></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col nzFlex="4">
+      <nz-card style="background: rgb(13, 152, 186); border-radius: 0.5rem;">
+        <div style="margin-left: 5px; font-weight: 600;">
+        <nz-statistic
+          [nzValue]="(11.28 | number: '1.0-2')!"
+          [nzTitle]="'Total Sales Count'"
+          [nzPrefix]="prefixTplOne"
+          [nzSuffix]="'%'"
+          [nzValueStyle]="{ color: '#E6E6FA' }"
+        ></nz-statistic>
+        </div>
+        <ng-template #prefixTplOne><span nz-icon nzType="arrow-up"></span></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col nzFlex="4">
+      <nz-card style="background:  rgb(0, 178, 135); border-radius: 0.5rem;">
+        <div style="margin-left: 5px; font-weight: 600;">
+        <nz-statistic
+          [nzValue]="(11.28 | number: '1.0-2')!"
+          [nzTitle]="'Pay Now Sales Value'"
+          [nzPrefix]="prefixTplOne"
+          [nzSuffix]="'%'"
+          [nzValueStyle]="{ color: '#FFCCCB' }"
+        ></nz-statistic>
+        </div>
+        <ng-template #prefixTplOne><span nz-icon nzType="arrow-up"></span></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col nzFlex="4">
+      <nz-card style="background: rgb(254, 164, 0); border-radius: 0.5rem;">
+        <div style="margin-left: 5px; font-weight: 600;">
+        <nz-statistic
+          [nzValue]="(9.3 | number: '1.0-2')!"
+          [nzTitle]="'Credit Sales Value'"
+          [nzPrefix]="prefixTplTwo"
+          [nzSuffix]="'%'"
+          [nzValueStyle]="{ color: '#CF1322' }"
+        ></nz-statistic>
+       </div>
+        <ng-template #prefixTplTwo><span nz-icon nzType="arrow-down"></span></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col nzFlex="4">
+      <nz-card style="background: pink; border-radius: 0.5rem;">
+        <div style="margin-left: 5px; font-weight: 600;">
+        <nz-statistic 
+          [nzValue]="(9.3 | number: '1.0-2')!"
+          [nzTitle]="'Credit Default Value'"
+          [nzPrefix]="prefixTplTwo"
+          [nzSuffix]="'%'"
+          [nzValueStyle]="{ color: '#CF1322' }"
+        ></nz-statistic>
+        </div>
+        <ng-template #prefixTplTwo><span nz-icon nzType="arrow-down"></span></ng-template>
+      </nz-card>
+    </nz-col>
+  </nz-row>
+</div>
+
 <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px" style="margin-bottom: 20px;">
-    <div fxLayout="row" fxLayout.sm="row" [style.margin-top.px]=20 [style.margin-bottom.px]=20>
+    
+  <!-- <div fxLayout="row" fxLayout.sm="row" [style.margin-top.px]=20 [style.margin-bottom.px]=20>
       <div fxFlex="20">
         <div class="portal-widget">
           <mat-card fxLayout="column" fxLayoutAlign="center center" style="background-color: #FF4500; margin-left: 10px;">
@@ -11,6 +87,7 @@
         </mat-card>
         </div>
       </div>
+      
       <div fxFlex="20">
         <div class="portal-widget">
           <mat-card fxLayout="column" fxLayoutAlign="center center" style="background-color: #0d98ba; margin-left: 10px;">
@@ -22,6 +99,7 @@
         </mat-card>
         </div>
       </div>
+
       <div fxFlex="20">
         <div class="portal-widget">
           <mat-card fxLayout="column" fxLayoutAlign="center center" style="background-color: #00b287; margin-left: 10px;">
@@ -33,6 +111,7 @@
         </mat-card>
         </div>
       </div>
+
       <div fxFlex="20">
         <div class="portal-widget">
           <mat-card fxLayout="column" fxLayoutAlign="center center" style="background-color: #fea400; margin-left: 10px;">
@@ -44,6 +123,7 @@
         </mat-card>
         </div>
       </div>
+
       <div fxFlex="20">
         <div class="portal-widget">
           <mat-card fxLayout="column" fxLayoutAlign="center center" style="background-color: #b27300; margin-left: 10px;">
@@ -55,7 +135,9 @@
         </mat-card>
         </div>
       </div>
-    </div>
+
+    </div> -->
+    
     <!-- <div>
       <canvas id="b" height="750" width="650"></canvas>
     </div> -->
@@ -66,7 +148,8 @@
         <mat-card-header>
           <div style="float: right;">
             <mat-form-field>
-              <mat-select #matRef il8n placeholder="Select Sales Period" [(ngModel)]="period" name="period" (selectionChange)="chartDatedSales($event)">
+              <!-- [(ngModel)]="period" -->
+              <mat-select #matRef il8n placeholder="Select Sales Period"  name="period" (selectionChange)="chartDatedSales($event)">
                 <mat-option *ngFor="let period of salesPeriods" [value]="period">{{period}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -116,6 +199,7 @@
       
     </mat-card>
   </div>
+  
   <div fxLayout="row" fxLayout.sm="column">
     <div fxFlex="33" style="margin-right: 5px; margin-bottom: 40px">
       <mat-card>

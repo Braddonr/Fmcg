@@ -62,7 +62,7 @@
                   <i nz-icon nzType="calendar"></i>
                 </nz-filter-trigger>
               </th>
-              <th *ngIf="showHideColumn('Actions')">Actions</th>
+              <th *ngIf="showHideColumn('Actions')" nzWidth="8%">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -78,12 +78,15 @@
               <td *ngIf="showHideColumn('Order Value')">{{ data.orderValue }}</td>
               <td *ngIf="showHideColumn('Mode of Payment')">{{ data.modeOfPayment }}</td>
               <td *ngIf="showHideColumn('Proof of Payment')">{{ data.proofOfPayment }}</td>
-              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
+              <td *ngIf="showHideColumn('Status')">
+                <!-- {{ data.status }} -->
+                <app-label [labelValue]="data.status" labelTheme="approved"></app-label>
+            </td>
               <td  *ngIf="showHideColumn('Actions')">
                 <div style="justify-items: center; text-align: center;">
                 <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="view(data)">V</button>&nbsp;
                 <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp; -->
-                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button> -->
+                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzSize="small" (click)="approveSale(data)" style="background-color: green; color: white">A</button>
                 </div>
               </td>
             </tr>

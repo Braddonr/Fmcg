@@ -1,6 +1,6 @@
 <span class="fa fa-spinner spinner" *ngIf="data_loaded"></span>
 <nz-tabset nzCentered>
-  <nz-tab nzTitle="Unapproved Cooler Maintenance Companies">
+  <nz-tab nzTitle="Unapproved Cooler Maintenance Companies ({{totalUnapprovedCompanies}} )">
     <nz-card class="card" nzTitle="Unapproved Cooler Maintenance Companies ({{totalUnapprovedCompanies}} Records)" [nzExtra]="unApprovedCompaniesTemplate" style="font-size: 12px;"> 
           
       <div class="table">
@@ -90,7 +90,7 @@
   </nz-card>
   </nz-tab>
 
-  <nz-tab nzTitle="Unapproved Cooler Parts">
+  <nz-tab nzTitle="Unapproved Cooler Parts ({{totalUnapprovedParts}} )">
     <nz-card class="card" nzTitle="Unapproved Cooler Parts ({{totalUnapprovedParts}} Records)" [nzExtra]="unapprovedPartsTemplate" style="font-size: 12px;"> 
           
       <div class="table">

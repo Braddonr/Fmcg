@@ -44,7 +44,7 @@ interface data {
 
 export class ListUsersComponent implements OnInit {
 
-  @Input() toolTipViewTitle: string = "View";
+  @Input() toolTipViewTitle: string = "View User";
   @Input() toolTipViewColor: string = "blue";
   @Input() toolTipViewPosition = 'bottom';
 
@@ -52,12 +52,12 @@ export class ListUsersComponent implements OnInit {
   @Input() toolTipResetColor: string = "red";
   @Input() toolTipResetPosition = 'bottom';
 
-  @Input() toolTipEditTitle: string = "Block";
+  @Input() toolTipEditTitle: string = "Block User";
   @Input() toolTipEditColor: string = "red";
   @Input() toolTipEditPosition = 'bottom';
 
 
-  @Input() toolTipDeleteTitle: string = "Delete";
+  @Input() toolTipDeleteTitle: string = "Delete User";
   @Input() toolTipDeleteColor: string = "red";
   @Input() toolTipDeletePosition = 'bottom';
 
@@ -70,6 +70,7 @@ export class ListUsersComponent implements OnInit {
   cardTitle: string;
   columnsToDisplay: any = {};
   _data: any[];
+  data_loaded: boolean = false;
   data: any;
   dataToExport: any[];
   endDate: string;
@@ -455,7 +456,7 @@ applyFilter(event: Event) {
   }
 
   handleOkEdit(): void {
-    this.resetPassword();
+    this.showResetConfirm();
     console.log('Button ok clicked!');
     this.isVisibleEdit = false;
   }
@@ -463,6 +464,17 @@ applyFilter(event: Event) {
   handleCancelEdit(): void {
     console.log('Button cancel clicked!');
     this.isVisibleEdit = false;
+  }
+  showResetConfirm() {
+    this.modal.confirm({
+      nzTitle: 'Reset user password',
+      nzContent: '<p style="color: red;">Are you sure you want to reset the password for this user?</p>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOnOk: () => this.resetPassword(),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
   }
 
   showBlockConfirm(element): void {

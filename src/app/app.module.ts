@@ -58,6 +58,7 @@ import { NzDropDownModule } from "ng-zorro-antd/dropdown";
 import { NzMenuModule } from "ng-zorro-antd/menu";
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzToolTipModule } from "ng-zorro-antd/tooltip";
+import { NzStatisticModule } from "ng-zorro-antd/statistic";
 // import { IconDefinition } from '@ant-design/icons-angular';
 // import { NzIconModule } from 'ng-zorro-antd/icon';
 
@@ -142,6 +143,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NzDropDownModule,
     NzMenuModule,
     NzSpaceModule,
+    NzStatisticModule,
     NzToolTipModule
     // NzIconModule.forRoot(icons),
 

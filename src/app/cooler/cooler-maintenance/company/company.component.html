@@ -150,148 +150,200 @@
   </nz-dropdown-menu>
 
 
-  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Cooler Company" nzOkText="Add Company" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
+  <nz-modal [nzOkDisabled] = "!formAdd.valid" [(nzVisible)]="isVisibleAdd" nzTitle="Add Cooler Company" nzOkText="Add Company"  nzWidth="700px"  [nzStyle]="{ top: '50px' }" (nzOnCancel)="handleCancelAdd()" (nzOnOk)="handleOkAdd()">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formAdd">
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Company Name</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-            nz-input
-            placeholder=" Company Name"
-            id="companyName"
-            formControlName="companyName"
-          />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="contactName" nzRequired>Contact Name</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Name"
-              id="contactName"
-              formControlName="contactName"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Phone"
-              id="contactPhone"
-              formControlName="contactPhone"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email" nzRequired>Email</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="Email"
-              id="email"
-              formControlName="email"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="location" nzRequired>Location</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="location"
-              id="location"
-              formControlName="location"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks" nzRequired>Remarks</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="remarks"
-              id="remarks"
-              formControlName="remarks"
-            />
-          </nz-form-control>
-        </nz-form-item>
+        <div nz-row >
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="9" nzRequired nzFor="companyName">Company Name</nz-form-label>
+              <nz-form-control  nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Company Name"
+                  formControlName="companyName"
+                  id="companyName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="11" nzRequired nzFor="contactName">Contact Name</nz-form-label>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Name"
+                  formControlName="contactName"
+                  id="contactName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row >
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label  [nzSpan]="9" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
+              <nz-form-control  nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Contact Phone"
+                  formControlName="contactPhone"
+                  id="contactPhone"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="11" nzRequired nzFor="email">Email</nz-form-label>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  type="email"
+                  placeholder="Email"
+                  formControlName="email"
+                  id="email"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+        <div nz-col nzFlex="2.5">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="9" nzFor="remarks" nzRequired>Remarks</nz-form-label>
+            <nz-form-control nzErrorTip="This field is required!">
+              <input
+                nz-input
+                placeholder="Remarks"
+                id="remarks"
+                formControlName="remarks"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzFlex="2.5"></div>
+      </div>
+
+        <div nz-col #map >
+          <div id="map" style="margin-left: 10px; margin-top: 10px;">
+             <nz-form-control nzErrorTip="This field is required">
+               <input
+                 nz-input
+                 type="text"
+                 placeholder="Choose location from map"
+                 formControlName="location"
+                 id="location"
+               />
+             </nz-form-control> 
+           <agm-map [latitude]="latLng.latitude" [longitude]="latLng.longitude" (mapClick)="addMarker($event)">
+             <agm-marker [latitude]="marker[0].latitude" [longitude]="marker[0].longitude"></agm-marker>
+           </agm-map>
+          </div>
+        </div>
     </form>
   </ng-container>
   </nz-modal>
 
-  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Cooler Company" nzOkText="Edit Company" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
+  <nz-modal [nzOkDisabled] = "formEdit && !formEdit.valid" [(nzVisible)]="isVisibleEdit" nzTitle="Edit Cooler Company" nzWidth="700px"  [nzStyle]="{ top: '50px' }" nzOkText="Edit Company" (nzOnCancel)="handleCancelEdit()" (nzOnOk)="handleOkEdit()">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="formEdit">
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="companyName">Company Name</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-            nz-input
-            placeholder=" Company Name"
-            id="companyName"
-            formControlName="companyName"
-          />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="contactName" nzRequired>Contact Name</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Name"
-              id="contactName"
-              formControlName="contactName"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder=" Contact Phone"
-              id="contactPhone"
-              formControlName="contactPhone"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email" nzRequired>Email</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="Email"
-              id="email"
-              formControlName="email"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="location" nzRequired>Location</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="location"
-              id="location"
-              formControlName="location"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="remarks" nzRequired>Remarks</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This field is required!">
-            <input
-              nz-input
-              placeholder="remarks"
-              id="remarks"
-              formControlName="remarks"
-            />
-          </nz-form-control>
-        </nz-form-item>
+        <div nz-row >
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="9" nzRequired nzFor="companyName">Company Name</nz-form-label>
+              <nz-form-control  nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Company Name"
+                  formControlName="companyName"
+                  id="companyName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="11" nzRequired nzFor="contactName">Contact Name</nz-form-label>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  placeholder="Contact Name"
+                  formControlName="contactName"
+                  id="contactName"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-row >
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label  [nzSpan]="9" nzRequired nzFor="contactPhone">Contact Phone</nz-form-label>
+              <nz-form-control  nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="Contact Phone"
+                  formControlName="contactPhone"
+                  id="contactPhone"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzFlex="2.5">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="11" nzRequired nzFor="email">Email</nz-form-label>
+              <nz-form-control nzErrorTip="This field is required">
+                <input
+                  nz-input
+                  type="email"
+                  placeholder="Email"
+                  formControlName="email"
+                  id="email"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div nz-row>
+        <div nz-col nzFlex="2.5">
+          <nz-form-item>
+            <nz-form-label [nzSpan]="9" nzFor="remarks" nzRequired>Remarks</nz-form-label>
+            <nz-form-control nzErrorTip="This field is required!">
+              <input
+                nz-input
+                placeholder="Remarks"
+                id="remarks"
+                formControlName="remarks"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzFlex="2.5"></div>
+      </div>
+
+        <div nz-col #map >
+          <div id="map" style="margin-left: 10px; margin-top: 10px;">
+             <nz-form-control nzErrorTip="This field is required">
+               <input
+                 nz-input
+                 type="text"
+                 placeholder="Choose location from map"
+                 formControlName="location"
+                 id="location"
+               />
+             </nz-form-control> 
+           <agm-map [latitude]="latLng.latitude" [longitude]="latLng.longitude" (mapClick)="addMarker($event)">
+             <agm-marker [latitude]="marker[0].latitude" [longitude]="marker[0].longitude"></agm-marker>
+           </agm-map>
+          </div>
+        </div>
       
     </form>
   </ng-container>

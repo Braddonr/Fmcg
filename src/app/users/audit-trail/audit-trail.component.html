@@ -1,9 +1,23 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <div fxFlex.gt-sm="90" fxFlex.gt-xs="100%">
-        <nz-card nzTitle="{{cardTitle | uppercase}}" [nzExtra]="extraTemplate" nzSize="large">
-            <nz-table [nzBordered]="false" #basicTable nzSize="small" [nzData]="auditTrails" [nzLoading]="loading" [nzFrontPagination]="false" nzShowSizeChanger [nzTotal]="total" [nzPageSize]="perPage" [nzPageIndex]="page"(nzQueryParams)="onQueryParamsChange($event)">
+<!-- <div fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex.gt-sm="90" fxFlex.gt-xs="100%"> -->
+        <nz-card class="card" nzTitle="Audit Trails({{total}} Records)" [nzExtra]="extraTemplate" nzSize="large">
+            <div class="table">
+            <nz-table 
+                #borderedTable nzBordered 
+                #basicTable 
+                id="basicTable"
+                nzSize="small" 
+                [nzData]="listOfDataToDisplay" 
+                [nzLoading]="loading"
+                [nzFrontPagination]="false" 
+                nzShowSizeChanger 
+                [nzTotal]="total" 
+                [nzPageSize]="perPage" 
+                [nzPageIndex]="page"
+                (nzQueryParams)="onQueryParamsChange($event)">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th email>
                             User Email
                             <nz-filter-trigger [(nzVisible)]="visibleEmail" [nzActive]="userEmail.length > 0" [nzDropdownMenu]="menuEmail">
@@ -19,7 +33,7 @@
                         </th>
                         <th>Response Status</th>
                         <th requestTime>
-                            Request Time
+                            Request Date
                             <nz-filter-trigger [(nzVisible)]="visibleDate" [nzActive]="selectedDate.length > 0" [nzDropdownMenu]="menuDate">
                                 <i nz-icon nzType="search"></i>
                             </nz-filter-trigger>
@@ -29,26 +43,34 @@
                 </thead>
                 <tbody nzSize="small">
                     <tr *ngFor="let data of basicTable.data">
-                        <td>{{data.userEmail}}</td>
+                        <td>{{data.ID}}</td>
+                        <td>{{data.email}}</td>
                         <td>{{data.uri}}</td>
                         <td>{{data.methodType}}</td>
                         <td>
-                            <app-success-label [labelValue]="data.responseStatus"></app-success-label>
+                            <app-label [labelValue]="data.responseStatus" labelTheme="responseStatus" style="justify-items: center; text-align: center;"></app-label>
                         </td>
                         <td><code class="atma-failed">{{data.requestDate}}</code></td>
                         <td>
-                            <button nz-button nzType="primary" nzGhost nzSize="small"  
+                            <div>
+                                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipViewTitle" [nzTooltipColor]="toolTipViewColor" [nzTooltipPlacement]='toolTipViewPosition' nzType="primary" nzShape="circle" nzSize="small" (click)="viewAudit(data)">V</button>&nbsp;
+                                <!-- <button nz-button nz-tooltip [nzTooltipTitle]="toolTipEditTitle" [nzTooltipColor]="toolTipEditColor" [nzTooltipPlacement]='toolTipEditPosition' nzType="default" nzShape="circle" nzSize="small"(click)="showModalEdit(data)">E</button>&nbsp;
+                                <button nz-button nz-tooltip [nzTooltipTitle]="toolTipDeleteTitle" [nzTooltipColor]="toolTipDeleteColor" [nzTooltipPlacement]='toolTipDeletePosition' nzType="primary" nzShape="circle" nzDanger nzSize="small" (click)="showDeleteConfirm(data)">D</button> -->
+                            </div>
+
+                            <!-- <button nz-button nzType="primary" nzGhost nzSize="small"  
                             [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon>
                             Actions</button>
                             <mat-menu #menu="matMenu" [overlapTrigger]="false">
                                 <button mat-menu-item (click)="viewAudit(data)" title="View Details" aria-describedby="View Details">
                                     <mat-icon>remove_red_eye</mat-icon>View
                                 </button>
-                            </mat-menu>
+                            </mat-menu> -->
                         </td>
                     </tr>
                 </tbody>
             </nz-table>
+        </div>
             <nz-dropdown-menu #menu="nzDropdownMenu">
                 <div class="ant-table-filter-dropdown">
                     <div class="search-box">
@@ -72,7 +94,38 @@
             </nz-dropdown-menu>
         </nz-card>
         <ng-template #extraTemplate>
-            <div fxLayout="row" fxLayoutAlign="end center">
+            <nz-space>
+                <input nz-input placeholder="User Agent" [(ngModel)]="requestAgent" (ngModelChange)="onUserAgentSelect($event)">&nbsp;
+                <!-- <button nz-button nz-dropdown [nzDropdownMenu]="menu4">
+                  Show/Hide Columns
+                  <i nz-icon nzType="down"></i>
+                </button>&nbsp; -->
+                <!-- <nz-dropdown-menu #menu4="nzDropdownMenu">
+                  <ul nz-menu style="padding: 10px; display: flex; flex-direction: column;">
+                  <label nz-checkbox [(ngModel)]="showAll" (click)="show_hide_all()">Show/Hide All Columns</label>
+                  <label nz-checkbox *ngFor="let item of checkList" [(ngModel)]="item.status" (click)="toggleStatus(item.name)">{{item.name}}</label>
+                  
+                  </ul>
+                </nz-dropdown-menu> -->
+                <button nz-button nzType="primary" nzDanger title="Clear Filters" aria-describedby="Clear Filters" (click)="reset()">Clear Filters</button> &nbsp;
+                <!-- <button nz-button nzType="default" (click)="showModalAdd()"><i nz-icon nzType="plus" nzTheme="outline" style="font-size: 14px; margin-top: 0px;"></i>Add New Profile</button>&nbsp; -->
+                <button nz-button nzType="primary" nz-dropdown [nzDropdownMenu]="fileType"><i nz-icon nzType="download" nzTheme="outline" style="font-size: 18px;"></i>Export</button>
+                <nz-dropdown-menu #fileType="nzDropdownMenu">
+                  <ul nz-menu>
+                    <li nz-menu-item>
+                      <a (click)="exportToPDF()"><i nz-icon nzType="file-pdf" nzTheme="outline"></i>PDF</a>
+                    </li>
+                    <li nz-menu-item>
+                      <a (click)="exportXLSX()"><i nz-icon nzType="file-excel" nzTheme="outline"></i>Excel</a>
+                    </li>
+                    <li nz-menu-item>
+                      <a (click)=" exportToCSV()"><i nz-icon nzType="exception" nzTheme="outline"></i>CSV</a>
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+              </nz-space>
+            
+            <!-- <div fxLayout="row" fxLayoutAlign="end center">
                 <div fxFlex="33.33%">
                     <input nz-input placeholder="User Agent" [(ngModel)]="requestAgent" (ngModelChange)="onUserAgentSelect($event)">
                 </div>
@@ -92,11 +145,11 @@
                   <mat-icon>file_copy</mat-icon>
                   XLSX
               </button>
-              <!-- <button (click)="exportToCSV()" mat-menu-item>
+              <button (click)="exportToCSV()" mat-menu-item>
                 <mat-icon>file_copy</mat-icon>
                 CSV
-            </button> -->
-          </mat-menu>
+            </button>
+          </mat-menu> -->
         </ng-template>
-    </div>
-</div>
+    <!-- </div>
+</div> -->

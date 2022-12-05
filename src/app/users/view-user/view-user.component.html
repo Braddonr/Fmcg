@@ -47,7 +47,7 @@
     </nz-tab>
 </nz-card>
 
-    <nz-tab nzTitle="User Profile">
+    <!-- <nz-tab nzTitle="User Profile">
         <nz-descriptions nzTitle="User Profile" nzBordered [nzSize]="small" style="padding: 20px" >
             <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
             <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
@@ -77,10 +77,16 @@
               <br />
             </nz-descriptions-item>
           </nz-descriptions>
-      </nz-tab>
+      </nz-tab> -->
   
-    <nz-tab nzTitle="Audit Trail">
-        <nz-descriptions nzTitle="Audit Trail" nzBordered [nzSize]="small" style="padding: 20px">
+        <nz-tab nzTitle="User Audit Trail" class="tab">
+            <nz-page-header
+          class="site-page-header"
+          nzbutton (click)="onBack()" 
+          nzBackIcon
+          nzTitle="User Audit Trail"
+        ></nz-page-header>
+        <nz-descriptions nzBordered [nzSize]="small" style="padding: 20px">
             <nz-descriptions-item nzTitle="Product">Cloud Database</nz-descriptions-item>
             <nz-descriptions-item nzTitle="Billing Mode">Prepaid</nz-descriptions-item>
             <nz-descriptions-item nzTitle="Automatic Renewal">YES</nz-descriptions-item>

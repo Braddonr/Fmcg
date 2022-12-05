@@ -1,7 +1,27 @@
-tr td {
-    font-size: small !important;
-}
-mat-icon {
-    vertical-align: middle;
-    font-size: 18px;
-}
+// tr td {
+//     font-size: small !important;
+// }
+// mat-icon {
+//     vertical-align: middle;
+//     font-size: 18px;
+// }
+
+
+.card{
+    padding: 10px;
+    margin: 20px;
+   }
+   .checkbox{
+     padding-left: 15px;
+   }
+   
+   .table{
+     margin-top: 2px;
+    }
+   ::ng-deep .ant-table table {
+     font-size: 12px;
+   }
+   ::ng-deep .ant-table-thead>tr>th {
+     position: relative;
+     overflow-wrap: break-word;
+   } 

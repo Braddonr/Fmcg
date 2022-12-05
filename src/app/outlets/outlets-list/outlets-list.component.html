@@ -342,7 +342,7 @@
                 <input
                   nz-input
                   type="text"
-                  placeholder="Choose Location"
+                  placeholder="Choose location from map"
                   formControlName="location"
                   id="location"
                 />
@@ -351,20 +351,6 @@
               <agm-marker [latitude]="marker[0].latitude" [longitude]="marker[0].longitude"></agm-marker>
             </agm-map>
            </div>
-            <!-- <div #map id="map" class="map">
-            <nz-form-item>
-              <nz-form-label  [nzSpan]="13" nzFor="location">Location</nz-form-label>
-              <nz-form-control row="4"  nzErrorTip="This field is required">
-                <input
-                  nz-input
-                  type="text"
-                  placeholder="Enter Location"
-                  formControlName="location"
-                  id="location"
-                />
-              </nz-form-control>
-            </nz-form-item>
-           </div> -->
           </div>
         
         </div>

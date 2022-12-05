@@ -123,8 +123,8 @@ export class MenuService {
         items: [
           {link: "user-management/list-users", label: this.translate.instant("Users") , icon: "crop_square"},
           {link : "user-management/profiles", label: this.translate.instant("Profiles"), icon: "crop_square"},
-          {link : "user-management/audit-trail", label: this.translate.instant("Audit Trail"), icon: "crop_square"},
           {link : "user-management/roles", label: this.translate.instant("Roles"), icon: "crop_square"},
+          {link : "user-management/audit-trail", label: this.translate.instant("Audit Trails"), icon: "crop_square"},
         ]
       }
 

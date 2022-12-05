@@ -158,7 +158,7 @@ export class PendingComponent implements OnInit {
 
   // console.log(this.listOfUnallocations);
 
-  this.listOfPendingDeAllocationsToDisplay = [...this. listOfPendingDeAllocations];
+  this.listOfPendingDeAllocationsToDisplay = [...this.listOfPendingDeAllocations];
 });
   }
 
@@ -235,18 +235,19 @@ approveCooler(element): void{
     id: element.id
   }
   this.httpService.put("cooler/approve", id)
-  .subscribe
-    (res => {
-      let message: any;
-      message = res['message'];
-      if (res['status'] = "Success") {
-          this.toastr.success(message, "Success!");
-      }
-      else{
-          this.toastr.error(message, "Error!");
-        }
+  .subscribe({
+    next:(res)=> { 
+     let message: any;
+     message = res['message']
+      this.toastr.success(message, "Success!");
       this.loadPendingApprovalCoolers();
-    })
+    },
+    error:(err)=>{
+     let errorMessage: any;
+     errorMessage = err.error['message']
+      this.toastr.error(errorMessage, "Error!");
+    },
+   })
 }
 approveAllocatedCooler(element): void{
   const id = {

@@ -70,7 +70,10 @@
               <td *ngIf="showHideColumn('Cooler Size')">{{ data.coolerSize }}</td>
               <td *ngIf="showHideColumn('Serial Number')">{{ data.serialNumber }}</td>
               <td *ngIf="showHideColumn('Asset Number')">{{ data.assetNumber }}</td>
-              <td *ngIf="showHideColumn('Status')">{{ data.status }}</td>
+              <td *ngIf="showHideColumn('Status')">
+                <!-- {{ data.status }} -->
+                <app-label [labelValue]="data.status" labelTheme="status"></app-label>
+              </td>
               <td *ngIf="showHideColumn('Created By')">{{ data.createdBy }}</td>
               <td *ngIf="showHideColumn('Created On')">{{ data.createdOn | date : 'short' }}</td>
               <td  *ngIf="showHideColumn('Actions')">

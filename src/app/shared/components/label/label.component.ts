@@ -15,7 +15,7 @@ export class LabelComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if(this.labelValue === 1 || this.labelValue === '1' || this.labelValue === true || this.labelValue === 'true' || this.labelValue === 'TRUE')
+    if(this.labelValue === 1 || this.labelValue === '1' || this.labelValue === true || this.labelValue === 'true' || this.labelValue === 'TRUE' || this.labelValue === 'Active')
     {
        if(this.labelTheme == "locked"){
           this.label = "Locked";
@@ -41,10 +41,17 @@ export class LabelComponent implements OnInit {
       this.label = "Enabled";
       this.labelClass = 'cyan';
       }
-      
+      else if (this.labelTheme == "status"){
+        this.label = "Active";
+        this.labelClass = 'success';
+          }  
+      else if (this.labelTheme == "responseStatus"){
+        this.label = "Success";
+        this.labelClass = 'success';
+          }
     } 
   
-    else if (this.labelValue === '0' || this.labelValue !== '1' || this.labelValue === false || this.labelValue === 'false' || this.labelValue === 'FALSE') {
+    else if (this.labelValue === '0' || this.labelValue !== '1' || this.labelValue === false || this.labelValue === 'false' || this.labelValue === 'FALSE' || this.labelValue === 'Require Repair'|| this.labelValue == 'PENDING SALES APPROVAL'|| this.labelValue=="PENDING DEPOT APPROVAL") {
       if(this.labelTheme == "locked"){
         this.label = "Not Locked";
         this.labelClass = 'success';
@@ -68,7 +75,15 @@ export class LabelComponent implements OnInit {
     else if (this.labelTheme == "enabled"){
     this.label = "Disabled";
     this.labelClass = 'red';
-    }
+      }
+    else if (this.labelTheme == "status"){
+      this.label = "Inactive";
+      this.labelClass = 'red';
+        }
+    else if (this.labelTheme == "responseStatus"){
+          this.label = "Failed";
+          this.labelClass = 'red';
+            }
     }
     else {
       this.label = "Inactive";

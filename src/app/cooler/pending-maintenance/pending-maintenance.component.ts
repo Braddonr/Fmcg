@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
+import { endOfMonth } from 'date-fns';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { ToastrService } from 'ngx-toastr';
@@ -77,6 +78,7 @@ export class PendingMaintenanceComponent implements OnInit {
 
   showAll = false;
   showAll2 = false;
+  ranges = { Today: [new Date(), new Date()], 'This Month': [new Date(), endOfMonth(new Date())] };
 
   status: boolean = false;
   searchTerm = '';
@@ -261,6 +263,12 @@ toggleStatus2(name: string) {
     // console.log(this.listOfDataToDisplay);
 
   }
+
+   //date picker
+   onChange(result: Date[]): void {
+    console.log('From: ', result[0], ', to: ', result[1]);
+  }
+
  //export Unapproved Cooler Companies PDF
 
  exportUnapprovedCompaniesPDF(){

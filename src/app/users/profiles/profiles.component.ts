@@ -18,13 +18,13 @@ import { HttpService } from 'src/app/shared/services/http.service';
 })
 export class ProfilesComponent implements OnInit {
 
-  @Input() toolTipViewTitle: string = "View";
+  @Input() toolTipViewTitle: string = "View Profile";
   @Input() toolTipViewColor: string = "blue";
   @Input() toolTipViewPosition = 'bottom';
-  @Input() toolTipEditTitle: string = "Edit";
+  @Input() toolTipEditTitle: string = "Edit Profile Name";
   @Input() toolTipEditColor: string = "";
   @Input() toolTipEditPosition = 'bottom';
-  @Input() toolTipDeleteTitle: string = "Delete";
+  @Input() toolTipDeleteTitle: string = "Delete Profile";
   @Input() toolTipDeleteColor: string = "red";
   @Input() toolTipDeletePosition = 'bottom';
 
@@ -96,12 +96,13 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
-      companyName:new FormControl('', [<any>Validators.required]),
-      contactName:new FormControl('', [<any>Validators.required]),
-      contactPhone:new FormControl('', [<any>Validators.required]),
-      email:new FormControl('', [<any>Validators.required]),
-      location: new FormControl('', [<any>Validators.required]),
-      remarks: new FormControl('', [<any>Validators.required]),
+      profileName:new FormControl('', [<any>Validators.required]),
+      status:new FormControl('', [<any>Validators.required]),
+      approved:new FormControl('', [<any>Validators.required]),
+      reworked:new FormControl('', [<any>Validators.required]),
+      deleted: new FormControl('', [<any>Validators.required]),
+      enabled: new FormControl('', [<any>Validators.required]),
+      remarks: new FormControl('', [<any>Validators.required])
     }); 
     this.loadProfiles();
   }
@@ -289,11 +290,12 @@ export class ProfilesComponent implements OnInit {
    }
    editProfile(){
     const model = {
-      companyName: this.formEdit.value.companyName,
-      contactName: this.formEdit.value.contactName,
-      contactPhone: this.formEdit.value.contactPhone,
-      email: this.formEdit.value.email,
-      location: this.formEdit.value.location,
+      profileName: this.formEdit.value.profileName,
+      // status: this.formEdit.value.status,
+      // approved: this.formEdit.value.approved,
+      // reworked: this.formEdit.value.reworked,
+      // deleted: this.formEdit.value.deleted,
+      // enabled: this.formEdit.value.enabled,
       remarks: this.formEdit.value.remarks,
       id: this.profile['id'],
       // previousData: {

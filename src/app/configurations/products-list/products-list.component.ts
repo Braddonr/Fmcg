@@ -120,13 +120,13 @@ export class ProductsListComponent implements OnInit {
   ngOnInit() {
     this.formAdd = this.formBuilder.group({
       brand:new FormControl('', [<any>Validators.required]),
-      categoryId:new FormControl('', [<any>Validators.required]),
+      // categoryId:new FormControl('', [<any>Validators.required]),
       pack:new FormControl('', [<any>Validators.required]),
       packagingType:new FormControl('', [<any>Validators.required]),
       productCode: new FormControl('', [<any>Validators.required]),
       productDescription: new FormControl('', [<any>Validators.required]),
-      units: new FormControl('', [<any>Validators.required]),
-      unitId: new FormControl('', [<any>Validators.required]),
+      // units: new FormControl('', [<any>Validators.required]),
+      // unitId: new FormControl('', [<any>Validators.required]),
       remarks: new FormControl('', [<any>Validators.required]),
     });
     this.loadProducts();
@@ -407,13 +407,13 @@ this.httpService.post("config/product/add", this.formAdd.value)
 editProduct(){
 const model = {
   brand: this.formEdit.value.brand,
-  categoryId: this.formEdit.value.categoryId,
+  // categoryId: this.formEdit.value.categoryId,
   pack: this.formEdit.value.pack,
   packagingType: this.formEdit.value.packagingType,
   productCode: this.formEdit.value.productCode,
   productDescription: this.formEdit.value.productDescription,
-  units: this.formEdit.value.units,
-  unitId: this.formEdit.value.unitId,
+  // units: this.formEdit.value.units,
+  // unitId: this.formEdit.value.unitId,
   remarks: this.formEdit.value.remarks,
   id: this.product['id'],
   // previousData: {

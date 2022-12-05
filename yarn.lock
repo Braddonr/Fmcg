@@ -151,13 +151,6 @@
     "@angular-devkit/core" "8.0.0"
     "rxjs" "6.4.0"
 
-"@angular-material-extensions/google-maps-autocomplete@^8.1.3":
-  "integrity" "sha512-CNeUeCHiZyBuV8reWr9A9tyzlVJuCCxWOInV0LlJlpk/0mJ6jaJh1k8QFC4PgbD14CUUR0u7gBKNPhGwXXtoUg=="
-  "resolved" "https://registry.npmjs.org/@angular-material-extensions/google-maps-autocomplete/-/google-maps-autocomplete-8.1.3.tgz"
-  "version" "8.1.3"
-  dependencies:
-    "tslib" "^2.3.0"
-
 "@angular/animations@11.0.2":
   "integrity" "sha512-uF/RlBY1rznbuw+1lm8Q2HKDrBOQQ2Bi2cUPuef+ALn+lxGl501eHlE+PTtBjDEzJcJPfd4pE3Ww3+3Il+D+Tw=="
   "resolved" "https://registry.npmjs.org/@angular/animations/-/animations-11.0.2.tgz"

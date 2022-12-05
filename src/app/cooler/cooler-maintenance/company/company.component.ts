@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,11 +18,20 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from 'src/app/shared/services/global.service';
 import { HttpClient } from '@angular/common/http';
+import { MouseEvent } from '@agm/core';
 
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.scss']
+  styleUrls: ['./company.component.scss'],
+  styles: [`
+    agm-map {
+      height: 260px;
+      padding-top: 2px;
+      margin-top: 10px;
+    }
+  `],
+   encapsulation: ViewEncapsulation.None,
 })
 export class CompanyComponent implements OnInit {
   displayedColumns: string[] = ['Position','ID','COMPANY_NAME','EMAIL','LOCATION','CONTACT_NAME','CONTACT_PHONE','CREATED_BY','Remarks','Actions'];
@@ -112,6 +121,13 @@ checkList: any[] = [
   formAdd: FormGroup;
   formEdit: FormGroup;
   company: any;
+
+  latLng: any;
+  marker: any[] = [{
+    latitude : '',
+    longitude : ''
+  }];
+  address: any;
   constructor(
     private dialog: MatDialog,
     private router: Router,
@@ -126,6 +142,11 @@ checkList: any[] = [
   ) {}
 
   ngOnInit() {
+    this.latLng = {
+      latitude: -1.286389,
+      longitude: 36.817223
+    }
+
     this.formAdd = this.formBuilder.group({
       companyName:new FormControl('', [<any>Validators.required]),
       contactName:new FormControl('', [<any>Validators.required]),
@@ -136,6 +157,40 @@ checkList: any[] = [
     }); 
     this.loadCoolerCompanies();
   }
+
+  
+  addMarker($event: MouseEvent) {
+
+    console.log(`latitude: ${$event.coords.lat}, longitude: ${$event.coords.lng}`);
+    this.marker = [{
+      latitude: $event.coords.lat,
+      longitude: $event.coords.lng
+     }]
+    // console.log(this.marker[0].latitude)
+    this.reverseGeoCoder();
+  }
+
+  reverseGeoCoder(){
+
+    //use Geoapify Reverse Geocoding API
+    let apiKey = '1d8ddf66b4c84277be6a0adfac41a613';
+    let lat = this.marker[0].latitude;
+    let lon= this.marker[0].longitude;
+    this.httpService.reverseGeoCoder(apiKey,lat, lon).subscribe(res => {
+      
+      this.address = res['features'][0]['properties']
+      console.log(this.address)
+      console.log(this.address.address_line1)
+      // this.location = this.address.address_line1;
+      this.formAdd.patchValue({
+        location: this.address.address_line1
+      });
+      this.formEdit.patchValue({
+        location: this.address.address_line1
+      });
+      // this.formAdd = this.formBuilder.group(location);
+      });
+    }
 
   //opens creation modal
   triggerModal(data: any): void {
@@ -523,9 +578,9 @@ toggleStatus(name: string) {
 
   // Download PDF
   exportCompanyPDF() {
-    let element = 'table'
-    let PDFTitle = 'Cooler Maintenance Companies';
-   this.global.exportPDF(element, 'Cooler Maintenance Companies', PDFTitle);
+  let element = 'table'
+  let PDFTitle = 'Cooler Maintenance Companies';
+  this.global.exportPDF(element, 'Cooler Maintenance Companies', PDFTitle);
 }
 
 //export excel file
@@ -533,7 +588,7 @@ toggleStatus(name: string) {
   let element = document.getElementById('coolerCompaniesTable');
   this.global.exportTableElmToExcel(element, 'Cooler Maintenance Companies');
  }
- 
+
  //export csv file
  exportCompanyCSV(){
   this.global.exportToCsv(this.listOfDataToDisplay,
